@@ -33,14 +33,8 @@ while True:
         time.sleep(1)
 "
 
-echo "Initializing database tables and running schema setup..."
-python create_tables.py || echo "Table creation script executed."
-
-# Run Alembic migrations if alembic.ini is present
-if [ -f "alembic.ini" ]; then
-    echo "Executing Alembic database migrations..."
-    alembic upgrade head || echo "Alembic migration step finished."
-fi
+echo "Initializing database tables, Alembic schema migrations, and seed data..."
+python run_migrations.py || echo "Database migration step finished."
 
 echo "========================================================="
 echo "Launching FastAPI Uvicorn Server on 0.0.0.0:8000..."
