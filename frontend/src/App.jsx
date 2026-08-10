@@ -32,12 +32,12 @@ import PerformanceDashboardPage from './pages/PerformanceDashboardPage';
 
 export default function App() {
   return (
-    <div className="flex min-h-screen bg-slate-950 text-slate-100 selection:bg-cyan-500 selection:text-white font-sans">
+    <div className="flex min-h-screen bg-[#f2f2f2] text-[#1a3b45] selection:bg-[#52ab98] selection:text-white font-sans antialiased">
       {/* Sidebar Navigation */}
       <Sidebar />
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 bg-[#f2f2f2]">
         <Routes>
           <Route path="/" element={<Navigate to="/transporters" replace />} />
           <Route path="/transporters" element={<TransportersPage />} />
