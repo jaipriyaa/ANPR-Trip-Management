@@ -9,7 +9,8 @@ import {
   Upload, Video, Search, CheckCircle2, XCircle, Clock, Eye, Hash, 
   FileType, Activity, Zap, Truck, CreditCard, Calendar, BarChart3, 
   Loader2, Pencil, Shield, ShieldCheck, Layers, User, Car, Navigation, 
-  RefreshCw, Database, ExternalLink, Sliders, Building2, Check, AlertTriangle, ArrowRight
+  RefreshCw, Database, ExternalLink, Sliders, Building2, Check, AlertTriangle, ArrowRight,
+  ScanText, Cctv, Route, Timer, Radio
 } from 'lucide-react';
 
 
@@ -174,7 +175,7 @@ export default function VehicleRecognitionPage() {
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#c8d8e4] pb-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl bg-[#2b6777] text-white flex items-center justify-center shadow-md">
-                <Car className="w-5 h-5" />
+                <ScanText className="w-5 h-5" />
               </div>
               <div>
                 <h2 className="text-lg font-extrabold text-[#0f2931]">Current Vehicle & Plate Detection</h2>
@@ -359,7 +360,7 @@ export default function VehicleRecognitionPage() {
           <div className="flex items-center justify-between border-b border-[#c8d8e4] pb-3">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-2xl bg-[#52ab98] text-white flex items-center justify-center shadow-md">
-                <Building2 className="w-5 h-5" />
+                <Cctv className="w-5 h-5" />
               </div>
               <div>
                 <h3 className="text-base font-extrabold text-[#0f2931]">Gate Control & Industrial Trip Operations</h3>
@@ -458,13 +459,13 @@ export default function VehicleRecognitionPage() {
 
 
         {/* ========================================================================= */}
-        {/* PRIORITY SECTION #3: TIME INSIDE & STAY DURATION MONITOR */}
+        {/* SECTION #3: TIME INSIDE & STAY DURATION MONITOR */}
         {/* ========================================================================= */}
         <section className="bg-white rounded-3xl border border-[#c8d8e4] p-6 shadow-lg space-y-4">
           <div className="flex items-center justify-between border-b border-[#c8d8e4] pb-3">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-2xl bg-[#2b6777] text-white flex items-center justify-center shadow-md">
-                <Clock className="w-5 h-5" />
+                <Timer className="w-5 h-5" />
               </div>
               <div>
                 <h3 className="text-base font-extrabold text-[#0f2931]">Time Inside Yard & Stay Duration Monitor</h3>
@@ -521,13 +522,13 @@ export default function VehicleRecognitionPage() {
 
 
         {/* ========================================================================= */}
-        {/* PRIORITY SECTION #4: LIVE VEHICLE TELEMETRY & GATE EVENTS STREAM */}
+        {/* SECTION #4: LIVE VEHICLE TELEMETRY & GATE EVENTS STREAM */}
         {/* ========================================================================= */}
         <section className="bg-white rounded-3xl border border-[#c8d8e4] p-6 shadow-lg space-y-4">
           <div className="flex items-center justify-between border-b border-[#c8d8e4] pb-3">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-2xl bg-[#52ab98] text-white flex items-center justify-center shadow-md">
-                <Activity className="w-5 h-5" />
+                <Radio className="w-5 h-5" />
               </div>
               <div>
                 <h3 className="text-base font-extrabold text-[#0f2931]">Live Vehicle Telemetry & Gate Events Stream</h3>

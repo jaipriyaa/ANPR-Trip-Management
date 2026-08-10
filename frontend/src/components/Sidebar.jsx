@@ -4,28 +4,30 @@ import AppLogo from './AppLogo';
 import { 
   Building2, 
   Truck, 
-  CreditCard, 
   UserCheck, 
-  Video, 
-  Activity, 
+  Cctv, 
+  Radio, 
   ShieldAlert, 
   FileText, 
   LayoutDashboard,
   Users,
-  Zap,
-  Eye,
   Settings,
   ShieldCheck,
-  CheckCircle2,
-  Lock,
-  Edit3,
-  Sliders,
-  Clock,
-  AlertTriangle,
-  Archive,
+  BadgeCheck,
+  KeyRound,
+  Workflow,
+  Timer,
+  Siren,
+  FolderArchive,
   Database,
   Gauge,
-  CalendarDays,
+  ScanText,
+  Route,
+  ArrowLeftRight,
+  FileSearch,
+  FileBarChart,
+  History,
+  Server,
   Sparkles
 } from 'lucide-react';
 
@@ -36,7 +38,7 @@ const navigationGroups = [
       { 
         name: 'AI Recognition', 
         path: '/vehicle-recognition', 
-        icon: Zap, 
+        icon: ScanText, 
         highlight: true, 
         badge: 'LIVE AI' 
       },
@@ -47,29 +49,29 @@ const navigationGroups = [
     items: [
       { name: 'Transporters', path: '/transporters', icon: Building2 },
       { name: 'Vehicle Master', path: '/vehicles', icon: Truck },
-      { name: 'Vehicle Plates', path: '/vehicle-plates', icon: CreditCard },
+      { name: 'Vehicle Plates', path: '/vehicle-plates', icon: ScanText },
       { name: 'Drivers', path: '/drivers', icon: UserCheck },
-      { name: 'Manual Review Queue', path: '/manual-review', icon: Edit3 },
+      { name: 'Manual Review Queue', path: '/manual-review', icon: FileSearch },
     ]
   },
   {
     title: 'Gate & Operations',
     items: [
-      { name: 'Gate Management', path: '/gates', icon: Video },
-      { name: 'Trip Engine', path: '/trips', icon: CalendarDays },
-      { name: 'Live Control Room', path: '/live-gate', icon: Activity },
-      { name: 'Entry/Exit Logs', path: '/entry-exit', icon: Eye },
+      { name: 'Gate Management', path: '/gates', icon: Cctv },
+      { name: 'Trip Engine', path: '/trips', icon: Route },
+      { name: 'Live Control Room', path: '/live-gate', icon: Radio },
+      { name: 'Entry/Exit Logs', path: '/entry-exit', icon: ArrowLeftRight },
     ]
   },
   {
     title: 'Data Engineering Pipeline',
     items: [
-      { name: 'Pipeline Dashboard', path: '/pipeline-dashboard', icon: Sliders },
-      { name: 'Daily Summaries', path: '/daily-summary', icon: CalendarDays },
-      { name: 'Gate Summaries', path: '/gate-summary', icon: Video },
-      { name: 'Late Arrival Scans', path: '/late-arrivals', icon: Clock },
-      { name: 'Overstay Monitor', path: '/overstay', icon: AlertTriangle },
-      { name: 'Archive Manager', path: '/archive-manager', icon: Archive },
+      { name: 'Pipeline Dashboard', path: '/pipeline-dashboard', icon: Workflow },
+      { name: 'Daily Summaries', path: '/daily-summary', icon: FileBarChart },
+      { name: 'Gate Summaries', path: '/gate-summary', icon: Cctv },
+      { name: 'Late Arrival Scans', path: '/late-arrivals', icon: Timer },
+      { name: 'Overstay Monitor', path: '/overstay', icon: Siren },
+      { name: 'Archive Manager', path: '/archive-manager', icon: FolderArchive },
       { name: 'OCR Feedback Dataset', path: '/ocr-feedback', icon: Database },
     ]
   },
@@ -77,9 +79,9 @@ const navigationGroups = [
     title: 'Authorization & Security',
     items: [
       { name: 'Auth Engine Dashboard', path: '/authorization-dashboard', icon: ShieldCheck },
-      { name: 'Vehicle Whitelist', path: '/whitelist', icon: CheckCircle2 },
+      { name: 'Vehicle Whitelist', path: '/whitelist', icon: BadgeCheck },
       { name: 'Security Watchlist', path: '/watchlist', icon: ShieldAlert },
-      { name: 'Gate Decisions Log', path: '/gate-decisions', icon: Lock },
+      { name: 'Gate Decisions Log', path: '/gate-decisions', icon: KeyRound },
     ]
   },
   {
@@ -89,8 +91,8 @@ const navigationGroups = [
       { name: 'Performance Benchmarks', path: '/performance-dashboard', icon: Gauge },
       { name: 'Industrial Reports', path: '/reports', icon: FileText },
       { name: 'Users & RBAC', path: '/users', icon: Users },
-      { name: 'Audit Trail Logs', path: '/audit-logs', icon: ShieldCheck },
-      { name: 'System & Health', path: '/system-health', icon: Settings },
+      { name: 'Audit Trail Logs', path: '/audit-logs', icon: History },
+      { name: 'System & Health', path: '/system-health', icon: Server },
     ]
   }
 ];
@@ -116,7 +118,7 @@ export default function Sidebar() {
             <h2 className="px-3 text-[11px] font-bold text-[#c8d8e4]/90 uppercase tracking-wider flex items-center justify-between">
               <span>{group.title}</span>
               {group.title === 'Core AI Engine' && (
-                <Sparkles className="w-3 h-3 text-[#52ab98]" />
+                <Sparkles className="w-3.5 h-3.5 text-[#52ab98]" />
               )}
             </h2>
             <div className="mt-1.5 space-y-1.5">
@@ -139,7 +141,7 @@ export default function Sidebar() {
                     }
                   >
                     <div className="flex items-center gap-2.5">
-                      <Icon className={item.highlight ? "w-4 h-4 text-amber-300 fill-amber-300 animate-pulse" : "w-4 h-4"} />
+                      <Icon className={item.highlight ? "w-4.5 h-4.5 text-amber-300 fill-amber-300/30 animate-pulse" : "w-4.5 h-4.5"} />
                       <span className={item.highlight ? "font-extrabold text-white text-sm" : ""}>{item.name}</span>
                     </div>
                     {item.badge && (
