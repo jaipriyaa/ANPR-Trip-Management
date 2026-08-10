@@ -92,8 +92,8 @@ export default function Sidebar() {
           <AppLogo className="w-6 h-6 text-[#2b6777]" />
         </div>
         <div>
-          <h1 className="font-extrabold text-white tracking-wide text-sm leading-tight">ENTERPRISE ANPR</h1>
-          <p className="text-xs text-[#c8d8e4] font-medium">Trip Platform v3.5</p>
+          <h1 className="font-extrabold text-white tracking-wider text-base leading-tight">VEYRA</h1>
+          <p className="text-xs text-[#c8d8e4] font-medium">ANPR Trip Platform v3.5</p>
         </div>
       </div>
 

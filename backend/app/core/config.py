@@ -4,7 +4,7 @@ from pydantic import ConfigDict
 
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = "Edge ANPR & Vehicle Trip Management Platform"
+    PROJECT_NAME: str = "VEYRA | Industrial ANPR & Vehicle Trip Management Platform"
     API_V1_STR: str = "/api/v1"
     DATABASE_URL: str = os.getenv("DATABASE_URL", "postgresql://postgres:1234@localhost:5432/anpr_db")
 
