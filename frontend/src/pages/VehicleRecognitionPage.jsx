@@ -174,7 +174,7 @@ export default function VehicleRecognitionPage() {
         <section className="bg-white rounded-3xl border-2 border-[#2b6777]/30 p-6 shadow-xl space-y-5">
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#c8d8e4] pb-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-[#2b6777] text-white flex items-center justify-center shadow-md">
+              <div className="w-10 h-10 rounded-2xl bg-white border border-[#a8c2d4] text-[#2b6777] flex items-center justify-center shadow-md">
                 <ScanText className="w-5 h-5" />
               </div>
               <div>
@@ -223,7 +223,7 @@ export default function VehicleRecognitionPage() {
                     </div>
                   ) : (
                     <div className="space-y-2 group-hover:scale-105 transition-transform">
-                      <div className="w-12 h-12 rounded-full bg-[#e8eff4] text-[#2b6777] flex items-center justify-center mx-auto shadow-sm">
+                      <div className="w-12 h-12 rounded-full bg-white border border-[#a8c2d4] text-[#2b6777] flex items-center justify-center mx-auto shadow-sm">
                         <Upload className="w-6 h-6" />
                       </div>
                       <p className="text-xs font-bold text-[#0f2931]">Drop Vehicle Camera Stream or Select File</p>
@@ -354,12 +354,12 @@ export default function VehicleRecognitionPage() {
 
 
         {/* ========================================================================= */}
-        {/* PRIORITY SECTION #2: GATE CONTROL & INDUSTRIAL TRIP ACTION PANEL */}
+        {/* SECTION #2: GATE CONTROL & INDUSTRIAL TRIP ACTION PANEL */}
         {/* ========================================================================= */}
         <section className="bg-white rounded-3xl border border-[#c8d8e4] p-6 shadow-lg space-y-4">
           <div className="flex items-center justify-between border-b border-[#c8d8e4] pb-3">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-2xl bg-[#52ab98] text-white flex items-center justify-center shadow-md">
+              <div className="w-9 h-9 rounded-2xl bg-white border border-[#a8c2d4] text-[#2b6777] flex items-center justify-center shadow-md">
                 <Cctv className="w-5 h-5" />
               </div>
               <div>
@@ -464,7 +464,7 @@ export default function VehicleRecognitionPage() {
         <section className="bg-white rounded-3xl border border-[#c8d8e4] p-6 shadow-lg space-y-4">
           <div className="flex items-center justify-between border-b border-[#c8d8e4] pb-3">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-2xl bg-[#2b6777] text-white flex items-center justify-center shadow-md">
+              <div className="w-9 h-9 rounded-2xl bg-white border border-[#a8c2d4] text-[#2b6777] flex items-center justify-center shadow-md">
                 <Timer className="w-5 h-5" />
               </div>
               <div>
@@ -527,7 +527,7 @@ export default function VehicleRecognitionPage() {
         <section className="bg-white rounded-3xl border border-[#c8d8e4] p-6 shadow-lg space-y-4">
           <div className="flex items-center justify-between border-b border-[#c8d8e4] pb-3">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-2xl bg-[#52ab98] text-white flex items-center justify-center shadow-md">
+              <div className="w-9 h-9 rounded-2xl bg-white border border-[#a8c2d4] text-[#2b6777] flex items-center justify-center shadow-md">
                 <Radio className="w-5 h-5" />
               </div>
               <div>
@@ -552,7 +552,7 @@ export default function VehicleRecognitionPage() {
                   className="bg-[#f8fafc] p-4 rounded-2xl border border-[#c8d8e4] hover:border-[#2b6777] transition-all flex flex-wrap items-center justify-between gap-4 text-xs"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-[#e8eff4] text-[#2b6777] flex items-center justify-center font-bold font-mono">
+                    <div className="w-10 h-10 rounded-xl bg-white border border-[#a8c2d4] text-[#2b6777] flex items-center justify-center font-bold font-mono">
                       <Car className="w-5 h-5" />
                     </div>
                     <div>
