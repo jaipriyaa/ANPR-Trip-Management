@@ -161,8 +161,8 @@ export default function VehicleRecognitionPage() {
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-[#f2f2f2]">
       <Header
-        title="Vehicle Recognition & Real-Time ANPR Operations Dashboard"
-        subtitle="Industrial Control Room — Live Vehicle Telemetry, Multi-Frame ANPR & Gate Sync"
+        title="AI Recognition"
+        subtitle="Live Vehicle Telemetry & Real-Time ANPR"
       />
 
       <main className="flex-1 p-6 space-y-6 max-w-7xl mx-auto w-full">
@@ -170,9 +170,9 @@ export default function VehicleRecognitionPage() {
         <div className="bg-white rounded-xl border border-[#c8d8e4] p-3 backdrop-blur-md flex flex-wrap items-center justify-between gap-3 text-xs">
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="font-bold text-[#1a3b45] uppercase tracking-wider text-[11px]">Industrial ANPR Control Room</span>
-            <span className="text-[#5c7885]">|</span>
-            <span className="text-[#5c7885]">Live Telemetry & Gate Automation Engine</span>
+            <span className="font-bold text-[#0f2931] uppercase tracking-wider text-[11px]">Live ANPR Control Room</span>
+            <span className="text-[#4d6e78]">|</span>
+            <span className="text-[#4d6e78]">Real-Time Vehicle & Gate Telemetry Engine</span>
           </div>
           <div className="flex items-center gap-2 font-mono text-[11px]">
             <span className="px-2.5 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded font-semibold flex items-center gap-1">
