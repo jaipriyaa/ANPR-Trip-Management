@@ -24,10 +24,10 @@ export default {
           300: '#6d9eb0',
           400: '#488595',
           500: '#2b6777',  // Primary #2b6777
-          600: '#235462',
+          600: '#22525f',
           700: '#1b424d',
           800: '#143038',
-          900: '#0f2931',  // High Contrast Text #0f2931
+          900: '#0f172a',  // Dark Text #0f172a
           DEFAULT: '#2b6777',
         },
         jade: {
@@ -58,26 +58,26 @@ export default {
           muted: '#dbe5ec',
           DEFAULT: '#f2f2f2',
         },
-        // High Contrast Light Mode Text Colors
+        // Ultra-High Contrast Dark Text Tokens
         darktext: {
-          primary: '#0f2931',
-          secondary: '#2b6777',
-          muted: '#4d6e78',
+          primary: '#0f172a',
+          secondary: '#1e293b',
+          muted: '#334155',
         },
-        // Seamless theme compatibility mapping for crisp light mode text & surfaces
+        // Slate mapping tuned for 100% text legibility
         slate: {
           50: '#ffffff',
           100: '#f8fafc',
-          200: '#e8eff4',
-          300: '#c8d8e4',
-          400: '#4d6e78',  // Muted readable text
-          500: '#2b6777',  // Primary accent text
-          600: '#235462',
-          700: '#1a3e47',
-          800: '#16353e',  // High contrast body text
-          850: '#0f2931',  // Deep contrast title text
-          900: '#ffffff',  // Cards background
-          950: '#f2f2f2',  // Layout background
+          200: '#f1f5f9',
+          300: '#e2e8f0',
+          400: '#475569',  // Dark Gray Muted Text (Contrast > 7:1)
+          500: '#334155',  // Solid Slate Text (Contrast > 10:1)
+          600: '#1e293b',  // Deep Charcoal Body Text (Contrast > 14:1)
+          700: '#0f172a',  // Black Title Text (Contrast > 17:1)
+          800: '#0f172a',  // Black Heading Text
+          850: '#0f172a',  // Ultra Black Heading Text
+          900: '#ffffff',  // Card background
+          950: '#f2f2f2',  // Page background
         }
       },
       borderRadius: {
@@ -88,8 +88,8 @@ export default {
         'full': '9999px',
       },
       boxShadow: {
-        'soft': '0 10px 30px -5px rgba(43, 103, 119, 0.08), 0 4px 12px -2px rgba(43, 103, 119, 0.04)',
-        'soft-lg': '0 20px 40px -10px rgba(43, 103, 119, 0.12), 0 8px 20px -4px rgba(43, 103, 119, 0.06)',
+        'soft': '0 10px 30px -5px rgba(15, 23, 42, 0.06), 0 4px 12px -2px rgba(15, 23, 42, 0.03)',
+        'soft-lg': '0 20px 40px -10px rgba(15, 23, 42, 0.10), 0 8px 20px -4px rgba(15, 23, 42, 0.05)',
         'jade-glow': '0 4px 16px 0 rgba(82, 171, 152, 0.35)',
         'teal-glow': '0 4px 16px 0 rgba(43, 103, 119, 0.30)',
       }
