@@ -4,22 +4,22 @@ An enterprise-grade, edge-native industrial platform for real-time Vehicle Detec
 
 ---
 
-## 🌟 Executive Overview & Key Features
+  ## Executive Overview & Key Features
 
-- 🚘 **YOLOv11 Vehicle Detection & Sub-Type Classification**: Detects and categorizes Cars, SUVs, Pickup Trucks, Heavy Trucks, Mini Trucks, Buses, Vans, Motorcycles, and Auto Rickshaws.
-- 🎯 **YOLOv11 License Plate Detection & Cropping**: High-precision localization of Indian standard, commercial, tilted, damaged, and dirty plates.
-- 🔍 **Multi-Pass OCR Engine & Indian Regex Correction**: Multi-stage OCR ensemble with confusion matrix correction (`0`<->`O`, `1`<->`I`, `8`<->`B`, `5`<->`S`).
-- ⚡ **Multi-Backend Inference Acceleration**: Automatic selection & fallback order: **NVIDIA TensorRT (FP16)** → **ONNX Runtime (CUDA/CPU)** → **PyTorch YOLO**.
-- 🚦 **Gate Automation & Live Control Room**: Real-time camera feeds, RTSP stream ingestion, automated boom barrier triggers, and access decision logging.
-- 📋 **Trip Lifecycle Engine**: Tracks trips from `PLANNED` → `REGISTERED` → `IN_PLANT` → `COMPLETED` / `CANCELLED` with dwell-time alerts.
-- 🛡️ **Authorization Engine**: Whitelist, Watchlist, and Automated Gate Decision Engine.
-- ✍️ **Manual Review Queue**: Human-in-the-loop UI for low-confidence OCR scans with automated feedback dataset collection.
-- 📊 **Performance Benchmarking & Telemetry**: Built-in latency, FPS, CPU, RAM, and GPU profiling dashboard.
-- 🐳 **Single-Command Production Docker Launch**: Complete multi-container stack (`React`, `FastAPI`, `PostgreSQL 16`, `Redis`) started via `docker compose up --build`.
+-  **YOLOv11 Vehicle Detection & Sub-Type Classification**: Detects and categorizes Cars, SUVs, Pickup Trucks, Heavy Trucks, Mini Trucks, Buses, Vans, Motorcycles, and Auto Rickshaws.
+-  **YOLOv11 License Plate Detection & Cropping**: High-precision localization of Indian standard, commercial, tilted, damaged, and dirty plates.
+-  **Multi-Pass OCR Engine & Indian Regex Correction**: Multi-stage OCR ensemble with confusion matrix correction (`0`<->`O`, `1`<->`I`, `8`<->`B`, `5`<->`S`).
+-  **Multi-Backend Inference Acceleration**: Automatic selection & fallback order: **NVIDIA TensorRT (FP16)** → **ONNX Runtime (CUDA/CPU)** → **PyTorch YOLO**.
+-  **Gate Automation & Live Control Room**: Real-time camera feeds, RTSP stream ingestion, automated boom barrier triggers, and access decision logging.
+-  **Trip Lifecycle Engine**: Tracks trips from `PLANNED` → `REGISTERED` → `IN_PLANT` → `COMPLETED` / `CANCELLED` with dwell-time alerts.
+-  **Authorization Engine**: Whitelist, Watchlist, and Automated Gate Decision Engine.
+-  **Manual Review Queue**: Human-in-the-loop UI for low-confidence OCR scans with automated feedback dataset collection.
+-  **Performance Benchmarking & Telemetry**: Built-in latency, FPS, CPU, RAM, and GPU profiling dashboard.
+-  **Single-Command Production Docker Launch**: Complete multi-container stack (`React`, `FastAPI`, `PostgreSQL 16`, `Redis`) started via `docker compose up --build`.
 
 ---
 
-## 🛠️ Technology Stack
+##  Technology Stack
 
 - **Backend**: FastAPI, Python 3.11+, SQLAlchemy 2.0 ORM, Alembic, Pydantic V2, PostgreSQL 16, Redis 7
 - **Frontend**: React 18, Vite, TailwindCSS, TanStack Query, Axios, Lucide Icons, React Router v6
@@ -28,7 +28,7 @@ An enterprise-grade, edge-native industrial platform for real-time Vehicle Detec
 
 ---
 
-## 🚀 Quickstart - Running the System
+##  Quickstart - Running the System
 
 ### Option A: Single-Command Docker Deployment (Recommended)
 ```bash
@@ -80,7 +80,7 @@ cd backend && uvicorn app.main:app --host 0.0.0.0 --port 8000
 
 ---
 
-## 📂 Project Structure Overview
+##  Project Structure Overview
 
 ```
 ANPR-Trip-Management/
@@ -97,21 +97,21 @@ ANPR-Trip-Management/
 
 ---
 
-## 📚 Complete Documentation Package
+##  Complete Documentation Package
 
 Explore detailed technical manuals inside [`docs/`](docs/README.md):
-- 📖 [**System Architecture & Diagrams**](docs/ARCHITECTURE.md)
-- 🚀 [**Installation Guide**](docs/INSTALL.md)
-- 🐳 [**Docker Deployment Guide**](docs/DOCKER_DEPLOYMENT.md)
-- ⚡ [**Jetson & TensorRT Deployment**](docs/JETSON_DEPLOYMENT.md)
-- 📊 [**Performance Benchmark Report**](docs/BENCHMARK_REPORT.md)
-- 🧪 [**Test Suite Report**](docs/TEST_REPORT.md)
-- 🌐 [**REST API Documentation**](docs/API_DOCUMENTATION.md)
-- 💻 [**User Manual**](docs/USER_MANUAL.md)
+-  [**System Architecture & Diagrams**](docs/ARCHITECTURE.md)
+-  [**Installation Guide**](docs/INSTALL.md)
+-  [**Docker Deployment Guide**](docs/DOCKER_DEPLOYMENT.md)
+-  [**Jetson & TensorRT Deployment**](docs/JETSON_DEPLOYMENT.md)
+-  [**Performance Benchmark Report**](docs/BENCHMARK_REPORT.md)
+-  [**Test Suite Report**](docs/TEST_REPORT.md)
+-  [**REST API Documentation**](docs/API_DOCUMENTATION.md)
+-  [**User Manual**](docs/USER_MANUAL.md)
 
 ---
 
-## 🧪 Verification & Automated Tests
+##  Verification & Automated Tests
 
 Run system hardware check and the automated pytest suite:
 ```bash
