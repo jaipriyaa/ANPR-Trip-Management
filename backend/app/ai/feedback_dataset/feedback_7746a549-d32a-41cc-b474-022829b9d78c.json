@@ -1,0 +1,11 @@
+{
+  "review_id": "7746a549-d32a-41cc-b474-022829b9d78c",
+  "raw_ocr_text": "GOODSI Q1 UHKXIER",
+  "old_predicted_plate": "GOODSIQ1UHKXIER",
+  "corrected_ground_truth": "MH14TCF200F",
+  "confidence": 0.7301,
+  "vehicle_image_path": "debug/vehicles/vehicle_43f09ce2_1.jpg",
+  "plate_image_path": "debug/plates/plate_43f09ce2_1_4.jpg",
+  "reviewed_by": "Major Rajesh Verma",
+  "timestamp": "2026-08-08T06:41:30.854224+00:00"
+}

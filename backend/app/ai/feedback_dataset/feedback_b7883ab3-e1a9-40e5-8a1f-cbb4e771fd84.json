@@ -1,0 +1,11 @@
+{
+  "review_id": "b7883ab3-e1a9-40e5-8a1f-cbb4e771fd84",
+  "raw_ocr_text": "ER",
+  "old_predicted_plate": "MH14TCF200F",
+  "corrected_ground_truth": "MH14TCF200F",
+  "confidence": 0.9889,
+  "vehicle_image_path": "debug/vehicles/vehicle_56fa42a5_1.jpg",
+  "plate_image_path": "debug/plates/plate_56fa42a5_1_1.jpg",
+  "reviewed_by": "Major Rajesh Verma",
+  "timestamp": "2026-08-07T14:00:29.602583+00:00"
+}

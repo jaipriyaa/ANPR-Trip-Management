@@ -1,0 +1,11 @@
+{
+  "review_id": "9f8fb416-d0d6-408b-8e1a-cffd29808872",
+  "raw_ocr_text": "KAO1",
+  "old_predicted_plate": "MH14TCF200F",
+  "corrected_ground_truth": "MH14TCF200F",
+  "confidence": 0.5328,
+  "vehicle_image_path": "debug/vehicles/vehicle_b16f9cc6_1.jpg",
+  "plate_image_path": "debug/plates/plate_b16f9cc6_1_1.jpg",
+  "reviewed_by": "Major Rajesh Verma",
+  "timestamp": "2026-08-08T06:28:34.660091+00:00"
+}

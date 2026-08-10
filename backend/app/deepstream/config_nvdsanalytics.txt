@@ -1,0 +1,39 @@
+# DeepStream NVDSAnalytics ROI & Line Crossing Configuration for Gate Automation
+
+[property]
+enable=1
+config-version=2
+
+# Gate Entry Camera Stream
+[roi-filtering-stream-0]
+enable=1
+roi-gate-entry=100;400;1800;400;1800;1000;100;1000
+inverse-roi=0
+class-id=0
+
+[line-crossing-stream-0]
+enable=1
+line-crossing-entry=100;600;1800;600;100;500;1800;500
+class-id=0
+
+[direction-detection-stream-0]
+enable=1
+direction-inbound=960;100;960;900
+class-id=0
+
+# Gate Exit Camera Stream
+[roi-filtering-stream-1]
+enable=1
+roi-gate-exit=100;400;1800;400;1800;1000;100;1000
+inverse-roi=0
+class-id=0
+
+[line-crossing-stream-1]
+enable=1
+line-crossing-exit=100;600;1800;600;100;700;1800;700
+class-id=0
+
+[direction-detection-stream-1]
+enable=1
+direction-outbound=960;900;960;100
+class-id=0

@@ -1,0 +1,21 @@
+name: "lprnet"
+platform: "tensorrt_plan"
+max_batch_size: 16
+input [
+  {
+    name: "input_1"
+    data_type: TYPE_FP32
+    format: FORMAT_NCHW
+    dims: [ 3, 48, 96 ]
+  }
+]
+output [
+  {
+    name: "tf_op_layer_ArgMax"
+    data_type: TYPE_INT32
+    dims: [ 24 ]
+  }
+]
+dynamic_batching {
+  max_queue_delay_microseconds: 2000
+}

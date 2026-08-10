@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  anpr-db:
+    image: postgres:15-alpine
+    container_name: anpr_db_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: anpr_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+  triton-server:
+    image: nvcr.io/nvidia/tritonserver:24.04-py3
+    container_name: anpr_triton_server
+    command: ["tritonserver", "--model-repository=/models"]
+    volumes:
+      - ../backend/app/deepstream/triton_models:/models
+    ports:
+      - "8001:8001" # gRPC
+      - "8002:8002" # HTTP
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: always
+
+  deepstream-edge:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.deepstream
+    container_name: anpr_deepstream_pipeline
+    runtime: nvidia
+    environment:
+      - DISPLAY=:0
+      - DATABASE_URL=postgresql://postgres:123@anpr-db:5432/anpr_db
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ../backend:/app/backend
+    depends_on:
+      - anpr-db
+      - triton-server
+    restart: always
+
+  fastapi-backend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.backend
+    container_name: anpr_fastapi_backend
+    environment:
+      - DATABASE_URL=postgresql://postgres:123@anpr-db:5432/anpr_db
+    ports:
+      - "8000:8000"
+    depends_on:
+      - anpr-db
+    restart: always
+
+volumes:
+  postgres_data:

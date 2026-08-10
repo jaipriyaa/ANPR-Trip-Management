@@ -1,0 +1,70 @@
+# DeepStream 7.x Reference App Configuration for ANPR Trip Management
+# Pipeline: RTSP -> StreamMux -> PGIE (Vehicle) -> Tracker (NvDCF) -> SGIE1 (Plate Detect) -> SGIE2 (LPR OCR) -> NVDSAnalytics -> Kafka/HTTP Sink
+
+source-list:
+  num-sources: 2
+  gpu-id: 0
+  list:
+    - uri: rtsp://admin:admin123@190.168.1.100:554/live/gate_in
+      type: 4
+      camera-id: GATE_IN_CAM_01
+    - uri: rtsp://admin:admin123@190.168.1.101:554/live/gate_out
+      type: 4
+      camera-id: GATE_OUT_CAM_01
+
+streammux:
+  gpu-id: 0
+  live-source: 1
+  batch-size: 4
+  width: 1920
+  height: 1080
+  enable-padding: 0
+  nvbuf-memory-type: 0
+
+primary-gie:
+  gpu-id: 0
+  model-engine-file: ../ai_model/trafficcamnet.onnx_b4_gpu0_fp16.engine
+  labelfile-path: ../ai_model/labels_trafficcamnet.txt
+  batch-size: 4
+  bbox-border-color0: 0;1;0;1
+  gie-unique-id: 1
+  interval: 0
+
+tracker:
+  gpu-id: 0
+  tracker-width: 960
+  tracker-height: 540
+  ll-lib-file: /opt/nvidia/deepstream/deepstream/lib/libnvds_nvmultiobjecttracker.so
+  ll-config-file: config_tracker_NvDCF_perf.yml
+  enable-batch-process: 1
+  enable-past-frame: 1
+
+secondary-gie-lpd:
+  gpu-id: 0
+  model-engine-file: ../ai_model/us_lpd_yolov8.onnx_b4_gpu0_fp16.engine
+  labelfile-path: ../ai_model/labels_lpd.txt
+  batch-size: 4
+  gie-unique-id: 2
+  operate-on-gie-id: 1
+  operate-on-class-ids: 0 # Vehicle class
+
+secondary-gie-lpr:
+  gpu-id: 0
+  model-engine-file: ../ai_model/us_lprnet.onnx_b4_gpu0_fp16.engine
+  labelfile-path: ../ai_model/dict_us.txt
+  batch-size: 4
+  gie-unique-id: 3
+  operate-on-gie-id: 2
+  operate-on-class-ids: 0 # Plate class
+  custom-parse-lpr-func: NvDsInferParseCustomNVLPR
+
+nvdsanalytics:
+  enable: 1
+  config-file: config_nvdsanalytics.txt
+
+sink:
+  enable: 1
+  type: 6 # Kafka / HTTP Webhook Payload
+  msg-conv-config: dstest5_msgconv_sample_config.txt
+  msg-broker-proto-lib: /opt/nvidia/deepstream/deepstream/lib/libnvds_kafka_proto.so
+  topic: anpr-vehicle-detections

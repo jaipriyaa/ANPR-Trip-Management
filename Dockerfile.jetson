@@ -1,0 +1,28 @@
+# Dockerfile for NVIDIA Jetson Edge Deployment (L4T / JetPack 5.x / 6.x)
+FROM nvcr.io/nvidia/l4t-pytorch:r35.2.1-pth2.0-py3
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHONUNBUFFERED=1
+
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
+    ffmpeg \
+    libsm6 \
+    libxext6 \
+    python3-pip \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements & install
+COPY deployment/jetson/requirements-jetson.txt ./
+RUN pip3 install --no-cache-dir -r requirements-jetson.txt
+
+# Copy source code & models
+COPY backend ./backend
+COPY models ./models
+
+EXPOSE 8000
+
+CMD ["python3", "-m", "uvicorn", "backend.app.main:app", "--host", "0.0.0.0", "--port", "8000"]

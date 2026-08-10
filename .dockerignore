@@ -1,0 +1,29 @@
+# Git & Cache
+.git
+.gitignore
+.dockerignore
+.pytest_cache
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+
+# Environments & Dependencies
+.venv
+venv
+env
+node_modules
+dist
+build
+
+# IDEs & OS
+.idea
+.vscode
+.DS_Store
+Thumbs.db
+
+# Logs & Temporary Files
+*.log
+debug/
+test_output/
+scratch/

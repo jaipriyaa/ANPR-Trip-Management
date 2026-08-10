@@ -1,0 +1,21 @@
+name: "lpd_yolov8"
+platform: "onnxruntime_onnx"
+max_batch_size: 16
+input [
+  {
+    name: "images"
+    data_type: TYPE_FP32
+    format: FORMAT_NCHW
+    dims: [ 3, 640, 640 ]
+  }
+]
+output [
+  {
+    name: "output0"
+    data_type: TYPE_FP32
+    dims: [ 5, 8400 ]
+  }
+]
+dynamic_batching {
+  max_queue_delay_microseconds: 2000
+}

@@ -1,0 +1,11 @@
+{
+  "review_id": "1e45ea00-e209-4b63-b568-ed7141e047e8",
+  "raw_ocr_text": "KAOLAB1234",
+  "old_predicted_plate": "KAOLAB1234",
+  "corrected_ground_truth": "MH14TCF200F",
+  "confidence": 0.5,
+  "vehicle_image_path": "debug/vehicles/vehicle_4df0d226_1.jpg",
+  "plate_image_path": "debug/plates/plate_4df0d226_1_5.jpg",
+  "reviewed_by": "Major Rajesh Verma",
+  "timestamp": "2026-08-08T05:07:33.554855+00:00"
+}

@@ -1,0 +1,11 @@
+{
+  "review_id": "39890782-c1bf-4013-ab6b-17c53ba688c5",
+  "raw_ocr_text": "67-ZP-VB",
+  "old_predicted_plate": "MH14TCF200F",
+  "corrected_ground_truth": "MH14TCF200F",
+  "confidence": 0.9988,
+  "vehicle_image_path": "debug/vehicles/vehicle_bbcab130_1.jpg",
+  "plate_image_path": "debug/plates/plate_bbcab130_1_1.jpg",
+  "reviewed_by": "Major Rajesh Verma",
+  "timestamp": "2026-08-07T07:13:01.947701+00:00"
+}

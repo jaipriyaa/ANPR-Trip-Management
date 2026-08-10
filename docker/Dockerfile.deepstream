@@ -1,0 +1,25 @@
+# NVIDIA DeepStream 7.0 Triton Edge Container Dockerfile
+FROM nvcr.io/nvidia/deepstream:7.0-triton-multiarch
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install dependencies for GStreamer, Kafka, OpenCV, Python bindings
+RUN apt-get update && apt-get install -y \
+    python3-pip \
+    python3-dev \
+    git \
+    libgstreamer1.0-dev \
+    libgstrtspserver-1.0-dev \
+    libglib2.0-dev \
+    librdkafka-dev \
+    pkg-config \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app/backend
+
+COPY backend/requirements.txt .
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+COPY backend/ .
+
+CMD ["python3", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

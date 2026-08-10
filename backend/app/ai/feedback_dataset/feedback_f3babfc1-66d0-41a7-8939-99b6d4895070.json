@@ -1,0 +1,11 @@
+{
+  "review_id": "f3babfc1-66d0-41a7-8939-99b6d4895070",
+  "raw_ocr_text": "03 ACU 908",
+  "old_predicted_plate": "MH14TCF200F",
+  "corrected_ground_truth": "MH14TCF200F",
+  "confidence": 0.7241,
+  "vehicle_image_path": "debug/vehicles/vehicle_cbd960d7_1.jpg",
+  "plate_image_path": "debug/plates/plate_cbd960d7_1_1.jpg",
+  "reviewed_by": "Major Rajesh Verma",
+  "timestamp": "2026-08-06T07:19:12.758723+00:00"
+}

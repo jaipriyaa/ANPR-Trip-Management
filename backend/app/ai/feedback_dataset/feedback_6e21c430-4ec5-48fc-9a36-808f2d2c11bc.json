@@ -1,0 +1,11 @@
+{
+  "review_id": "6e21c430-4ec5-48fc-9a36-808f2d2c11bc",
+  "raw_ocr_text": "CARRIERL 8 6 6 0 3389}",
+  "old_predicted_plate": "CARRIERL86603389",
+  "corrected_ground_truth": "MH14TCF200F",
+  "confidence": 0.5,
+  "vehicle_image_path": "debug/vehicles/vehicle_1a0cb91e_1.jpg",
+  "plate_image_path": "debug/plates/plate_1a0cb91e_1_13.jpg",
+  "reviewed_by": "Major Rajesh Verma",
+  "timestamp": "2026-08-08T05:45:17.231189+00:00"
+}

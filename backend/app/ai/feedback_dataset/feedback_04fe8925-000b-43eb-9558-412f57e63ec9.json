@@ -1,0 +1,11 @@
+{
+  "review_id": "04fe8925-000b-43eb-9558-412f57e63ec9",
+  "raw_ocr_text": "MH14TCF20OF",
+  "old_predicted_plate": "MH14TCF200F",
+  "corrected_ground_truth": "MH14TCF200F",
+  "confidence": 0.68,
+  "vehicle_image_path": null,
+  "plate_image_path": null,
+  "reviewed_by": "Major Rajesh Verma",
+  "timestamp": "2026-08-03T07:16:32.661239+00:00"
+}
