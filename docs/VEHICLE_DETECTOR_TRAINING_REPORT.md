@@ -103,7 +103,7 @@ Sample test inference visualizations with bounding boxes, confidence scores, and
 2. **ONNX Export File**: `models/vehicle_detector.onnx`
 3. **ONNX Input Shape**: `(1, 3, 640, 640)`
 4. **ONNX Output Shape**: `(1, 8, 8400)` (4 box coordinates + 4 class scores)
-5. **ONNX Verification**: Verified loading, input/output tensors, and PyTorch prediction consistency via `deployment/export_vehicle_detector_onnx.py`.
+5. **ONNX Verification**: Verified loading, input/output tensors, and PyTorch prediction consistency via `deployment/export_onnx.py`.
 
 ---
 

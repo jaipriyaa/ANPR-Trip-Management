@@ -72,7 +72,7 @@ The vehicle detector (`models/vehicle_detector.pt`) remained **completely untouc
 
 ## 5. ONNX Model Export & Output Tensor Audit
 
-- **Export Script:** [`deployment/export_license_plate_onnx.py`](file:///c:/Users/Manoj%20Kumar/Desktop/ANPR-Trip-Management/deployment/export_license_plate_onnx.py)
+- **Export Script:** [`deployment/export_onnx.py`](file:///c:/Users/Manoj%20Kumar/Desktop/ANPR-Trip-Management/deployment/export_onnx.py)
 - **ONNX Model Path:** [`models/license_plate_detector.onnx`](file:///c:/Users/Manoj%20Kumar/Desktop/ANPR-Trip-Management/models/license_plate_detector.onnx)
 - **Input Tensor Shape:** `[1, 3, 640, 640]`
 - **Output Tensor Shape:** `[1, 5, 8400]` (`5 = 4 bbox coordinates + 1 class probability`)
