@@ -50,22 +50,22 @@ export default function ArchiveManagerPage() {
   const totalPages = Math.ceil(total / limit) || 1;
 
   return (
-    <div className="flex-1 flex flex-col min-w-0 bg-slate-950 text-slate-100 font-sans">
+    <div className="flex-1 flex flex-col min-w-0 bg-[#f2f2f2] text-[#1a3b45] font-sans">
       <Header title="Retention Policy & Data Archival Manager" subtitle="Automated data lifecycle management archiving completed trips and movement logs older than retention threshold" />
 
       <main className="flex-1 p-6 space-y-6 overflow-y-auto">
-        <div className="flex items-center justify-between bg-slate-900/80 rounded-xl p-4 border border-slate-800 backdrop-blur-md">
+        <div className="flex items-center justify-between bg-white rounded-xl p-4 border border-[#c8d8e4] backdrop-blur-md">
           <div className="flex items-center gap-3">
             <Archive className="w-5 h-5 text-cyan-400" />
-            <h2 className="text-sm font-bold text-white">Archival & Retention Policy</h2>
+            <h2 className="text-sm font-bold text-[#1a3b45]">Archival & Retention Policy</h2>
           </div>
 
           <div className="flex items-center gap-3 text-xs font-sans">
-            <span className="text-slate-400">Retention Threshold:</span>
+            <span className="text-[#5c7885]">Retention Threshold:</span>
             <select
               value={retentionDays}
               onChange={(e) => setRetentionDays(Number(e.target.value))}
-              className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 text-white font-semibold focus:outline-none focus:border-cyan-500"
+              className="bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl px-3 py-1.5 text-[#1a3b45] font-semibold focus:outline-none focus:border-cyan-500"
             >
               <option value={90}>90 Days</option>
               <option value={180}>180 Days (6 Months)</option>
@@ -81,7 +81,7 @@ export default function ArchiveManagerPage() {
 
             <button
               onClick={fetchJobs}
-              className="p-2 bg-slate-950 border border-slate-800 rounded-xl text-slate-400 hover:text-white"
+              className="p-2 bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl text-[#5c7885] hover:text-[#1a3b45]"
             >
               <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
             </button>
@@ -89,10 +89,10 @@ export default function ArchiveManagerPage() {
         </div>
 
         {/* Archival Job Execution Log Table */}
-        <div className="bg-slate-900/80 rounded-xl border border-slate-800 overflow-hidden backdrop-blur-md">
+        <div className="bg-white rounded-xl border border-[#c8d8e4] overflow-hidden backdrop-blur-md">
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-slate-300">
-              <thead className="bg-slate-950 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800 font-mono">
+            <table className="w-full text-left text-xs text-[#2b6777]">
+              <thead className="bg-[#f2f2f2] text-[#5c7885] uppercase text-[10px] tracking-wider border-b border-[#c8d8e4] font-mono">
                 <tr>
                   <th className="p-4">Job Name</th>
                   <th className="p-4">Target Tables</th>
@@ -105,25 +105,25 @@ export default function ArchiveManagerPage() {
               <tbody className="divide-y divide-slate-800/60 font-mono">
                 {loading ? (
                   <tr>
-                    <td colSpan="6" className="p-8 text-center text-slate-500 font-sans">Loading archive jobs...</td>
+                    <td colSpan="6" className="p-8 text-center text-[#5c7885] font-sans">Loading archive jobs...</td>
                   </tr>
                 ) : jobs.length === 0 ? (
                   <tr>
-                    <td colSpan="6" className="p-8 text-center text-slate-500 font-sans">No archival jobs executed yet.</td>
+                    <td colSpan="6" className="p-8 text-center text-[#5c7885] font-sans">No archival jobs executed yet.</td>
                   </tr>
                 ) : (
                   jobs.map((j) => (
-                    <tr key={j.id} className="hover:bg-slate-800/40 transition-colors">
-                      <td className="p-4 font-bold text-white font-sans">{j.job_name}</td>
+                    <tr key={j.id} className="hover:bg-[#f0f6f8] transition-colors">
+                      <td className="p-4 font-bold text-[#1a3b45] font-sans">{j.job_name}</td>
                       <td className="p-4 text-purple-300">{j.target_table}</td>
                       <td className="p-4 text-emerald-400 font-bold">{j.records_archived}</td>
-                      <td className="p-4 text-slate-300">{j.retention_days} Days</td>
+                      <td className="p-4 text-[#2b6777]">{j.retention_days} Days</td>
                       <td className="p-4">
                         <span className="px-2.5 py-1 rounded text-[10px] font-bold border bg-emerald-500/10 text-emerald-400 border-emerald-500/30">
                           ● {j.status}
                         </span>
                       </td>
-                      <td className="p-4 text-slate-400">{j.completed_at ? new Date(j.completed_at).toLocaleString() : '-'}</td>
+                      <td className="p-4 text-[#5c7885]">{j.completed_at ? new Date(j.completed_at).toLocaleString() : '-'}</td>
                     </tr>
                   ))
                 )}
@@ -132,20 +132,20 @@ export default function ArchiveManagerPage() {
           </div>
 
           {/* Pagination */}
-          <div className="p-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400 font-sans">
+          <div className="p-4 border-t border-[#c8d8e4] flex items-center justify-between text-xs text-[#5c7885] font-sans">
             <span>Page {page} of {totalPages} ({total} total archive jobs)</span>
             <div className="flex items-center gap-2 font-mono">
               <button
                 disabled={page <= 1}
                 onClick={() => setPage(p => p - 1)}
-                className="p-1.5 bg-slate-950 border border-slate-800 rounded-lg disabled:opacity-40 hover:bg-slate-800"
+                className="p-1.5 bg-[#f2f2f2] border border-[#c8d8e4] rounded-lg disabled:opacity-40 hover:bg-[#e8eff4]"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 disabled={page >= totalPages}
                 onClick={() => setPage(p => p + 1)}
-                className="p-1.5 bg-slate-950 border border-slate-800 rounded-lg disabled:opacity-40 hover:bg-slate-800"
+                className="p-1.5 bg-[#f2f2f2] border border-[#c8d8e4] rounded-lg disabled:opacity-40 hover:bg-[#e8eff4]"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>

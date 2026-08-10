@@ -53,33 +53,33 @@ export default function AuditLogsPage() {
   );
 
   return (
-    <div className="flex-1 flex flex-col min-w-0 bg-slate-950 text-slate-100 font-sans">
+    <div className="flex-1 flex flex-col min-w-0 bg-[#f2f2f2] text-[#1a3b45] font-sans">
       <Header title="Security Audit Trail & Compliance Logs" subtitle="Tamper-proof audit logs recording user authentication, administrative changes, gate rule updates, and trip approvals" />
 
       <main className="flex-1 p-6 space-y-6 overflow-y-auto">
         {/* Search & Action Bar */}
-        <div className="flex items-center justify-between bg-slate-900/80 rounded-xl p-4 border border-slate-800 backdrop-blur-md">
+        <div className="flex items-center justify-between bg-white rounded-xl p-4 border border-[#c8d8e4] backdrop-blur-md">
           <div className="relative w-full sm:w-80">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-[#5c7885] absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Search Action, Entity, IP Address..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 font-mono"
+              className="w-full pl-9 pr-4 py-2 bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl text-xs text-[#1a3b45] placeholder-slate-500 focus:outline-none focus:border-cyan-500 font-mono"
             />
           </div>
 
-          <div className="text-xs text-slate-400 font-mono">
+          <div className="text-xs text-[#5c7885] font-mono">
             Total Logged Audit Events: <span className="text-cyan-400 font-bold">{total}</span>
           </div>
         </div>
 
         {/* Audit Logs Table */}
-        <div className="bg-slate-900/80 rounded-xl border border-slate-800 overflow-hidden backdrop-blur-md">
+        <div className="bg-white rounded-xl border border-[#c8d8e4] overflow-hidden backdrop-blur-md">
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-slate-300">
-              <thead className="bg-slate-950 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800 font-mono">
+            <table className="w-full text-left text-xs text-[#2b6777]">
+              <thead className="bg-[#f2f2f2] text-[#5c7885] uppercase text-[10px] tracking-wider border-b border-[#c8d8e4] font-mono">
                 <tr>
                   <th className="p-4">Action</th>
                   <th className="p-4">Entity Type</th>
@@ -92,26 +92,26 @@ export default function AuditLogsPage() {
               <tbody className="divide-y divide-slate-800/60 font-mono">
                 {loading ? (
                   <tr>
-                    <td colSpan="6" className="p-8 text-center text-slate-500 font-sans">Loading audit log events...</td>
+                    <td colSpan="6" className="p-8 text-center text-[#5c7885] font-sans">Loading audit log events...</td>
                   </tr>
                 ) : filteredLogs.length === 0 ? (
                   <tr>
-                    <td colSpan="6" className="p-8 text-center text-slate-500 font-sans">
+                    <td colSpan="6" className="p-8 text-center text-[#5c7885] font-sans">
                       <FileCheck className="w-8 h-8 mx-auto mb-2 opacity-50 text-cyan-400" />
                       No audit events found matching filters.
                     </td>
                   </tr>
                 ) : (
                   filteredLogs.map((l) => (
-                    <tr key={l.id} className="hover:bg-slate-800/40 transition-colors">
+                    <tr key={l.id} className="hover:bg-[#f0f6f8] transition-colors">
                       <td className="p-4 font-bold text-cyan-400">{l.action}</td>
                       <td className="p-4 font-sans text-purple-300">{l.entity_type}</td>
-                      <td className="p-4 text-slate-400 text-[11px]">{l.entity_id || '-'}</td>
-                      <td className="p-4 font-sans text-slate-200">
+                      <td className="p-4 text-[#5c7885] text-[11px]">{l.entity_id || '-'}</td>
+                      <td className="p-4 font-sans text-[#1a3b45]">
                         {l.details ? JSON.stringify(l.details) : 'Executed'}
                       </td>
-                      <td className="p-4 text-slate-400">{l.ip_address}</td>
-                      <td className="p-4 text-[11px] text-slate-400">{new Date(l.created_at).toLocaleString()}</td>
+                      <td className="p-4 text-[#5c7885]">{l.ip_address}</td>
+                      <td className="p-4 text-[11px] text-[#5c7885]">{new Date(l.created_at).toLocaleString()}</td>
                     </tr>
                   ))
                 )}
@@ -120,20 +120,20 @@ export default function AuditLogsPage() {
           </div>
 
           {/* Pagination */}
-          <div className="p-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400 font-sans">
+          <div className="p-4 border-t border-[#c8d8e4] flex items-center justify-between text-xs text-[#5c7885] font-sans">
             <span>Showing page {page} of {totalPages} ({total} total audit records)</span>
             <div className="flex items-center gap-2 font-mono">
               <button
                 disabled={page <= 1}
                 onClick={() => setPage(p => p - 1)}
-                className="p-1.5 bg-slate-950 border border-slate-800 rounded-lg disabled:opacity-40 hover:bg-slate-800"
+                className="p-1.5 bg-[#f2f2f2] border border-[#c8d8e4] rounded-lg disabled:opacity-40 hover:bg-[#e8eff4]"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 disabled={page >= totalPages}
                 onClick={() => setPage(p => p + 1)}
-                className="p-1.5 bg-slate-950 border border-slate-800 rounded-lg disabled:opacity-40 hover:bg-slate-800"
+                className="p-1.5 bg-[#f2f2f2] border border-[#c8d8e4] rounded-lg disabled:opacity-40 hover:bg-[#e8eff4]"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>

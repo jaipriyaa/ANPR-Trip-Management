@@ -68,17 +68,17 @@ export default function UsersPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col min-w-0 bg-slate-950 text-slate-100 font-sans">
+    <div className="flex-1 flex flex-col min-w-0 bg-[#f2f2f2] text-[#1a3b45] font-sans">
       <Header title="User Management & Role-Based Access Control" subtitle="Configure system accounts, role permissions matrix (Administrator, Security Officer, Gate Operator, Supervisor, Viewer)" />
 
       <main className="flex-1 p-6 space-y-6 overflow-y-auto">
         {/* Header Action Bar */}
-        <div className="flex items-center justify-between bg-slate-900/80 rounded-xl p-4 border border-slate-800 backdrop-blur-md">
+        <div className="flex items-center justify-between bg-white rounded-xl p-4 border border-[#c8d8e4] backdrop-blur-md">
           <div className="flex items-center gap-3">
             <Users className="w-5 h-5 text-cyan-400" />
             <div>
-              <h2 className="text-sm font-bold text-white">Platform User Accounts</h2>
-              <p className="text-xs text-slate-400">{users.length} Registered Personnel Accounts</p>
+              <h2 className="text-sm font-bold text-[#1a3b45]">Platform User Accounts</h2>
+              <p className="text-xs text-[#5c7885]">{users.length} Registered Personnel Accounts</p>
             </div>
           </div>
 
@@ -91,10 +91,10 @@ export default function UsersPage() {
         </div>
 
         {/* Users Master Table */}
-        <div className="bg-slate-900/80 rounded-xl border border-slate-800 overflow-hidden backdrop-blur-md">
+        <div className="bg-white rounded-xl border border-[#c8d8e4] overflow-hidden backdrop-blur-md">
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-slate-300">
-              <thead className="bg-slate-950 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800 font-mono">
+            <table className="w-full text-left text-xs text-[#2b6777]">
+              <thead className="bg-[#f2f2f2] text-[#5c7885] uppercase text-[10px] tracking-wider border-b border-[#c8d8e4] font-mono">
                 <tr>
                   <th className="p-4">Username</th>
                   <th className="p-4">Full Name</th>
@@ -107,24 +107,24 @@ export default function UsersPage() {
               <tbody className="divide-y divide-slate-800/60 font-mono">
                 {loading ? (
                   <tr>
-                    <td colSpan="6" className="p-8 text-center text-slate-500 font-sans">Loading user accounts...</td>
+                    <td colSpan="6" className="p-8 text-center text-[#5c7885] font-sans">Loading user accounts...</td>
                   </tr>
                 ) : users.length === 0 ? (
                   <tr>
-                    <td colSpan="6" className="p-8 text-center text-slate-500 font-sans">No user accounts found.</td>
+                    <td colSpan="6" className="p-8 text-center text-[#5c7885] font-sans">No user accounts found.</td>
                   </tr>
                 ) : (
                   users.map((u) => (
-                    <tr key={u.id} className="hover:bg-slate-800/40 transition-colors">
+                    <tr key={u.id} className="hover:bg-[#f0f6f8] transition-colors">
                       <td className="p-4 font-bold text-cyan-400">{u.username}</td>
-                      <td className="p-4 font-sans text-white">{u.full_name}</td>
+                      <td className="p-4 font-sans text-[#1a3b45]">{u.full_name}</td>
                       <td className="p-4 text-purple-300">{u.email}</td>
                       <td className="p-4">
                         <span className={`px-2.5 py-1 rounded text-[10px] font-bold border ${
                           u.role === 'Administrator' ? 'bg-purple-500/10 text-purple-400 border-purple-500/30' :
                           u.role === 'Security Officer' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' :
                           u.role === 'Gate Operator' ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30' :
-                          'bg-slate-800 text-slate-400 border-slate-700'
+                          'bg-[#e8eff4] text-[#5c7885] border-[#c8d8e4]'
                         }`}>
                           {u.role}
                         </span>
@@ -132,7 +132,7 @@ export default function UsersPage() {
                       <td className="p-4">
                         <span className="text-emerald-400 font-bold">● Active</span>
                       </td>
-                      <td className="p-4 text-slate-400 text-[11px]">{u.created_at ? new Date(u.created_at).toLocaleDateString() : 'System'}</td>
+                      <td className="p-4 text-[#5c7885] text-[11px]">{u.created_at ? new Date(u.created_at).toLocaleDateString() : 'System'}</td>
                     </tr>
                   ))
                 )}
@@ -142,24 +142,24 @@ export default function UsersPage() {
         </div>
 
         {/* Role Permissions Matrix Section */}
-        <div className="bg-slate-900/80 rounded-xl border border-slate-800 p-5 backdrop-blur-md space-y-4">
-          <h3 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+        <div className="bg-white rounded-xl border border-[#c8d8e4] p-5 backdrop-blur-md space-y-4">
+          <h3 className="text-xs font-bold text-[#1a3b45] uppercase tracking-wider flex items-center gap-2">
             <Shield className="w-4 h-4 text-purple-400" /> Configurable Role Permissions Matrix (RBAC)
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {roles.map((r) => (
-              <div key={r.role} className="bg-slate-950 rounded-xl border border-slate-800 p-4 space-y-3">
-                <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+              <div key={r.role} className="bg-[#f2f2f2] rounded-xl border border-[#c8d8e4] p-4 space-y-3">
+                <div className="flex items-center justify-between border-b border-[#c8d8e4] pb-2">
                   <h4 className="font-bold text-sm text-cyan-400">{r.role}</h4>
                   <Shield className="w-4 h-4 text-purple-400" />
                 </div>
-                <p className="text-xs text-slate-400">{r.description}</p>
+                <p className="text-xs text-[#5c7885]">{r.description}</p>
                 <div className="space-y-1 pt-1">
-                  <p className="text-[10px] text-slate-500 uppercase font-semibold">Allowed Modules:</p>
+                  <p className="text-[10px] text-[#5c7885] uppercase font-semibold">Allowed Modules:</p>
                   <div className="flex flex-wrap gap-1">
                     {r.permissions.map((p) => (
-                      <span key={p} className="text-[10px] bg-slate-900 text-slate-300 border border-slate-800 px-2 py-0.5 rounded font-mono">
+                      <span key={p} className="text-[10px] bg-white text-[#2b6777] border border-[#c8d8e4] px-2 py-0.5 rounded font-mono">
                         ✓ {p}
                       </span>
                     ))}
@@ -172,60 +172,60 @@ export default function UsersPage() {
 
         {/* Modal: Create User */}
         {showAddModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 w-full max-w-md space-y-4 shadow-2xl">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                <h3 className="text-base font-bold text-white flex items-center gap-2">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-white backdrop-blur-md">
+            <div className="bg-white border border-[#c8d8e4] rounded-2xl p-6 w-full max-w-md space-y-4 shadow-2xl">
+              <div className="flex items-center justify-between border-b border-[#c8d8e4] pb-3">
+                <h3 className="text-base font-bold text-[#1a3b45] flex items-center gap-2">
                   <UserCheck className="w-5 h-5 text-cyan-400" /> Create Platform User Account
                 </h3>
-                <button onClick={() => setShowAddModal(false)} className="text-slate-400 hover:text-white">
+                <button onClick={() => setShowAddModal(false)} className="text-[#5c7885] hover:text-[#1a3b45]">
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
               <form onSubmit={handleCreateUser} className="space-y-3 text-xs">
                 <div>
-                  <label className="block text-slate-400 font-semibold mb-1">Username</label>
+                  <label className="block text-[#5c7885] font-semibold mb-1">Username</label>
                   <input
                     type="text"
                     value={formData.username}
                     onChange={(e) => setFormData({ ...formData, username: e.target.value })}
                     placeholder="e.g. officer_verma"
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white focus:border-cyan-500 font-mono"
+                    className="w-full bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl p-2.5 text-[#1a3b45] focus:border-cyan-500 font-mono"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-slate-400 font-semibold mb-1">Full Name</label>
+                  <label className="block text-[#5c7885] font-semibold mb-1">Full Name</label>
                   <input
                     type="text"
                     value={formData.full_name}
                     onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
                     placeholder="e.g. Major Rajesh Verma"
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white focus:border-cyan-500"
+                    className="w-full bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl p-2.5 text-[#1a3b45] focus:border-cyan-500"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-slate-400 font-semibold mb-1">Email Address</label>
+                  <label className="block text-[#5c7885] font-semibold mb-1">Email Address</label>
                   <input
                     type="email"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="e.g. verma@factory.com"
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white focus:border-cyan-500"
+                    className="w-full bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl p-2.5 text-[#1a3b45] focus:border-cyan-500"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-slate-400 font-semibold mb-1">Assign Role</label>
+                  <label className="block text-[#5c7885] font-semibold mb-1">Assign Role</label>
                   <select
                     value={formData.role}
                     onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white focus:border-cyan-500"
+                    className="w-full bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl p-2.5 text-[#1a3b45] focus:border-cyan-500"
                   >
                     <option value="Administrator">Administrator</option>
                     <option value="Security Officer">Security Officer</option>
@@ -235,11 +235,11 @@ export default function UsersPage() {
                   </select>
                 </div>
 
-                <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+                <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#c8d8e4]">
                   <button
                     type="button"
                     onClick={() => setShowAddModal(false)}
-                    className="px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-slate-400 hover:text-white"
+                    className="px-4 py-2 bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl text-[#5c7885] hover:text-[#1a3b45]"
                   >
                     Cancel
                   </button>

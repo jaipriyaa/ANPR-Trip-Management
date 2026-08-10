@@ -32,7 +32,7 @@ import PerformanceDashboardPage from './pages/PerformanceDashboardPage';
 
 export default function App() {
   return (
-    <div className="flex min-h-screen bg-[#f2f2f2] text-[#1a3b45] selection:bg-[#52ab98] selection:text-white font-sans antialiased">
+    <div className="flex min-h-screen bg-[#f2f2f2] text-[#1a3b45] selection:bg-[#52ab98] selection:text-[#1a3b45] font-sans antialiased">
       {/* Sidebar Navigation */}
       <Sidebar />
 

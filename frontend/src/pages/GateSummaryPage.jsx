@@ -35,29 +35,29 @@ export default function GateSummaryPage() {
   const totalPages = Math.ceil(total / limit) || 1;
 
   return (
-    <div className="flex-1 flex flex-col min-w-0 bg-slate-950 text-slate-100 font-sans">
+    <div className="flex-1 flex flex-col min-w-0 bg-[#f2f2f2] text-[#1a3b45] font-sans">
       <Header title="Daily Per-Gate Performance Summaries" subtitle="Per-gate traffic analysis, average processing times, stay durations, and ANPR recognition accuracy" />
 
       <main className="flex-1 p-6 space-y-6 overflow-y-auto">
-        <div className="flex items-center justify-between bg-slate-900/80 rounded-xl p-4 border border-slate-800 backdrop-blur-md">
+        <div className="flex items-center justify-between bg-white rounded-xl p-4 border border-[#c8d8e4] backdrop-blur-md">
           <div className="flex items-center gap-3">
             <Video className="w-5 h-5 text-cyan-400" />
-            <h2 className="text-sm font-bold text-white">Daily Per-Gate Aggregates</h2>
+            <h2 className="text-sm font-bold text-[#1a3b45]">Daily Per-Gate Aggregates</h2>
           </div>
 
           <button
             onClick={fetchGateSummaries}
-            className="p-2 bg-slate-950 border border-slate-800 rounded-xl text-slate-400 hover:text-white"
+            className="p-2 bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl text-[#5c7885] hover:text-[#1a3b45]"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
           </button>
         </div>
 
         {/* Master Gate Summary Table */}
-        <div className="bg-slate-900/80 rounded-xl border border-slate-800 overflow-hidden backdrop-blur-md">
+        <div className="bg-white rounded-xl border border-[#c8d8e4] overflow-hidden backdrop-blur-md">
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-slate-300">
-              <thead className="bg-slate-950 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800 font-mono">
+            <table className="w-full text-left text-xs text-[#2b6777]">
+              <thead className="bg-[#f2f2f2] text-[#5c7885] uppercase text-[10px] tracking-wider border-b border-[#c8d8e4] font-mono">
                 <tr>
                   <th className="p-4">Date</th>
                   <th className="p-4">Gate Name</th>
@@ -72,21 +72,21 @@ export default function GateSummaryPage() {
               <tbody className="divide-y divide-slate-800/60 font-mono">
                 {loading ? (
                   <tr>
-                    <td colSpan="8" className="p-8 text-center text-slate-500 font-sans">Loading gate summaries...</td>
+                    <td colSpan="8" className="p-8 text-center text-[#5c7885] font-sans">Loading gate summaries...</td>
                   </tr>
                 ) : gateSums.length === 0 ? (
                   <tr>
-                    <td colSpan="8" className="p-8 text-center text-slate-500 font-sans">No gate summary records found.</td>
+                    <td colSpan="8" className="p-8 text-center text-[#5c7885] font-sans">No gate summary records found.</td>
                   </tr>
                 ) : (
                   gateSums.map((gs) => (
-                    <tr key={gs.id} className="hover:bg-slate-800/40 transition-colors">
+                    <tr key={gs.id} className="hover:bg-[#f0f6f8] transition-colors">
                       <td className="p-4 font-bold text-cyan-400">{gs.summary_date}</td>
-                      <td className="p-4 font-bold text-white font-sans">{gs.gate_name}</td>
+                      <td className="p-4 font-bold text-[#1a3b45] font-sans">{gs.gate_name}</td>
                       <td className="p-4 text-emerald-400 font-bold">{gs.vehicles_entered}</td>
                       <td className="p-4 text-blue-400 font-bold">{gs.vehicles_exited}</td>
                       <td className="p-4 text-purple-300">{gs.avg_processing_time_secs}s</td>
-                      <td className="p-4 text-slate-300">{gs.avg_stay_duration_mins} mins</td>
+                      <td className="p-4 text-[#2b6777]">{gs.avg_stay_duration_mins} mins</td>
                       <td className="p-4 text-amber-400">{gs.alerts_generated}</td>
                       <td className="p-4 text-emerald-400 font-bold">{gs.recognition_accuracy}%</td>
                     </tr>
@@ -97,20 +97,20 @@ export default function GateSummaryPage() {
           </div>
 
           {/* Pagination */}
-          <div className="p-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400 font-sans">
+          <div className="p-4 border-t border-[#c8d8e4] flex items-center justify-between text-xs text-[#5c7885] font-sans">
             <span>Page {page} of {totalPages} ({total} total gate summary records)</span>
             <div className="flex items-center gap-2 font-mono">
               <button
                 disabled={page <= 1}
                 onClick={() => setPage(p => p - 1)}
-                className="p-1.5 bg-slate-950 border border-slate-800 rounded-lg disabled:opacity-40 hover:bg-slate-800"
+                className="p-1.5 bg-[#f2f2f2] border border-[#c8d8e4] rounded-lg disabled:opacity-40 hover:bg-[#e8eff4]"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 disabled={page >= totalPages}
                 onClick={() => setPage(p => p + 1)}
-                className="p-1.5 bg-slate-950 border border-slate-800 rounded-lg disabled:opacity-40 hover:bg-slate-800"
+                className="p-1.5 bg-[#f2f2f2] border border-[#c8d8e4] rounded-lg disabled:opacity-40 hover:bg-[#e8eff4]"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>

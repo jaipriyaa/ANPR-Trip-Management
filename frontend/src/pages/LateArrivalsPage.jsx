@@ -28,29 +28,29 @@ export default function LateArrivalsPage() {
   }, []);
 
   return (
-    <div className="flex-1 flex flex-col min-w-0 bg-slate-950 text-slate-100 font-sans">
+    <div className="flex-1 flex flex-col min-w-0 bg-[#f2f2f2] text-[#1a3b45] font-sans">
       <Header title="Late Arrival Detection Engine" subtitle="Automated schedule variance tracking comparing expected entry time vs actual gate arrival timestamp" />
 
       <main className="flex-1 p-6 space-y-6 overflow-y-auto">
-        <div className="flex items-center justify-between bg-slate-900/80 rounded-xl p-4 border border-slate-800 backdrop-blur-md">
+        <div className="flex items-center justify-between bg-white rounded-xl p-4 border border-[#c8d8e4] backdrop-blur-md">
           <div className="flex items-center gap-3">
             <Clock className="w-5 h-5 text-amber-400" />
-            <h2 className="text-sm font-bold text-white">Active Late Arrival Scans</h2>
+            <h2 className="text-sm font-bold text-[#1a3b45]">Active Late Arrival Scans</h2>
           </div>
 
           <button
             onClick={fetchLateArrivals}
-            className="p-2 bg-slate-950 border border-slate-800 rounded-xl text-slate-400 hover:text-white"
+            className="p-2 bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl text-[#5c7885] hover:text-[#1a3b45]"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
           </button>
         </div>
 
         {/* Master Late Arrivals Table */}
-        <div className="bg-slate-900/80 rounded-xl border border-slate-800 overflow-hidden backdrop-blur-md">
+        <div className="bg-white rounded-xl border border-[#c8d8e4] overflow-hidden backdrop-blur-md">
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-slate-300">
-              <thead className="bg-slate-950 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800 font-mono">
+            <table className="w-full text-left text-xs text-[#2b6777]">
+              <thead className="bg-[#f2f2f2] text-[#5c7885] uppercase text-[10px] tracking-wider border-b border-[#c8d8e4] font-mono">
                 <tr>
                   <th className="p-4">Trip Number</th>
                   <th className="p-4">License Plate</th>
@@ -65,21 +65,21 @@ export default function LateArrivalsPage() {
               <tbody className="divide-y divide-slate-800/60 font-mono">
                 {loading ? (
                   <tr>
-                    <td colSpan="8" className="p-8 text-center text-slate-500 font-sans">Scanning late arrivals...</td>
+                    <td colSpan="8" className="p-8 text-center text-[#5c7885] font-sans">Scanning late arrivals...</td>
                   </tr>
                 ) : lateList.length === 0 ? (
                   <tr>
-                    <td colSpan="8" className="p-8 text-center text-slate-500 font-sans">No late arrival violations detected. All trips on schedule!</td>
+                    <td colSpan="8" className="p-8 text-center text-[#5c7885] font-sans">No late arrival violations detected. All trips on schedule!</td>
                   </tr>
                 ) : (
                   lateList.map((item) => (
-                    <tr key={item.trip_id} className="hover:bg-slate-800/40 transition-colors">
+                    <tr key={item.trip_id} className="hover:bg-[#f0f6f8] transition-colors">
                       <td className="p-4 font-bold text-purple-400">{item.trip_number}</td>
                       <td className="p-4 font-bold text-cyan-400">{item.recognized_plate}</td>
-                      <td className="p-4 text-slate-200 font-sans">{item.transporter_name}</td>
-                      <td className="p-4 text-slate-300 font-sans">{item.driver_name}</td>
-                      <td className="p-4 text-slate-400">{new Date(item.expected_entry).toLocaleString()}</td>
-                      <td className="p-4 text-slate-300">{new Date(item.actual_entry).toLocaleString()}</td>
+                      <td className="p-4 text-[#1a3b45] font-sans">{item.transporter_name}</td>
+                      <td className="p-4 text-[#2b6777] font-sans">{item.driver_name}</td>
+                      <td className="p-4 text-[#5c7885]">{new Date(item.expected_entry).toLocaleString()}</td>
+                      <td className="p-4 text-[#2b6777]">{new Date(item.actual_entry).toLocaleString()}</td>
                       <td className="p-4 text-amber-400 font-bold">+{item.delay_minutes} mins</td>
                       <td className="p-4">
                         <span className={`px-2.5 py-1 rounded text-[10px] font-bold border ${

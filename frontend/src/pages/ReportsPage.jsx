@@ -68,18 +68,18 @@ export default function ReportsPage() {
   }, [reportType]);
 
   return (
-    <div className="flex-1 flex flex-col min-w-0 bg-slate-950 text-slate-100 font-sans">
+    <div className="flex-1 flex flex-col min-w-0 bg-[#f2f2f2] text-[#1a3b45] font-sans">
       <Header title="Industrial Reports & Data Export" subtitle="Configurable reporting engine for gate logs, trip compliance, accuracy audit, and Excel/CSV/PDF exports" />
 
       <main className="flex-1 p-6 space-y-6 overflow-y-auto">
         {/* Action & Configuration Bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-slate-900/80 rounded-xl p-4 border border-slate-800 backdrop-blur-md">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white rounded-xl p-4 border border-[#c8d8e4] backdrop-blur-md">
           <div className="flex items-center gap-3 w-full sm:w-auto">
             <FileText className="w-5 h-5 text-cyan-400" />
             <select
               value={reportType}
               onChange={(e) => setReportType(e.target.value)}
-              className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500 font-semibold"
+              className="bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl px-3 py-2 text-xs text-[#1a3b45] focus:outline-none focus:border-cyan-500 font-semibold"
             >
               {reportOptions.map((r) => (
                 <option key={r} value={r}>{r}</option>
@@ -93,7 +93,7 @@ export default function ReportsPage() {
                 setExportFormat('JSON');
                 fetchReport();
               }}
-              className="px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-300 hover:text-white font-mono flex items-center gap-2"
+              className="px-4 py-2 bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl text-xs text-[#2b6777] hover:text-[#1a3b45] font-mono flex items-center gap-2"
             >
               <Search className="w-3.5 h-3.5" /> View Report Data
             </button>
@@ -111,19 +111,19 @@ export default function ReportsPage() {
         </div>
 
         {/* Report Preview Table */}
-        <div className="bg-slate-900/80 rounded-xl border border-slate-800 overflow-hidden backdrop-blur-md space-y-4">
-          <div className="p-4 border-b border-slate-800 flex items-center justify-between">
+        <div className="bg-white rounded-xl border border-[#c8d8e4] overflow-hidden backdrop-blur-md space-y-4">
+          <div className="p-4 border-b border-[#c8d8e4] flex items-center justify-between">
             <div>
-              <h3 className="text-sm font-bold text-white flex items-center gap-2">
+              <h3 className="text-sm font-bold text-[#1a3b45] flex items-center gap-2">
                 <FileType className="w-4 h-4 text-cyan-400" /> {reportType}
               </h3>
-              <p className="text-xs text-slate-400">Generated on {reportData?.generated_at ? new Date(reportData.generated_at).toLocaleString() : 'Live'} | Total Records: {reportData?.total_records || 0}</p>
+              <p className="text-xs text-[#5c7885]">Generated on {reportData?.generated_at ? new Date(reportData.generated_at).toLocaleString() : 'Live'} | Total Records: {reportData?.total_records || 0}</p>
             </div>
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-slate-300">
-              <thead className="bg-slate-950 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800 font-mono">
+            <table className="w-full text-left text-xs text-[#2b6777]">
+              <thead className="bg-[#f2f2f2] text-[#5c7885] uppercase text-[10px] tracking-wider border-b border-[#c8d8e4] font-mono">
                 <tr>
                   <th className="p-4">License Plate</th>
                   <th className="p-4">Vehicle Type</th>
@@ -140,27 +140,27 @@ export default function ReportsPage() {
               <tbody className="divide-y divide-slate-800/60 font-mono">
                 {loading ? (
                   <tr>
-                    <td colSpan="10" className="p-8 text-center text-slate-500 font-sans">Generating report data...</td>
+                    <td colSpan="10" className="p-8 text-center text-[#5c7885] font-sans">Generating report data...</td>
                   </tr>
                 ) : !reportData?.rows || reportData.rows.length === 0 ? (
                   <tr>
-                    <td colSpan="10" className="p-8 text-center text-slate-500 font-sans">No report records found matching criteria.</td>
+                    <td colSpan="10" className="p-8 text-center text-[#5c7885] font-sans">No report records found matching criteria.</td>
                   </tr>
                 ) : (
                   reportData.rows.map((row, i) => (
-                    <tr key={i} className="hover:bg-slate-800/40 transition-colors">
+                    <tr key={i} className="hover:bg-[#f0f6f8] transition-colors">
                       <td className="p-4 font-bold text-cyan-400">{row.plate_number}</td>
-                      <td className="p-4 font-sans text-slate-300">{row.vehicle_type}</td>
+                      <td className="p-4 font-sans text-[#2b6777]">{row.vehicle_type}</td>
                       <td className="p-4 font-mono text-purple-400">{row.entry_gate}</td>
-                      <td className="p-4 font-mono text-slate-400">{row.exit_gate}</td>
-                      <td className="p-4 text-[11px] text-slate-300">{row.entry_time ? new Date(row.entry_time).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' }) : '-'}</td>
+                      <td className="p-4 font-mono text-[#5c7885]">{row.exit_gate}</td>
+                      <td className="p-4 text-[11px] text-[#2b6777]">{row.entry_time ? new Date(row.entry_time).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' }) : '-'}</td>
                       <td className="p-4 text-amber-300 font-bold">{row.stay_duration}</td>
-                      <td className="p-4 font-sans text-slate-300">{row.transporter}</td>
-                      <td className="p-4 font-sans text-slate-300">{row.driver}</td>
+                      <td className="p-4 font-sans text-[#2b6777]">{row.transporter}</td>
+                      <td className="p-4 font-sans text-[#2b6777]">{row.driver}</td>
                       <td className="p-4 font-mono text-emerald-400 font-bold">{row.confidence}</td>
                       <td className="p-4">
                         <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                          row.status === 'INSIDE' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30' : 'bg-slate-800 text-slate-400'
+                          row.status === 'INSIDE' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30' : 'bg-[#e8eff4] text-[#5c7885]'
                         }`}>
                           {row.status}
                         </span>

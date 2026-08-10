@@ -132,7 +132,7 @@ export default function Sidebar() {
 
       {/* Footer System Info */}
       <div className="p-4 border-t border-[#3d8294]/40 bg-[#22525f]/60 rounded-b-none">
-        <div className="flex items-center gap-2 text-xs text-[#52ab98] font-bold">
+        <div className="flex items-center gap-2 text-xs font-bold">
           <span className="w-2.5 h-2.5 rounded-full bg-[#52ab98] animate-pulse shadow-sm shadow-[#52ab98]"></span>
           <span className="text-white">Data Pipeline Active</span>
         </div>

@@ -33,7 +33,7 @@ export default function Modal({ isOpen, onClose, title, children }) {
           <h3 className="text-sm font-bold text-[#2b6777] tracking-tight">{title}</h3>
           <button
             onClick={onClose}
-            className="text-[#2b6777] hover:text-white p-1.5 rounded-full hover:bg-[#2b6777] transition-colors"
+            className="text-[#2b6777] hover:text-[#1a3b45] p-1.5 rounded-full hover:bg-[#2b6777] transition-colors"
           >
             <X className="w-4 h-4" />
           </button>

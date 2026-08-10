@@ -87,16 +87,16 @@ export default function EntryExitLogPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col min-w-0 bg-slate-950 text-slate-100">
+    <div className="flex-1 flex flex-col min-w-0 bg-[#f2f2f2] text-[#1a3b45]">
       <Header title="Entry / Exit Vehicle Movement Log" subtitle="Real-time gate event processing, live facility occupancy, and stay duration analytics" />
 
       <main className="flex-1 p-6 space-y-6 overflow-y-auto">
         {/* Live Status Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Card 1: Currently Inside */}
-          <div className="bg-slate-900/60 rounded-xl p-4 border border-emerald-500/30 backdrop-blur-md flex items-center justify-between relative overflow-hidden">
+          <div className="bg-white rounded-xl p-4 border border-emerald-500/30 backdrop-blur-md flex items-center justify-between relative overflow-hidden">
             <div className="space-y-1">
-              <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider">Vehicles Currently Inside</p>
+              <p className="text-xs text-[#5c7885] font-semibold uppercase tracking-wider">Vehicles Currently Inside</p>
               <p className="text-3xl font-extrabold text-emerald-400 font-mono">
                 {summary.vehicles_currently_inside}
               </p>
@@ -110,9 +110,9 @@ export default function EntryExitLogPage() {
           </div>
 
           {/* Card 2: Entered Today */}
-          <div className="bg-slate-900/60 rounded-xl p-4 border border-blue-500/30 backdrop-blur-md flex items-center justify-between">
+          <div className="bg-white rounded-xl p-4 border border-blue-500/30 backdrop-blur-md flex items-center justify-between">
             <div className="space-y-1">
-              <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider">Vehicles Entered Today</p>
+              <p className="text-xs text-[#5c7885] font-semibold uppercase tracking-wider">Vehicles Entered Today</p>
               <p className="text-3xl font-extrabold text-blue-400 font-mono">
                 {summary.vehicles_entered_today}
               </p>
@@ -124,23 +124,23 @@ export default function EntryExitLogPage() {
           </div>
 
           {/* Card 3: Exited Today */}
-          <div className="bg-slate-900/60 rounded-xl p-4 border border-slate-700/60 backdrop-blur-md flex items-center justify-between">
+          <div className="bg-white rounded-xl p-4 border border-[#c8d8e4] backdrop-blur-md flex items-center justify-between">
             <div className="space-y-1">
-              <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider">Vehicles Exited Today</p>
-              <p className="text-3xl font-extrabold text-slate-300 font-mono">
+              <p className="text-xs text-[#5c7885] font-semibold uppercase tracking-wider">Vehicles Exited Today</p>
+              <p className="text-3xl font-extrabold text-[#2b6777] font-mono">
                 {summary.vehicles_exited_today}
               </p>
-              <p className="text-[11px] text-slate-400 font-mono pt-1">Completed Outbound Gate Departures</p>
+              <p className="text-[11px] text-[#5c7885] font-mono pt-1">Completed Outbound Gate Departures</p>
             </div>
-            <div className="w-12 h-12 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300">
+            <div className="w-12 h-12 rounded-xl bg-[#e8eff4] border border-[#c8d8e4] flex items-center justify-center text-[#2b6777]">
               <LogOut className="w-6 h-6" />
             </div>
           </div>
 
           {/* Card 4: Average Stay Duration */}
-          <div className="bg-slate-900/60 rounded-xl p-4 border border-purple-500/30 backdrop-blur-md flex items-center justify-between">
+          <div className="bg-white rounded-xl p-4 border border-purple-500/30 backdrop-blur-md flex items-center justify-between">
             <div className="space-y-1">
-              <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider">Average Stay Duration</p>
+              <p className="text-xs text-[#5c7885] font-semibold uppercase tracking-wider">Average Stay Duration</p>
               <p className="text-xl font-bold text-purple-300 font-mono mt-1">
                 {summary.avg_stay_duration_formatted}
               </p>
@@ -153,25 +153,25 @@ export default function EntryExitLogPage() {
         </div>
 
         {/* Search & Filter Bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-slate-900/60 rounded-xl p-4 border border-slate-800 backdrop-blur-md">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white rounded-xl p-4 border border-[#c8d8e4] backdrop-blur-md">
           <div className="relative w-full sm:w-80">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-[#5c7885] absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Search by Plate Number, Vehicle Type, Purpose..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500"
+              className="w-full pl-9 pr-4 py-2 bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl text-xs text-[#1a3b45] placeholder-slate-500 focus:outline-none focus:border-cyan-500"
             />
           </div>
 
           <div className="flex items-center gap-3 w-full sm:w-auto">
             <div className="flex items-center gap-2">
-              <label className="text-xs font-semibold text-slate-400">Filter Status:</label>
+              <label className="text-xs font-semibold text-[#5c7885]">Filter Status:</label>
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
-                className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500"
+                className="bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl px-3 py-2 text-xs text-[#1a3b45] focus:outline-none focus:border-cyan-500"
               >
                 <option value="ALL">All Movements</option>
                 <option value="INSIDE">Currently Inside (Green)</option>
@@ -184,7 +184,7 @@ export default function EntryExitLogPage() {
                 fetchSummary();
                 fetchMovements();
               }}
-              className="p-2 bg-slate-950 border border-slate-800 rounded-xl text-slate-400 hover:text-white transition-all"
+              className="p-2 bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl text-[#5c7885] hover:text-[#1a3b45] transition-all"
               title="Refresh Event Log"
             >
               <RefreshCw className="w-4 h-4" />
@@ -193,10 +193,10 @@ export default function EntryExitLogPage() {
         </div>
 
         {/* Movements Table */}
-        <div className="bg-slate-900/60 rounded-xl border border-slate-800 overflow-hidden backdrop-blur-md">
+        <div className="bg-white rounded-xl border border-[#c8d8e4] overflow-hidden backdrop-blur-md">
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-slate-300">
-              <thead className="bg-slate-950 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800">
+            <table className="w-full text-left text-xs text-[#2b6777]">
+              <thead className="bg-[#f2f2f2] text-[#5c7885] uppercase text-[10px] tracking-wider border-b border-[#c8d8e4]">
                 <tr>
                   <th className="p-4">Crop</th>
                   <th className="p-4">Plate Number</th>
@@ -211,11 +211,11 @@ export default function EntryExitLogPage() {
               <tbody className="divide-y divide-slate-800/60">
                 {loading ? (
                   <tr>
-                    <td colSpan="8" className="p-8 text-center text-slate-500">Loading vehicle movements log...</td>
+                    <td colSpan="8" className="p-8 text-center text-[#5c7885]">Loading vehicle movements log...</td>
                   </tr>
                 ) : movements.length === 0 ? (
                   <tr>
-                    <td colSpan="8" className="p-8 text-center text-slate-500">
+                    <td colSpan="8" className="p-8 text-center text-[#5c7885]">
                       <Truck className="w-8 h-8 mx-auto mb-2 opacity-50 text-cyan-400" />
                       No vehicle movement records found. Trigger AI Vehicle Recognition to record gate movements.
                     </td>
@@ -226,10 +226,10 @@ export default function EntryExitLogPage() {
                     const plateCropUrl = getImageUrl(m.cropped_plate_path);
 
                     return (
-                      <tr key={m.id} className="hover:bg-slate-800/40 transition-colors">
+                      <tr key={m.id} className="hover:bg-[#f0f6f8] transition-colors">
                         {/* Vehicle / Plate Image */}
                         <td className="p-3">
-                          <div className="w-14 h-10 rounded-lg overflow-hidden border border-slate-800 bg-slate-950 flex items-center justify-center">
+                          <div className="w-14 h-10 rounded-lg overflow-hidden border border-[#c8d8e4] bg-[#f2f2f2] flex items-center justify-center">
                             {plateCropUrl ? (
                               <img src={plateCropUrl} alt={m.recognized_plate} className="w-full h-full object-cover" />
                             ) : vehicleCropUrl ? (
@@ -247,8 +247,8 @@ export default function EntryExitLogPage() {
 
                         {/* Vehicle Details */}
                         <td className="p-4 space-y-0.5">
-                          <p className="font-semibold text-white">{m.vehicle_type || 'Vehicle'}</p>
-                          {m.make_model && <p className="text-[11px] text-slate-400">{m.make_model} {m.color ? `(${m.color})` : ''}</p>}
+                          <p className="font-semibold text-[#1a3b45]">{m.vehicle_type || 'Vehicle'}</p>
+                          {m.make_model && <p className="text-[11px] text-[#5c7885]">{m.make_model} {m.color ? `(${m.color})` : ''}</p>}
                           {m.transporter_name && <p className="text-[10px] text-purple-400">Transporter: {m.transporter_name}</p>}
                         </td>
 
@@ -257,7 +257,7 @@ export default function EntryExitLogPage() {
                           <p className="font-semibold text-blue-400 flex items-center gap-1">
                             <LogIn className="w-3.5 h-3.5" /> {m.entry_gate_code || 'Main Entry Gate'}
                           </p>
-                          <p className="text-[11px] text-slate-400 font-mono">
+                          <p className="text-[11px] text-[#5c7885] font-mono">
                             {new Date(m.entry_time).toLocaleString()}
                           </p>
                         </td>
@@ -266,10 +266,10 @@ export default function EntryExitLogPage() {
                         <td className="p-4 space-y-0.5">
                           {m.exit_time ? (
                             <>
-                              <p className="font-semibold text-slate-300 flex items-center gap-1">
-                                <LogOut className="w-3.5 h-3.5 text-slate-500" /> {m.exit_gate_code || 'Main Exit Gate'}
+                              <p className="font-semibold text-[#2b6777] flex items-center gap-1">
+                                <LogOut className="w-3.5 h-3.5 text-[#5c7885]" /> {m.exit_gate_code || 'Main Exit Gate'}
                               </p>
-                              <p className="text-[11px] text-slate-400 font-mono">
+                              <p className="text-[11px] text-[#5c7885] font-mono">
                                 {new Date(m.exit_time).toLocaleString()}
                               </p>
                             </>
@@ -296,7 +296,7 @@ export default function EntryExitLogPage() {
                               ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
                               : m.vehicle_status === 'ENTERED'
                               ? 'bg-blue-500/10 text-blue-400 border-blue-500/30'
-                              : 'bg-slate-800 text-slate-400 border-slate-700'
+                              : 'bg-[#e8eff4] text-[#5c7885] border-[#c8d8e4]'
                           }`}>
                             ● {m.movement_status === 'INSIDE' ? 'INSIDE' : m.vehicle_status}
                           </span>
@@ -315,20 +315,20 @@ export default function EntryExitLogPage() {
           </div>
 
           {/* Pagination */}
-          <div className="p-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+          <div className="p-4 border-t border-[#c8d8e4] flex items-center justify-between text-xs text-[#5c7885]">
             <span>Showing page {page} of {totalPages} ({total} total movements)</span>
             <div className="flex items-center gap-2">
               <button
                 disabled={page <= 1}
                 onClick={() => setPage(p => p - 1)}
-                className="p-1.5 bg-slate-950 border border-slate-800 rounded-lg disabled:opacity-40 hover:bg-slate-800"
+                className="p-1.5 bg-[#f2f2f2] border border-[#c8d8e4] rounded-lg disabled:opacity-40 hover:bg-[#e8eff4]"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 disabled={page >= totalPages}
                 onClick={() => setPage(p => p + 1)}
-                className="p-1.5 bg-slate-950 border border-slate-800 rounded-lg disabled:opacity-40 hover:bg-slate-800"
+                className="p-1.5 bg-[#f2f2f2] border border-[#c8d8e4] rounded-lg disabled:opacity-40 hover:bg-[#e8eff4]"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>

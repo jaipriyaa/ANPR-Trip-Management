@@ -229,65 +229,65 @@ export default function TripsPage() {
   const totalPages = Math.ceil(total / limit) || 1;
 
   return (
-    <div className="flex-1 flex flex-col min-w-0 bg-slate-950 text-slate-100 font-sans">
+    <div className="flex-1 flex flex-col min-w-0 bg-[#f2f2f2] text-[#1a3b45] font-sans">
       <Header title="Trip Engine & Dispatch Management" subtitle="Industrial vehicle trip lifecycle, gate entry/exit verification, material dispatching, and status audit logs" />
 
       <main className="flex-1 p-6 space-y-6 overflow-y-auto">
         {/* Top 7 Summary Metrics Cards */}
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
-          <div className="bg-slate-900/60 rounded-xl p-3 border border-cyan-500/30 backdrop-blur-md">
-            <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Active Trips</p>
+          <div className="bg-white rounded-xl p-3 border border-cyan-500/30 backdrop-blur-md">
+            <p className="text-[10px] text-[#5c7885] font-semibold uppercase tracking-wider">Active Trips</p>
             <p className="text-2xl font-extrabold text-cyan-400 font-mono mt-1">{summary.active_trips}</p>
             <p className="text-[10px] text-cyan-400/80 font-mono mt-0.5">In Progress</p>
           </div>
 
-          <div className="bg-slate-900/60 rounded-xl p-3 border border-emerald-500/30 backdrop-blur-md">
-            <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Completed Trips</p>
+          <div className="bg-white rounded-xl p-3 border border-emerald-500/30 backdrop-blur-md">
+            <p className="text-[10px] text-[#5c7885] font-semibold uppercase tracking-wider">Completed Trips</p>
             <p className="text-2xl font-extrabold text-emerald-400 font-mono mt-1">{summary.completed_trips}</p>
             <p className="text-[10px] text-emerald-400/80 font-mono mt-0.5">Finished</p>
           </div>
 
-          <div className="bg-slate-900/60 rounded-xl p-3 border border-blue-500/30 backdrop-blur-md">
-            <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Waiting Vehicles</p>
+          <div className="bg-white rounded-xl p-3 border border-blue-500/30 backdrop-blur-md">
+            <p className="text-[10px] text-[#5c7885] font-semibold uppercase tracking-wider">Waiting Vehicles</p>
             <p className="text-2xl font-extrabold text-blue-400 font-mono mt-1">{summary.waiting_vehicles}</p>
             <p className="text-[10px] text-blue-400/80 font-mono mt-0.5">At Gate</p>
           </div>
 
-          <div className="bg-slate-900/60 rounded-xl p-3 border border-red-500/30 backdrop-blur-md">
-            <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Rejected Trips</p>
+          <div className="bg-white rounded-xl p-3 border border-red-500/30 backdrop-blur-md">
+            <p className="text-[10px] text-[#5c7885] font-semibold uppercase tracking-wider">Rejected Trips</p>
             <p className="text-2xl font-extrabold text-red-400 font-mono mt-1">{summary.rejected_trips}</p>
             <p className="text-[10px] text-red-400/80 font-mono mt-0.5">Denied Entry</p>
           </div>
 
-          <div className="bg-slate-900/60 rounded-xl p-3 border border-emerald-500/30 backdrop-blur-md">
-            <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Vehicles Inside</p>
+          <div className="bg-white rounded-xl p-3 border border-emerald-500/30 backdrop-blur-md">
+            <p className="text-[10px] text-[#5c7885] font-semibold uppercase tracking-wider">Vehicles Inside</p>
             <p className="text-2xl font-extrabold text-emerald-400 font-mono mt-1">{summary.vehicles_inside}</p>
             <p className="text-[10px] text-emerald-400/80 font-mono mt-0.5">Premises Active</p>
           </div>
 
-          <div className="bg-slate-900/60 rounded-xl p-3 border border-purple-500/30 backdrop-blur-md">
-            <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Today's Trips</p>
+          <div className="bg-white rounded-xl p-3 border border-purple-500/30 backdrop-blur-md">
+            <p className="text-[10px] text-[#5c7885] font-semibold uppercase tracking-wider">Today's Trips</p>
             <p className="text-2xl font-extrabold text-purple-300 font-mono mt-1">{summary.todays_trips}</p>
             <p className="text-[10px] text-purple-400/80 font-mono mt-0.5">Dispatched</p>
           </div>
 
-          <div className="bg-slate-900/60 rounded-xl p-3 border border-amber-500/30 backdrop-blur-md">
-            <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Avg Duration</p>
+          <div className="bg-white rounded-xl p-3 border border-amber-500/30 backdrop-blur-md">
+            <p className="text-[10px] text-[#5c7885] font-semibold uppercase tracking-wider">Avg Duration</p>
             <p className="text-lg font-bold text-amber-300 font-mono mt-1.5">{summary.avg_trip_duration_formatted}</p>
             <p className="text-[10px] text-amber-400/80 font-mono mt-0.5">Turnaround</p>
           </div>
         </div>
 
         {/* Action & Filter Bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-slate-900/80 rounded-xl p-4 border border-slate-800 backdrop-blur-md">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white rounded-xl p-4 border border-[#c8d8e4] backdrop-blur-md">
           <div className="relative w-full sm:w-80">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-[#5c7885] absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Search Trip #, Plate, Purpose, Material..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500"
+              className="w-full pl-9 pr-4 py-2 bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl text-xs text-[#1a3b45] placeholder-slate-500 focus:outline-none focus:border-cyan-500"
             />
           </div>
 
@@ -295,7 +295,7 @@ export default function TripsPage() {
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500"
+              className="bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl px-3 py-2 text-xs text-[#1a3b45] focus:outline-none focus:border-cyan-500"
             >
               <option value="ALL">All Trip Statuses</option>
               <option value="SCHEDULED">SCHEDULED</option>
@@ -308,7 +308,7 @@ export default function TripsPage() {
             <select
               value={filterApproval}
               onChange={(e) => setFilterApproval(e.target.value)}
-              className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500"
+              className="bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl px-3 py-2 text-xs text-[#1a3b45] focus:outline-none focus:border-cyan-500"
             >
               <option value="ALL">All Approvals</option>
               <option value="APPROVED">APPROVED</option>
@@ -321,7 +321,7 @@ export default function TripsPage() {
                 fetchSummary();
                 fetchTrips();
               }}
-              className="p-2 bg-slate-950 border border-slate-800 rounded-xl text-slate-400 hover:text-white transition-all"
+              className="p-2 bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl text-[#5c7885] hover:text-[#1a3b45] transition-all"
               title="Refresh Trips List"
             >
               <RefreshCw className="w-4 h-4" />
@@ -340,10 +340,10 @@ export default function TripsPage() {
         </div>
 
         {/* Trips Master Table */}
-        <div className="bg-slate-900/80 rounded-xl border border-slate-800 overflow-hidden backdrop-blur-md">
+        <div className="bg-white rounded-xl border border-[#c8d8e4] overflow-hidden backdrop-blur-md">
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-slate-300">
-              <thead className="bg-slate-950 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800">
+            <table className="w-full text-left text-xs text-[#2b6777]">
+              <thead className="bg-[#f2f2f2] text-[#5c7885] uppercase text-[10px] tracking-wider border-b border-[#c8d8e4]">
                 <tr>
                   <th className="p-4">Trip #</th>
                   <th className="p-4">Vehicle & Plate</th>
@@ -359,36 +359,36 @@ export default function TripsPage() {
               <tbody className="divide-y divide-slate-800/60 font-mono">
                 {loading ? (
                   <tr>
-                    <td colSpan="9" className="p-8 text-center text-slate-500 font-sans">Loading trips database...</td>
+                    <td colSpan="9" className="p-8 text-center text-[#5c7885] font-sans">Loading trips database...</td>
                   </tr>
                 ) : trips.length === 0 ? (
                   <tr>
-                    <td colSpan="9" className="p-8 text-center text-slate-500 font-sans">
+                    <td colSpan="9" className="p-8 text-center text-[#5c7885] font-sans">
                       <Calendar className="w-8 h-8 mx-auto mb-2 opacity-50 text-cyan-400" />
                       No vehicle trips found matching filters. Create a new trip to begin tracking.
                     </td>
                   </tr>
                 ) : (
                   trips.map((t) => (
-                    <tr key={t.id} className="hover:bg-slate-800/40 transition-colors">
+                    <tr key={t.id} className="hover:bg-[#f0f6f8] transition-colors">
                       {/* Trip Number */}
                       <td className="p-4 font-bold text-cyan-400">{t.trip_number}</td>
 
                       {/* Vehicle & Plate */}
                       <td className="p-4 font-sans space-y-0.5">
-                        <p className="font-bold text-white font-mono">{t.vehicle_number || 'MH14TCF200F'}</p>
-                        <p className="text-[11px] text-slate-400">{t.vehicle_type || 'SUV'}</p>
+                        <p className="font-bold text-[#1a3b45] font-mono">{t.vehicle_number || 'MH14TCF200F'}</p>
+                        <p className="text-[11px] text-[#5c7885]">{t.vehicle_type || 'SUV'}</p>
                       </td>
 
                       {/* Driver & Transporter */}
                       <td className="p-4 font-sans space-y-0.5">
-                        <p className="font-semibold text-white">{t.driver_name || 'Assigned Driver'}</p>
+                        <p className="font-semibold text-[#1a3b45]">{t.driver_name || 'Assigned Driver'}</p>
                         <p className="text-[11px] text-purple-400">{t.transporter_name || 'VRL Logistics'}</p>
                       </td>
 
                       {/* Purpose & Material */}
                       <td className="p-4 font-sans space-y-0.5">
-                        <p className="font-semibold text-slate-200">{t.purpose}</p>
+                        <p className="font-semibold text-[#1a3b45]">{t.purpose}</p>
                         {t.material_name && (
                           <p className="text-[11px] text-cyan-300 font-mono">{t.material_name} ({t.material_quantity || 'N/A'})</p>
                         )}
@@ -396,14 +396,14 @@ export default function TripsPage() {
 
                       {/* Source & Destination */}
                       <td className="p-4 font-sans space-y-0.5">
-                        <p className="text-slate-400 text-[11px]">From: <span className="text-slate-200">{t.source_location || 'Factory Depot'}</span></p>
-                        <p className="text-slate-400 text-[11px]">To: <span className="text-slate-200">{t.destination_location || 'Assembly Yard'}</span></p>
+                        <p className="text-[#5c7885] text-[11px]">From: <span className="text-[#1a3b45]">{t.source_location || 'Factory Depot'}</span></p>
+                        <p className="text-[#5c7885] text-[11px]">To: <span className="text-[#1a3b45]">{t.destination_location || 'Assembly Yard'}</span></p>
                       </td>
 
                       {/* Expected Window */}
-                      <td className="p-4 text-[11px] text-slate-400 space-y-0.5">
-                        <p>In: <span className="text-slate-200">{new Date(t.expected_entry_time).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}</span></p>
-                        <p>Out: <span className="text-slate-200">{new Date(t.expected_exit_time).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}</span></p>
+                      <td className="p-4 text-[11px] text-[#5c7885] space-y-0.5">
+                        <p>In: <span className="text-[#1a3b45]">{new Date(t.expected_entry_time).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}</span></p>
+                        <p>Out: <span className="text-[#1a3b45]">{new Date(t.expected_exit_time).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}</span></p>
                       </td>
 
                       {/* Trip Status */}
@@ -414,7 +414,7 @@ export default function TripsPage() {
                             : t.trip_status === 'SCHEDULED'
                             ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30'
                             : t.trip_status === 'COMPLETED'
-                            ? 'bg-slate-800 text-slate-400 border-slate-700'
+                            ? 'bg-[#e8eff4] text-[#5c7885] border-[#c8d8e4]'
                             : 'bg-red-500/10 text-red-400 border-red-500/30'
                         }`}>
                           ● {t.trip_status}
@@ -441,7 +441,7 @@ export default function TripsPage() {
                             setSelectedTrip(t);
                             setShowDetailModal(true);
                           }}
-                          className="p-1.5 bg-slate-950 hover:bg-slate-800 border border-slate-800 rounded-lg text-slate-300 transition-all"
+                          className="p-1.5 bg-[#f2f2f2] hover:bg-[#e8eff4] border border-[#c8d8e4] rounded-lg text-[#2b6777] transition-all"
                           title="View Details & Status History"
                         >
                           <Eye className="w-3.5 h-3.5" />
@@ -474,20 +474,20 @@ export default function TripsPage() {
           </div>
 
           {/* Pagination */}
-          <div className="p-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400 font-sans">
+          <div className="p-4 border-t border-[#c8d8e4] flex items-center justify-between text-xs text-[#5c7885] font-sans">
             <span>Showing page {page} of {totalPages} ({total} total trips)</span>
             <div className="flex items-center gap-2 font-mono">
               <button
                 disabled={page <= 1}
                 onClick={() => setPage(p => p - 1)}
-                className="p-1.5 bg-slate-950 border border-slate-800 rounded-lg disabled:opacity-40 hover:bg-slate-800"
+                className="p-1.5 bg-[#f2f2f2] border border-[#c8d8e4] rounded-lg disabled:opacity-40 hover:bg-[#e8eff4]"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 disabled={page >= totalPages}
                 onClick={() => setPage(p => p + 1)}
-                className="p-1.5 bg-slate-950 border border-slate-800 rounded-lg disabled:opacity-40 hover:bg-slate-800"
+                className="p-1.5 bg-[#f2f2f2] border border-[#c8d8e4] rounded-lg disabled:opacity-40 hover:bg-[#e8eff4]"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
@@ -497,13 +497,13 @@ export default function TripsPage() {
 
         {/* Modal 1: Create & Schedule Trip */}
         {showCreateModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto space-y-5 shadow-2xl">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-                <h3 className="text-base font-bold text-white flex items-center gap-2">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-white backdrop-blur-md">
+            <div className="bg-white border border-[#c8d8e4] rounded-2xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto space-y-5 shadow-2xl">
+              <div className="flex items-center justify-between border-b border-[#c8d8e4] pb-4">
+                <h3 className="text-base font-bold text-[#1a3b45] flex items-center gap-2">
                   <Calendar className="w-5 h-5 text-cyan-400" /> Schedule New Industrial Vehicle Trip
                 </h3>
-                <button onClick={() => setShowCreateModal(false)} className="text-slate-400 hover:text-white">
+                <button onClick={() => setShowCreateModal(false)} className="text-[#5c7885] hover:text-[#1a3b45]">
                   <X className="w-5 h-5" />
                 </button>
               </div>
@@ -511,7 +511,7 @@ export default function TripsPage() {
               <form onSubmit={handleCreateTrip} className="space-y-4 text-xs">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-slate-400 font-semibold mb-1">Vehicle License Plate</label>
+                    <label className="block text-[#5c7885] font-semibold mb-1">Vehicle License Plate</label>
                     <select
                       value={formData.vehicle_id}
                       onChange={(e) => {
@@ -524,7 +524,7 @@ export default function TripsPage() {
                           transporter_id: veh && veh.transporter_id ? veh.transporter_id : formData.transporter_id,
                         });
                       }}
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white focus:border-cyan-500"
+                      className="w-full bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl p-2.5 text-[#1a3b45] focus:border-cyan-500"
                     >
                       <option value="">-- Select Master Vehicle --</option>
                       {vehicles.map((v) => (
@@ -534,22 +534,22 @@ export default function TripsPage() {
                   </div>
 
                   <div>
-                    <label className="block text-slate-400 font-semibold mb-1">Plate Number Override</label>
+                    <label className="block text-[#5c7885] font-semibold mb-1">Plate Number Override</label>
                     <input
                       type="text"
                       value={formData.recognized_plate}
                       onChange={(e) => setFormData({ ...formData, recognized_plate: e.target.value.toUpperCase() })}
                       placeholder="e.g. KA05AB1234"
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white focus:border-cyan-500 font-mono"
+                      className="w-full bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl p-2.5 text-[#1a3b45] focus:border-cyan-500 font-mono"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-slate-400 font-semibold mb-1">Assigned Driver</label>
+                    <label className="block text-[#5c7885] font-semibold mb-1">Assigned Driver</label>
                     <select
                       value={formData.driver_id}
                       onChange={(e) => setFormData({ ...formData, driver_id: e.target.value })}
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white focus:border-cyan-500"
+                      className="w-full bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl p-2.5 text-[#1a3b45] focus:border-cyan-500"
                     >
                       <option value="">-- Select Driver --</option>
                       {drivers.map((d) => (
@@ -559,11 +559,11 @@ export default function TripsPage() {
                   </div>
 
                   <div>
-                    <label className="block text-slate-400 font-semibold mb-1">Transporter</label>
+                    <label className="block text-[#5c7885] font-semibold mb-1">Transporter</label>
                     <select
                       value={formData.transporter_id}
                       onChange={(e) => setFormData({ ...formData, transporter_id: e.target.value })}
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white focus:border-cyan-500"
+                      className="w-full bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl p-2.5 text-[#1a3b45] focus:border-cyan-500"
                     >
                       <option value="">-- Select Transporter --</option>
                       {transporters.map((t) => (
@@ -573,11 +573,11 @@ export default function TripsPage() {
                   </div>
 
                   <div>
-                    <label className="block text-slate-400 font-semibold mb-1">Priority</label>
+                    <label className="block text-[#5c7885] font-semibold mb-1">Priority</label>
                     <select
                       value={formData.priority}
                       onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white focus:border-cyan-500"
+                      className="w-full bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl p-2.5 text-[#1a3b45] focus:border-cyan-500"
                     >
                       <option value="LOW">LOW</option>
                       <option value="MEDIUM">MEDIUM</option>
@@ -587,87 +587,87 @@ export default function TripsPage() {
                   </div>
 
                   <div>
-                    <label className="block text-slate-400 font-semibold mb-1">Expected Entry Time</label>
+                    <label className="block text-[#5c7885] font-semibold mb-1">Expected Entry Time</label>
                     <input
                       type="datetime-local"
                       value={formData.expected_entry_time}
                       onChange={(e) => setFormData({ ...formData, expected_entry_time: e.target.value })}
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white focus:border-cyan-500 font-mono"
+                      className="w-full bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl p-2.5 text-[#1a3b45] focus:border-cyan-500 font-mono"
                       required
                     />
                   </div>
 
                   <div>
-                    <label className="block text-slate-400 font-semibold mb-1">Expected Exit Time</label>
+                    <label className="block text-[#5c7885] font-semibold mb-1">Expected Exit Time</label>
                     <input
                       type="datetime-local"
                       value={formData.expected_exit_time}
                       onChange={(e) => setFormData({ ...formData, expected_exit_time: e.target.value })}
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white focus:border-cyan-500 font-mono"
+                      className="w-full bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl p-2.5 text-[#1a3b45] focus:border-cyan-500 font-mono"
                       required
                     />
                   </div>
 
                   <div>
-                    <label className="block text-slate-400 font-semibold mb-1">Purpose of Visit</label>
+                    <label className="block text-[#5c7885] font-semibold mb-1">Purpose of Visit</label>
                     <input
                       type="text"
                       value={formData.purpose}
                       onChange={(e) => setFormData({ ...formData, purpose: e.target.value })}
                       placeholder="e.g. Raw Material Supply"
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white focus:border-cyan-500"
+                      className="w-full bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl p-2.5 text-[#1a3b45] focus:border-cyan-500"
                       required
                     />
                   </div>
 
                   <div>
-                    <label className="block text-slate-400 font-semibold mb-1">Material Name & Qty</label>
+                    <label className="block text-[#5c7885] font-semibold mb-1">Material Name & Qty</label>
                     <div className="flex gap-2">
                       <input
                         type="text"
                         value={formData.material_name}
                         onChange={(e) => setFormData({ ...formData, material_name: e.target.value })}
                         placeholder="Material Name"
-                        className="w-1/2 bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white focus:border-cyan-500"
+                        className="w-1/2 bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl p-2.5 text-[#1a3b45] focus:border-cyan-500"
                       />
                       <input
                         type="text"
                         value={formData.material_quantity}
                         onChange={(e) => setFormData({ ...formData, material_quantity: e.target.value })}
                         placeholder="Qty (e.g. 25 Tons)"
-                        className="w-1/2 bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white focus:border-cyan-500"
+                        className="w-1/2 bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl p-2.5 text-[#1a3b45] focus:border-cyan-500"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-slate-400 font-semibold mb-1">Source Location</label>
+                    <label className="block text-[#5c7885] font-semibold mb-1">Source Location</label>
                     <input
                       type="text"
                       value={formData.source_location}
                       onChange={(e) => setFormData({ ...formData, source_location: e.target.value })}
                       placeholder="Origin Location"
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white focus:border-cyan-500"
+                      className="w-full bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl p-2.5 text-[#1a3b45] focus:border-cyan-500"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-slate-400 font-semibold mb-1">Destination Location</label>
+                    <label className="block text-[#5c7885] font-semibold mb-1">Destination Location</label>
                     <input
                       type="text"
                       value={formData.destination_location}
                       onChange={(e) => setFormData({ ...formData, destination_location: e.target.value })}
                       placeholder="Internal Plant Destination"
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white focus:border-cyan-500"
+                      className="w-full bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl p-2.5 text-[#1a3b45] focus:border-cyan-500"
                     />
                   </div>
                 </div>
 
-                <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+                <div className="flex items-center justify-end gap-3 pt-4 border-t border-[#c8d8e4]">
                   <button
                     type="button"
                     onClick={() => setShowCreateModal(false)}
-                    className="px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-slate-400 hover:text-white"
+                    className="px-4 py-2 bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl text-[#5c7885] hover:text-[#1a3b45]"
                   >
                     Cancel
                   </button>
@@ -685,70 +685,70 @@ export default function TripsPage() {
 
         {/* Modal 2: Trip Details & Status History Audit Log */}
         {showDetailModal && selectedTrip && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 w-full max-w-3xl max-h-[90vh] overflow-y-auto space-y-6 shadow-2xl">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-white backdrop-blur-md">
+            <div className="bg-white border border-[#c8d8e4] rounded-2xl p-6 w-full max-w-3xl max-h-[90vh] overflow-y-auto space-y-6 shadow-2xl">
+              <div className="flex items-center justify-between border-b border-[#c8d8e4] pb-4">
                 <div>
-                  <h3 className="text-base font-bold text-white flex items-center gap-2">
+                  <h3 className="text-base font-bold text-[#1a3b45] flex items-center gap-2">
                     <Calendar className="w-5 h-5 text-cyan-400" /> Trip Details — <span className="font-mono text-cyan-400">{selectedTrip.trip_number}</span>
                   </h3>
-                  <p className="text-xs text-slate-400 pt-0.5">Created on {new Date(selectedTrip.created_at).toLocaleString()}</p>
+                  <p className="text-xs text-[#5c7885] pt-0.5">Created on {new Date(selectedTrip.created_at).toLocaleString()}</p>
                 </div>
-                <button onClick={() => setShowDetailModal(false)} className="text-slate-400 hover:text-white">
+                <button onClick={() => setShowDetailModal(false)} className="text-[#5c7885] hover:text-[#1a3b45]">
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
               {/* Status Header Bar */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-[#f2f2f2] p-4 rounded-xl border border-[#c8d8e4] text-xs">
                 <div>
-                  <span className="text-slate-400 text-[10px] block">Trip Status</span>
+                  <span className="text-[#5c7885] text-[10px] block">Trip Status</span>
                   <span className="font-bold text-emerald-400 font-mono text-sm">{selectedTrip.trip_status}</span>
                 </div>
                 <div>
-                  <span className="text-slate-400 text-[10px] block">Approval Status</span>
+                  <span className="text-[#5c7885] text-[10px] block">Approval Status</span>
                   <span className="font-bold text-cyan-400 font-mono text-sm">{selectedTrip.approval_status}</span>
                 </div>
                 <div>
-                  <span className="text-slate-400 text-[10px] block">Priority</span>
+                  <span className="text-[#5c7885] text-[10px] block">Priority</span>
                   <span className="font-bold text-amber-400 font-mono">{selectedTrip.priority}</span>
                 </div>
                 <div>
-                  <span className="text-slate-400 text-[10px] block">Purpose</span>
-                  <span className="font-semibold text-white">{selectedTrip.purpose}</span>
+                  <span className="text-[#5c7885] text-[10px] block">Purpose</span>
+                  <span className="font-semibold text-[#1a3b45]">{selectedTrip.purpose}</span>
                 </div>
               </div>
 
               {/* Details Breakdown */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-800/80 space-y-2">
-                  <h4 className="font-bold text-slate-200 border-b border-slate-800/60 pb-1">Vehicle & Driver</h4>
-                  <p><span className="text-slate-400">Plate:</span> <span className="font-mono font-bold text-cyan-400">{selectedTrip.vehicle_number || 'MH14TCF200F'}</span></p>
-                  <p><span className="text-slate-400">Driver:</span> <span className="text-white font-semibold">{selectedTrip.driver_name || 'Suresh Kumar'}</span></p>
-                  <p><span className="text-slate-400">Transporter:</span> <span className="text-purple-400">{selectedTrip.transporter_name || 'VRL Logistics'}</span></p>
+                <div className="bg-white p-4 rounded-xl border border-[#c8d8e4] space-y-2">
+                  <h4 className="font-bold text-[#1a3b45] border-b border-[#c8d8e4] pb-1">Vehicle & Driver</h4>
+                  <p><span className="text-[#5c7885]">Plate:</span> <span className="font-mono font-bold text-cyan-400">{selectedTrip.vehicle_number || 'MH14TCF200F'}</span></p>
+                  <p><span className="text-[#5c7885]">Driver:</span> <span className="text-[#1a3b45] font-semibold">{selectedTrip.driver_name || 'Suresh Kumar'}</span></p>
+                  <p><span className="text-[#5c7885]">Transporter:</span> <span className="text-purple-400">{selectedTrip.transporter_name || 'VRL Logistics'}</span></p>
                 </div>
 
-                <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-800/80 space-y-2">
-                  <h4 className="font-bold text-slate-200 border-b border-slate-800/60 pb-1">Material & Logistics</h4>
-                  <p><span className="text-slate-400">Material:</span> <span className="text-cyan-300 font-mono">{selectedTrip.material_name || 'Steel Coils'} ({selectedTrip.material_quantity || '25 Tons'})</span></p>
-                  <p><span className="text-slate-400">From:</span> <span className="text-slate-200">{selectedTrip.source_location || 'Supplier Yard'}</span></p>
-                  <p><span className="text-slate-400">To:</span> <span className="text-slate-200">{selectedTrip.destination_location || 'Plant Bay 4'}</span></p>
+                <div className="bg-white p-4 rounded-xl border border-[#c8d8e4] space-y-2">
+                  <h4 className="font-bold text-[#1a3b45] border-b border-[#c8d8e4] pb-1">Material & Logistics</h4>
+                  <p><span className="text-[#5c7885]">Material:</span> <span className="text-cyan-300 font-mono">{selectedTrip.material_name || 'Steel Coils'} ({selectedTrip.material_quantity || '25 Tons'})</span></p>
+                  <p><span className="text-[#5c7885]">From:</span> <span className="text-[#1a3b45]">{selectedTrip.source_location || 'Supplier Yard'}</span></p>
+                  <p><span className="text-[#5c7885]">To:</span> <span className="text-[#1a3b45]">{selectedTrip.destination_location || 'Plant Bay 4'}</span></p>
                 </div>
 
-                <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-800/80 space-y-2 col-span-1 sm:col-span-2">
-                  <h4 className="font-bold text-slate-200 border-b border-slate-800/60 pb-1">Gate Execution Timestamps</h4>
+                <div className="bg-white p-4 rounded-xl border border-[#c8d8e4] space-y-2 col-span-1 sm:col-span-2">
+                  <h4 className="font-bold text-[#1a3b45] border-b border-[#c8d8e4] pb-1">Gate Execution Timestamps</h4>
                   <div className="grid grid-cols-2 gap-4 font-mono">
                     <div>
-                      <p className="text-slate-400 text-[10px]">Expected Entry Window</p>
-                      <p className="text-slate-200">{new Date(selectedTrip.expected_entry_time).toLocaleString()}</p>
-                      <p className="text-slate-400 text-[10px] pt-1">Actual Entry Timestamp</p>
+                      <p className="text-[#5c7885] text-[10px]">Expected Entry Window</p>
+                      <p className="text-[#1a3b45]">{new Date(selectedTrip.expected_entry_time).toLocaleString()}</p>
+                      <p className="text-[#5c7885] text-[10px] pt-1">Actual Entry Timestamp</p>
                       <p className="text-emerald-400 font-bold">{selectedTrip.actual_entry_time ? new Date(selectedTrip.actual_entry_time).toLocaleString() : 'Pending Entry'}</p>
                     </div>
                     <div>
-                      <p className="text-slate-400 text-[10px]">Expected Exit Window</p>
-                      <p className="text-slate-200">{new Date(selectedTrip.expected_exit_time).toLocaleString()}</p>
-                      <p className="text-slate-400 text-[10px] pt-1">Actual Exit Timestamp</p>
-                      <p className="text-slate-300 font-bold">{selectedTrip.actual_exit_time ? new Date(selectedTrip.actual_exit_time).toLocaleString() : 'In Progress'}</p>
+                      <p className="text-[#5c7885] text-[10px]">Expected Exit Window</p>
+                      <p className="text-[#1a3b45]">{new Date(selectedTrip.expected_exit_time).toLocaleString()}</p>
+                      <p className="text-[#5c7885] text-[10px] pt-1">Actual Exit Timestamp</p>
+                      <p className="text-[#2b6777] font-bold">{selectedTrip.actual_exit_time ? new Date(selectedTrip.actual_exit_time).toLocaleString() : 'In Progress'}</p>
                     </div>
                   </div>
                 </div>
@@ -756,22 +756,22 @@ export default function TripsPage() {
 
               {/* Status History Chronological Log */}
               <div className="space-y-2">
-                <h4 className="font-bold text-xs text-slate-200 flex items-center gap-1.5 uppercase tracking-wider">
+                <h4 className="font-bold text-xs text-[#1a3b45] flex items-center gap-1.5 uppercase tracking-wider">
                   <History className="w-4 h-4 text-cyan-400" /> Trip Status History Audit Log
                 </h4>
 
-                <div className="bg-slate-950 rounded-xl border border-slate-800 p-3 space-y-2 font-mono text-xs max-h-48 overflow-y-auto">
+                <div className="bg-[#f2f2f2] rounded-xl border border-[#c8d8e4] p-3 space-y-2 font-mono text-xs max-h-48 overflow-y-auto">
                   {selectedTrip.status_history?.length === 0 ? (
-                    <p className="text-slate-500 text-center py-2 font-sans">No status changes recorded.</p>
+                    <p className="text-[#5c7885] text-center py-2 font-sans">No status changes recorded.</p>
                   ) : (
                     selectedTrip.status_history?.map((h) => (
-                      <div key={h.id} className="flex items-center justify-between border-b border-slate-800/50 pb-2 text-[11px]">
+                      <div key={h.id} className="flex items-center justify-between border-b border-[#c8d8e4] pb-2 text-[11px]">
                         <div>
                           <span className="text-cyan-400 font-bold">{h.current_status}</span>
-                          {h.previous_status && <span className="text-slate-500"> (from {h.previous_status})</span>}
-                          {h.remarks && <p className="text-slate-400 font-sans text-[10px] pt-0.5">{h.remarks}</p>}
+                          {h.previous_status && <span className="text-[#5c7885]"> (from {h.previous_status})</span>}
+                          {h.remarks && <p className="text-[#5c7885] font-sans text-[10px] pt-0.5">{h.remarks}</p>}
                         </div>
-                        <div className="text-right text-slate-500">
+                        <div className="text-right text-[#5c7885]">
                           <p>{new Date(h.changed_at).toLocaleString()}</p>
                           <span className="text-[10px] text-purple-400">{h.changed_by}</span>
                         </div>
@@ -782,7 +782,7 @@ export default function TripsPage() {
               </div>
 
               {/* Footer Actions */}
-              <div className="flex items-center justify-between pt-4 border-t border-slate-800">
+              <div className="flex items-center justify-between pt-4 border-t border-[#c8d8e4]">
                 {selectedTrip.trip_status !== 'COMPLETED' && selectedTrip.trip_status !== 'CANCELLED' ? (
                   <button
                     onClick={() => handleCancelTrip(selectedTrip.id)}
@@ -794,7 +794,7 @@ export default function TripsPage() {
 
                 <button
                   onClick={() => setShowDetailModal(false)}
-                  className="px-5 py-2 bg-slate-950 border border-slate-800 text-white font-bold text-xs rounded-xl hover:bg-slate-800"
+                  className="px-5 py-2 bg-[#f2f2f2] border border-[#c8d8e4] text-[#1a3b45] font-bold text-xs rounded-xl hover:bg-[#e8eff4]"
                 >
                   Close
                 </button>

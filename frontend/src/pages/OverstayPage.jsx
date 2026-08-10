@@ -29,22 +29,22 @@ export default function OverstayPage() {
   }, [maxMins]);
 
   return (
-    <div className="flex-1 flex flex-col min-w-0 bg-slate-950 text-slate-100 font-sans">
+    <div className="flex-1 flex flex-col min-w-0 bg-[#f2f2f2] text-[#1a3b45] font-sans">
       <Header title="Factory Overstay Violation Monitor" subtitle="Real-time detection of vehicles remaining inside industrial premises beyond permitted stay duration limits" />
 
       <main className="flex-1 p-6 space-y-6 overflow-y-auto">
-        <div className="flex items-center justify-between bg-slate-900/80 rounded-xl p-4 border border-slate-800 backdrop-blur-md">
+        <div className="flex items-center justify-between bg-white rounded-xl p-4 border border-[#c8d8e4] backdrop-blur-md">
           <div className="flex items-center gap-3">
             <AlertTriangle className="w-5 h-5 text-rose-400" />
-            <h2 className="text-sm font-bold text-white">Factory Overstay Violations</h2>
+            <h2 className="text-sm font-bold text-[#1a3b45]">Factory Overstay Violations</h2>
           </div>
 
           <div className="flex items-center gap-3 text-xs font-sans">
-            <span className="text-slate-400">Max Permitted Duration:</span>
+            <span className="text-[#5c7885]">Max Permitted Duration:</span>
             <select
               value={maxMins}
               onChange={(e) => setMaxMins(Number(e.target.value))}
-              className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 text-white font-semibold focus:outline-none focus:border-rose-500"
+              className="bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl px-3 py-1.5 text-[#1a3b45] font-semibold focus:outline-none focus:border-rose-500"
             >
               <option value={60}>60 Minutes (1 Hour)</option>
               <option value={120}>120 Minutes (2 Hours)</option>
@@ -54,7 +54,7 @@ export default function OverstayPage() {
 
             <button
               onClick={fetchOverstay}
-              className="p-2 bg-slate-950 border border-slate-800 rounded-xl text-slate-400 hover:text-white"
+              className="p-2 bg-[#f2f2f2] border border-[#c8d8e4] rounded-xl text-[#5c7885] hover:text-[#1a3b45]"
             >
               <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
             </button>
@@ -62,10 +62,10 @@ export default function OverstayPage() {
         </div>
 
         {/* Master Overstay Table */}
-        <div className="bg-slate-900/80 rounded-xl border border-slate-800 overflow-hidden backdrop-blur-md">
+        <div className="bg-white rounded-xl border border-[#c8d8e4] overflow-hidden backdrop-blur-md">
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-slate-300">
-              <thead className="bg-slate-950 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800 font-mono">
+            <table className="w-full text-left text-xs text-[#2b6777]">
+              <thead className="bg-[#f2f2f2] text-[#5c7885] uppercase text-[10px] tracking-wider border-b border-[#c8d8e4] font-mono">
                 <tr>
                   <th className="p-4">License Plate</th>
                   <th className="p-4">Gate Entry Time</th>
@@ -78,17 +78,17 @@ export default function OverstayPage() {
               <tbody className="divide-y divide-slate-800/60 font-mono">
                 {loading ? (
                   <tr>
-                    <td colSpan="6" className="p-8 text-center text-slate-500 font-sans">Scanning factory premises for overstay violations...</td>
+                    <td colSpan="6" className="p-8 text-center text-[#5c7885] font-sans">Scanning factory premises for overstay violations...</td>
                   </tr>
                 ) : overstayList.length === 0 ? (
                   <tr>
-                    <td colSpan="6" className="p-8 text-center text-slate-500 font-sans">No overstay violations detected. All vehicles within permitted duration limits!</td>
+                    <td colSpan="6" className="p-8 text-center text-[#5c7885] font-sans">No overstay violations detected. All vehicles within permitted duration limits!</td>
                   </tr>
                 ) : (
                   overstayList.map((item) => (
-                    <tr key={item.movement_id} className="hover:bg-slate-800/40 transition-colors">
+                    <tr key={item.movement_id} className="hover:bg-[#f0f6f8] transition-colors">
                       <td className="p-4 font-bold text-rose-400 text-sm">{item.recognized_plate}</td>
-                      <td className="p-4 text-slate-300">{new Date(item.entry_time).toLocaleString()}</td>
+                      <td className="p-4 text-[#2b6777]">{new Date(item.entry_time).toLocaleString()}</td>
                       <td className="p-4 text-amber-400 font-bold">{item.total_stay_minutes} mins</td>
                       <td className="p-4 text-rose-400 font-bold">+{item.overstay_minutes} mins</td>
                       <td className="p-4 text-rose-300 font-bold">{item.overstay_hours} hrs</td>
