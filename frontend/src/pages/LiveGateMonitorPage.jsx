@@ -270,7 +270,7 @@ export default function LiveGateMonitorPage() {
                       {curVeh.cropped_vehicle_path ? (
                         <img src={getImageUrl(curVeh.cropped_vehicle_path)} alt="Vehicle Crop" className="w-full h-full object-cover" />
                       ) : (
-                        <Truck className="w-8 h-8 text-slate-700" />
+                        <Truck className="w-8 h-8 text-[#2b6777]" />
                       )}
                     </div>
                   </div>

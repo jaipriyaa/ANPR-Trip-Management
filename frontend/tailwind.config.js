@@ -6,6 +6,10 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['IBM Plex Sans', 'sans-serif'],
+        mono: ['IBM Plex Mono', 'monospace'],
+      },
       colors: {
         // User palette hex codes:
         // #2b6777 (Deep Teal)
@@ -23,7 +27,7 @@ export default {
           600: '#235462',
           700: '#1b424d',
           800: '#143038',
-          900: '#0c1e23',
+          900: '#0f2931',  // High Contrast Text #0f2931
           DEFAULT: '#2b6777',
         },
         jade: {
@@ -54,36 +58,33 @@ export default {
           muted: '#dbe5ec',
           DEFAULT: '#f2f2f2',
         },
-        brand: {
-          50: '#f2f7fa',
-          100: '#c8d8e4',
-          400: '#52ab98',
-          500: '#2b6777',
-          600: '#235462',
-          700: '#1b424d',
-          900: '#0c1e23',
+        // High Contrast Light Mode Text Colors
+        darktext: {
+          primary: '#0f2931',
+          secondary: '#2b6777',
+          muted: '#4d6e78',
         },
-        // Seamless theme compatibility mapping
+        // Seamless theme compatibility mapping for crisp light mode text & surfaces
         slate: {
           50: '#ffffff',
           100: '#f8fafc',
           200: '#e8eff4',
           300: '#c8d8e4',
-          400: '#5c7885',
-          500: '#2b6777',
-          600: '#22525f',
+          400: '#4d6e78',  // Muted readable text
+          500: '#2b6777',  // Primary accent text
+          600: '#235462',
           700: '#1a3e47',
-          800: '#122c33',
-          850: '#0e2227',
-          900: '#193a43',  // Dark containers map to rich Deep Teal #193a43
-          950: '#f2f2f2',  // Layout background maps to #f2f2f2 light surface
+          800: '#16353e',  // High contrast body text
+          850: '#0f2931',  // Deep contrast title text
+          900: '#ffffff',  // Cards background
+          950: '#f2f2f2',  // Layout background
         }
       },
       borderRadius: {
         'xl': '1rem',
         '2xl': '1.35rem',
         '3xl': '1.85rem',
-        '4xl': '2.5rem',
+        '4xl': '2.25rem',
         'full': '9999px',
       },
       boxShadow: {
