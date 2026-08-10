@@ -46,7 +46,6 @@ frontend/.env
 
 # ML Models, Datasets & Training Run Outputs
 *.pt
-*.onnx
 *.engine
 *.tflite
 *.pb
