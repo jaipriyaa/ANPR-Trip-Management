@@ -36,7 +36,15 @@
     letter-spacing: -0.01em;
   }
 
-  p, span, label, td, th {
+  /* Paragraph Text Size Increased by +2px (16px base / 1rem) */
+  p {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 1rem !important; /* 16px (+2px larger than standard 14px) */
+    line-height: 1.65;
+    color: #1e293b;
+  }
+
+  span, label, td, th {
     font-family: 'IBM Plex Sans', sans-serif;
   }
 
@@ -45,10 +53,11 @@
     font-weight: 500;
   }
 
-  /* Form Elements Text Contrast Optimization */
+  /* Form Elements Text Contrast & Size Optimization */
   input, select, textarea {
     color: #0f172a !important;
     font-weight: 500 !important;
+    font-size: 0.95rem !important; /* Slightly larger form inputs */
     background-color: #ffffff !important;
     border: 1.5px solid #a8c2d4 !important;
   }
@@ -111,7 +120,8 @@
   color: #ffffff !important;
   border-radius: 9999px;
   font-weight: 600;
-  padding: 0.6rem 1.4rem;
+  font-size: 0.95rem;
+  padding: 0.65rem 1.5rem;
   transition: all 0.2s ease;
   box-shadow: 0 4px 14px 0 rgba(43, 103, 119, 0.30);
 }
@@ -128,7 +138,8 @@
   color: #ffffff !important;
   border-radius: 9999px;
   font-weight: 600;
-  padding: 0.6rem 1.4rem;
+  font-size: 0.95rem;
+  padding: 0.65rem 1.5rem;
   transition: all 0.2s ease;
   box-shadow: 0 4px 14px 0 rgba(82, 171, 152, 0.35);
 }
@@ -146,7 +157,8 @@
   border: 1.5px solid #a8c2d4;
   border-radius: 9999px;
   font-weight: 600;
-  padding: 0.6rem 1.4rem;
+  font-size: 0.95rem;
+  padding: 0.65rem 1.5rem;
   transition: all 0.2s ease;
 }
 
@@ -162,16 +174,17 @@ table {
 thead th {
   color: #0f172a !important;
   font-weight: 700 !important;
-  font-size: 0.75rem;
+  font-size: 0.825rem;
   letter-spacing: 0.05em;
   background-color: #e8eff4 !important;
   border-bottom: 2px solid #a8c2d4 !important;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
 }
 tbody td {
   color: #0f172a !important;
   font-weight: 500;
+  font-size: 0.925rem;
   border-bottom: 1px solid #e2e8f0;
 }
 tbody tr:hover {

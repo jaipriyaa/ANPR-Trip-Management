@@ -10,6 +10,16 @@ export default {
         sans: ['IBM Plex Sans', 'sans-serif'],
         mono: ['IBM Plex Mono', 'monospace'],
       },
+      fontSize: {
+        // Boosted font sizes (+2px for text-xs, text-sm, text-base, etc.)
+        'xs': ['0.875rem', { lineHeight: '1.35rem' }],   // 14px (+2px from 12px)
+        'sm': ['1rem', { lineHeight: '1.5rem' }],        // 16px (+2px from 14px)
+        'base': ['1.125rem', { lineHeight: '1.75rem' }], // 18px (+2px from 16px)
+        'lg': ['1.25rem', { lineHeight: '1.85rem' }],    // 20px (+2px from 18px)
+        'xl': ['1.375rem', { lineHeight: '2rem' }],      // 22px (+2px from 20px)
+        '2xl': ['1.625rem', { lineHeight: '2.25rem' }],  // 26px
+        '3xl': ['2rem', { lineHeight: '2.5rem' }],       // 32px
+      },
       colors: {
         // User palette hex codes:
         // #2b6777 (Deep Teal)
