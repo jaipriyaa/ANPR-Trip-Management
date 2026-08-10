@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import AppLogo from './AppLogo';
 import { 
   Building2, 
   Truck, 
@@ -85,10 +86,10 @@ const navigationGroups = [
 export default function Sidebar() {
   return (
     <aside className="w-64 bg-[#2b6777] text-white flex flex-col h-screen sticky top-0 z-30 font-sans shadow-xl border-r border-[#3d8294]/30">
-      {/* Brand Header */}
+      {/* Brand Header with New Custom Logo Emblem */}
       <div className="p-5 border-b border-[#3d8294]/40 flex items-center gap-3">
-        <div className="w-10 h-10 rounded-2xl bg-[#52ab98] flex items-center justify-center shadow-lg shadow-[#52ab98]/30 ring-2 ring-[#c8d8e4]/40">
-          <Truck className="w-5 h-5 text-white" />
+        <div className="w-10 h-10 rounded-2xl bg-white flex items-center justify-center shadow-lg shadow-[#52ab98]/20 ring-2 ring-[#c8d8e4]/50">
+          <AppLogo className="w-6 h-6 text-[#2b6777]" />
         </div>
         <div>
           <h1 className="font-extrabold text-white tracking-wide text-sm leading-tight">ENTERPRISE ANPR</h1>

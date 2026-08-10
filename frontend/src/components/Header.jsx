@@ -1,12 +1,18 @@
 import React from 'react';
 import { Shield, Search, Bell } from 'lucide-react';
+import AppLogo from './AppLogo';
 
 export default function Header({ title, subtitle }) {
   return (
     <header className="h-16 bg-white border-b border-[#a8c2d4] sticky top-0 z-20 px-6 flex items-center justify-between shadow-sm">
-      <div>
-        <h1 className="text-lg font-extrabold text-[#0f172a] tracking-tight font-sans">{title}</h1>
-        {subtitle && <p className="text-xs text-[#334155] font-semibold font-sans mt-0.5">{subtitle}</p>}
+      <div className="flex items-center gap-3">
+        <div className="w-8 h-8 rounded-xl bg-[#f0f6f8] border border-[#a8c2d4] flex items-center justify-center">
+          <AppLogo className="w-5 h-5 text-[#2b6777]" />
+        </div>
+        <div>
+          <h1 className="text-lg font-extrabold text-[#0f172a] tracking-tight font-sans leading-snug">{title}</h1>
+          {subtitle && <p className="text-xs text-[#334155] font-semibold font-sans">{subtitle}</p>}
+        </div>
       </div>
 
       <div className="flex items-center gap-4">
