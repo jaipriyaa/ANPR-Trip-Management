@@ -177,7 +177,6 @@ export default function VehicleRecognitionPage() {
                 <Car className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-[10px] font-extrabold text-[#52ab98] uppercase tracking-wider">PRIORITY #1 FOCUS</span>
                 <h2 className="text-lg font-extrabold text-[#0f2931]">Current Vehicle & Plate Detection</h2>
               </div>
             </div>
@@ -363,7 +362,6 @@ export default function VehicleRecognitionPage() {
                 <Building2 className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-[10px] font-extrabold text-[#2b6777] uppercase tracking-wider">PRIORITY #2 FOCUS</span>
                 <h3 className="text-base font-extrabold text-[#0f2931]">Gate Control & Industrial Trip Operations</h3>
               </div>
             </div>
@@ -469,7 +467,6 @@ export default function VehicleRecognitionPage() {
                 <Clock className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-[10px] font-extrabold text-[#52ab98] uppercase tracking-wider">PRIORITY #3 FOCUS</span>
                 <h3 className="text-base font-extrabold text-[#0f2931]">Time Inside Yard & Stay Duration Monitor</h3>
               </div>
             </div>
@@ -533,7 +530,6 @@ export default function VehicleRecognitionPage() {
                 <Activity className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-[10px] font-extrabold text-[#2b6777] uppercase tracking-wider">PRIORITY #4 FOCUS</span>
                 <h3 className="text-base font-extrabold text-[#0f2931]">Live Vehicle Telemetry & Gate Events Stream</h3>
               </div>
             </div>
