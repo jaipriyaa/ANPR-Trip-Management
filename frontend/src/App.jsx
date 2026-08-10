@@ -39,7 +39,7 @@ export default function App() {
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0 bg-[#f2f2f2]">
         <Routes>
-          <Route path="/" element={<Navigate to="/transporters" replace />} />
+          <Route path="/" element={<Navigate to="/vehicle-recognition" replace />} />
           <Route path="/transporters" element={<TransportersPage />} />
           <Route path="/vehicles" element={<VehiclesPage />} />
           <Route path="/vehicle-plates" element={<VehiclePlatesPage />} />
