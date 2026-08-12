@@ -1,0 +1,11 @@
+{
+  "review_id": "b2303f68-3c8c-41d0-8c4f-6fd00a9fb370",
+  "raw_ocr_text": "MH01AB4661",
+  "original_ocr": "MH01AB4661",
+  "corrected_plate": "MH01CD4661",
+  "confidence": 0.6,
+  "vehicle_image_path": null,
+  "plate_image_path": null,
+  "reviewed_by": "Officer Test",
+  "timestamp": "2026-08-11T05:20:59.924543+00:00"
+}

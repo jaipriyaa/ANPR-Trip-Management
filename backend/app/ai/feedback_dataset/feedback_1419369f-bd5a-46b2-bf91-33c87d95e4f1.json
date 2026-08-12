@@ -1,0 +1,11 @@
+{
+  "review_id": "1419369f-bd5a-46b2-bf91-33c87d95e4f1",
+  "raw_ocr_text": "MH20AB1861",
+  "original_ocr": "MH20AB1861",
+  "corrected_plate": "MH20CD1861",
+  "confidence": 0.6,
+  "vehicle_image_path": null,
+  "plate_image_path": null,
+  "reviewed_by": "Security Officer",
+  "timestamp": "2026-08-11T05:20:59.972655+00:00"
+}

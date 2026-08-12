@@ -1,0 +1,11 @@
+{
+  "review_id": "79b9630e-a8dd-4a56-9606-452e4ca3ff6a",
+  "raw_ocr_text": "MH14AB8322",
+  "original_ocr": "MH14AB8322",
+  "corrected_plate": "MH14CD8322",
+  "confidence": 0.6,
+  "vehicle_image_path": null,
+  "plate_image_path": null,
+  "reviewed_by": "Security Officer",
+  "timestamp": "2026-08-11T05:20:59.955269+00:00"
+}

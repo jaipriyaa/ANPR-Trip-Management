@@ -1,0 +1,11 @@
+{
+  "review_id": "36ca113e-063f-4680-8ec3-ba23622704ee",
+  "raw_ocr_text": "AP12 V2317",
+  "original_ocr": "AP12V2317",
+  "corrected_plate": "MH14TCF200F",
+  "confidence": 0.1985,
+  "vehicle_image_path": "debug/vehicles/vehicle_2429cf19_1.jpg",
+  "plate_image_path": "debug/plates/plate_2429cf19_1_1.jpg",
+  "reviewed_by": "Major Rajesh Verma",
+  "timestamp": "2026-08-12T06:22:21.040184+00:00"
+}
