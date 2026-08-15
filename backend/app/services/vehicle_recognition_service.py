@@ -24,6 +24,34 @@ UPLOAD_BASE = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__fil
 ALLOWED_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp", ".tiff", ".tif"}
 ALLOWED_VIDEO_EXTENSIONS = {".mp4", ".avi", ".mov", ".mkv", ".webm"}
 MAX_FILE_SIZE = 200 * 1024 * 1024
+import numpy as np
+
+def _to_json_serializable(obj):
+    if obj is None:
+        return None
+    if isinstance(obj, dict):
+        return {str(k): _to_json_serializable(v) for k, v in obj.items()}
+    elif isinstance(obj, (list, tuple, set)):
+        return [_to_json_serializable(x) for x in obj]
+    elif isinstance(obj, np.ndarray):
+        return obj.tolist()
+    elif isinstance(obj, (np.integer, np.int64, np.int32, np.int16, np.int8)):
+        return int(obj)
+    elif isinstance(obj, (np.floating, np.float64, np.float32, np.float16)):
+        return float(obj)
+    elif isinstance(obj, (np.bool_, bool)):
+        return bool(obj)
+    elif isinstance(obj, (uuid.UUID, datetime)):
+        return str(obj)
+    elif hasattr(obj, "__dict__"):
+        return _to_json_serializable(vars(obj))
+    else:
+        try:
+            import json
+            json.dumps(obj)
+            return obj
+        except (TypeError, ValueError):
+            return str(obj)
 
 
 def _safe_uuid(val) -> Optional[uuid.UUID]:
@@ -482,7 +510,7 @@ class VehicleRecognitionService:
             "display_plate": plate_text if is_valid_p else "REQUIRES MANUAL REVIEW",
         }
 
-        return {
+        res = {
             "success": True,
             "request_id": req_id,
             "processing_time": round(total_time / 1000.0, 3),
@@ -559,6 +587,7 @@ class VehicleRecognitionService:
                 "stay_duration_formatted": movement_record.stay_duration_formatted if movement_record else None,
             } if movement_record else None,
         }
+        return _to_json_serializable(res)
 
     def sync_detection_record(
         self,

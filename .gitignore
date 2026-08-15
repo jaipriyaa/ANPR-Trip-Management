@@ -65,8 +65,8 @@ test_output/
 backend/test_output/
 uploads/
 backend/uploads/
-debug/
-backend/debug/
+/debug/
+/backend/debug/
 scratch/
 
 # Logs

@@ -1,34 +1,47 @@
+# FastAPI & Server Infrastructure (uvloop & httptools via uvicorn[standard] on Linux)
 fastapi
 uvicorn[standard]
+gunicorn
 
+# Database & Migrations
 sqlalchemy
 psycopg2-binary
 alembic
 
+# Data Validation & Configuration
 pydantic
 pydantic-settings
 email-validator
 
+# Security, Authentication & Utilities
 python-jose[cryptography]
 passlib[bcrypt]
 python-multipart
 bcrypt
 pytz
 
-opencv-python
+# Computer Vision & Image Processing (Headless OpenCV for Linux/Docker compatibility)
+opencv-python-headless
 numpy<2
 pandas
 Pillow
 
+# Deep Learning & AI Inference Engines
+torch
+torchvision
 ultralytics
 easyocr
+onnx
+onnxruntime
 
+# Reporting & Export Formats
 openpyxl
 reportlab
 
+# System & Networking
 python-dotenv
-
 httpx
 websockets
 
+# Testing Framework
 pytest
