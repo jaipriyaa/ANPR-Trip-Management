@@ -3,7 +3,7 @@ import os
 import time
 import cv2
 import numpy as np
-from typing import List, Optional
+from typing import List, Optional, Any
 
 from app.ai import config
 
@@ -60,18 +60,18 @@ class PlateDetector:
 
         logger.info("No plate model found, will use OpenCV fallback")
 
-    def detect(self, image: np.ndarray, vehicle_roi: Optional[np.ndarray] = None) -> dict:
+    def detect(self, image: np.ndarray, vehicle_bbox: Optional[Any] = None) -> dict:
         start = time.time()
         plates = []
 
         self._load()
-        yolo_result = self._detect_yolo(image, vehicle_roi)
+        yolo_result = self._detect_yolo(image, vehicle_bbox)
 
         if yolo_result and yolo_result.get("plates"):
             plates = yolo_result["plates"]
             logger.debug(f"YOLO plate detector found {len(plates)} plates")
         elif config.ENABLE_FALLBACK:
-            fallback_result = self._detect_opencv(image, vehicle_roi)
+            fallback_result = self._detect_opencv(image, vehicle_bbox)
             if fallback_result and fallback_result.get("plates"):
                 plates = fallback_result["plates"]
                 logger.debug(f"OpenCV fallback found {len(plates)} plates")
@@ -88,11 +88,28 @@ class PlateDetector:
             "processing_time_ms": elapsed_ms,
         }
 
-    def _detect_yolo(self, image: np.ndarray, vehicle_roi: Optional[np.ndarray] = None) -> dict:
+    def _detect_yolo(self, image: np.ndarray, vehicle_bbox: Optional[Any] = None) -> dict:
         if self._model is None and self._model_pt is None:
             return {"plates": [], "best_plate": None}
 
-        target = vehicle_roi if vehicle_roi is not None else image
+        offset_x, offset_y = 0, 0
+        if vehicle_bbox is not None:
+            if isinstance(vehicle_bbox, (list, tuple)) and len(vehicle_bbox) == 4:
+                x1, y1, x2, y2 = map(int, vehicle_bbox)
+                x1, y1 = max(0, x1), max(0, y1)
+                x2, y2 = min(image.shape[1], x2), min(image.shape[0], y2)
+                target = image[y1:y2, x1:x2]
+                offset_x, offset_y = x1, y1
+            elif isinstance(vehicle_bbox, np.ndarray) and vehicle_bbox.ndim >= 2:
+                target = vehicle_bbox
+            else:
+                target = image
+        else:
+            target = image
+
+        if target is None or getattr(target, "size", 0) == 0:
+            return {"plates": [], "best_plate": None}
+
         target_h, target_w = target.shape[:2]
 
         if self._model is not None:
@@ -118,29 +135,32 @@ class PlateDetector:
         else:
             boxes = []
 
-        if vehicle_roi is not None and hasattr(self, '_roi_offset'):
+        if offset_x > 0 or offset_y > 0:
             for b in boxes:
                 b["bbox"] = [
-                    b["bbox"][0] + self._roi_offset[0],
-                    b["bbox"][1] + self._roi_offset[1],
-                    b["bbox"][2] + self._roi_offset[0],
-                    b["bbox"][3] + self._roi_offset[1],
+                    b["bbox"][0] + offset_x,
+                    b["bbox"][1] + offset_y,
+                    b["bbox"][2] + offset_x,
+                    b["bbox"][3] + offset_y,
                 ]
 
         return {"plates": boxes, "best_plate": boxes[0] if boxes else None}
 
-    def _detect_opencv(self, image: np.ndarray, vehicle_roi: Optional[np.ndarray] = None) -> dict:
+    def _detect_opencv(self, image: np.ndarray, vehicle_bbox: Optional[Any] = None) -> dict:
         plates = []
         roi = image
         offset_x, offset_y = 0, 0
 
-        if vehicle_roi is not None:
-            h, w = image.shape[:2]
-            x1, y1, x2, y2 = vehicle_roi
-            x1, y1 = max(0, x1), max(0, y1)
-            x2, y2 = min(w, x2), min(h, y2)
-            roi = image[y1:y2, x1:x2]
-            offset_x, offset_y = x1, y1
+        if vehicle_bbox is not None:
+            if isinstance(vehicle_bbox, (list, tuple)) and len(vehicle_bbox) == 4:
+                h, w = image.shape[:2]
+                x1, y1, x2, y2 = map(int, vehicle_bbox)
+                x1, y1 = max(0, x1), max(0, y1)
+                x2, y2 = min(w, x2), min(h, y2)
+                roi = image[y1:y2, x1:x2]
+                offset_x, offset_y = x1, y1
+            elif isinstance(vehicle_bbox, np.ndarray) and vehicle_bbox.ndim >= 2:
+                roi = vehicle_bbox
             if roi.size == 0:
                 return {"plates": plates, "best_plate": None}
 
@@ -162,7 +182,9 @@ class PlateDetector:
                 c["detection_method"] = method_name
                 plates.append(c)
 
-        return {"plates": plates, "best_plate": plates[0] if plates else None}
+        plates.sort(key=lambda p: p["confidence"], reverse=True)
+        top_plates = plates[:3]
+        return {"plates": top_plates, "best_plate": top_plates[0] if top_plates else None}
 
     def _edge_detect(self, gray: np.ndarray) -> np.ndarray:
         bfilter = cv2.bilateralFilter(gray, 11, 17, 17)

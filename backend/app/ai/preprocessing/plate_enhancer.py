@@ -62,13 +62,7 @@ class PlateEnhancer:
         return cv2.resize(image, (target_w, target_h), interpolation=cv2.INTER_CUBIC)
 
     def _denoise(self, image: np.ndarray) -> np.ndarray:
-        return cv2.fastNlMeansDenoising(
-            image if len(image.shape) == 2 else image,
-            None,
-            self.denoise_strength,
-            7,
-            21,
-        )
+        return cv2.GaussianBlur(image, (3, 3), 0)
 
     def _grayscale(self, image: np.ndarray) -> np.ndarray:
         if len(image.shape) == 3:

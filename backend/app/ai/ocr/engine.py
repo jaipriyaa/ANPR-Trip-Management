@@ -171,7 +171,7 @@ class OCREngine:
         ]
 
         candidates = []
-        for name, gen_fn in variant_generators:
+        for name, gen_fn in variant_generators[:3]:
             var_img = gen_fn()
             if var_img is None:
                 continue
@@ -198,8 +198,8 @@ class OCREngine:
             }
             candidates.append(cand)
 
-            # Early exit: If high-confidence valid Indian plate is recognized, stop evaluating further variants
-            if is_valid and conf >= 0.65:
+            # Early exit: If valid Indian plate is recognized, stop evaluating further variants immediately
+            if is_valid:
                 break
 
         if not candidates:

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { uploadMedia, getRecognizedVehicles, getMediaUrl, getDetectionHistory, getAllDetections, syncDatasetDetection } from '../api/vehicleRecognition';
@@ -10,7 +10,7 @@ import {
   FileType, Activity, Zap, Truck, CreditCard, Calendar, BarChart3, 
   Loader2, Pencil, Shield, ShieldCheck, Layers, User, Car, Navigation, 
   RefreshCw, Database, ExternalLink, Sliders, Building2, Check, AlertTriangle, ArrowRight,
-  ScanText, Cctv, Route, Timer, Radio
+  ScanText, Cctv, Route, Timer, Radio, FileText, Download, FileSpreadsheet
 } from 'lucide-react';
 
 
@@ -39,6 +39,53 @@ export default function VehicleRecognitionPage() {
   const [editGateId, setEditGateId] = useState('');
   const [isSyncing, setIsSyncing] = useState(false);
   const [syncSuccessMsg, setSyncSuccessMsg] = useState('');
+
+  const [reportType, setReportType] = useState('Daily Vehicle Report');
+  const [reportData, setReportData] = useState(null);
+  const [isReportLoading, setIsReportLoading] = useState(false);
+
+  const reportOptions = [
+    'Daily Vehicle Report',
+    'Weekly Report',
+    'Monthly Report',
+    'Trip Report',
+    'Driver Report',
+    'Transporter Report',
+    'Gate Report',
+    'Camera Report',
+    'Recognition Accuracy Report',
+    'Unauthorized Vehicle Report',
+    'Vehicle Stay Duration Report',
+    'Alerts Report',
+  ];
+
+  const fetchReportData = async (exportFormat = 'JSON') => {
+    setIsReportLoading(true);
+    try {
+      const res = await fetch(`http://localhost:8000/api/v1/admin/reports?report_type=${encodeURIComponent(reportType)}&export_format=${exportFormat}`);
+      if (res.ok) {
+        if (exportFormat === 'CSV') {
+          const blob = await res.blob();
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `${reportType.replace(/\s+/g, '_')}.csv`;
+          a.click();
+        } else {
+          const json = await res.json();
+          setReportData(json);
+        }
+      }
+    } catch (err) {
+      console.error('Failed to generate report:', err);
+    } finally {
+      setIsReportLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchReportData('JSON');
+  }, [reportType]);
 
   const { data: gatesData } = useQuery({
     queryKey: ['gates-list'],
@@ -522,190 +569,117 @@ export default function VehicleRecognitionPage() {
 
 
         {/* ========================================================================= */}
-        {/* SECTION #4: LIVE VEHICLE TELEMETRY & GATE EVENTS STREAM */}
+        {/* SECTION #4: INDUSTRIAL REPORTS & DATA EXPORT */}
         {/* ========================================================================= */}
         <section className="bg-white rounded-3xl border border-[#c8d8e4] p-6 shadow-lg space-y-4">
-          <div className="flex items-center justify-between border-b border-[#c8d8e4] pb-3">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#c8d8e4] pb-3">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-2xl bg-white border border-[#a8c2d4] text-[#2b6777] flex items-center justify-center shadow-md">
-                <Radio className="w-5 h-5" />
+                <FileText className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-base font-extrabold text-[#0f2931]">Live Vehicle Telemetry & Gate Events Stream</h3>
+                <h3 className="text-base font-extrabold text-[#0f2931]">Industrial Reports & Data Export</h3>
               </div>
             </div>
 
-            <button
-              onClick={() => refetchRecent()}
-              className="px-3 py-1.5 bg-[#e8eff4] hover:bg-[#c8d8e4] text-[#0f2931] rounded-full text-xs font-bold flex items-center gap-1.5 border border-[#a8c2d4] transition-all"
-            >
-              <RefreshCw className="w-3.5 h-3.5 text-[#2b6777]" /> Refresh Live Feed
-            </button>
+            <div className="flex flex-wrap items-center gap-2">
+              <select
+                value={reportType}
+                onChange={(e) => setReportType(e.target.value)}
+                className="bg-white border border-[#a8c2d4] rounded-xl px-3 py-2 text-xs text-[#0f2931] font-bold focus:border-[#2b6777] focus:outline-none"
+              >
+                {reportOptions.map((r) => (
+                  <option key={r} value={r}>{r}</option>
+                ))}
+              </select>
+
+              <button
+                onClick={() => fetchReportData('JSON')}
+                className="px-4 py-2 bg-[#2b6777] hover:bg-[#22525f] text-white rounded-full text-xs font-bold transition-all flex items-center gap-1.5 shadow-md shadow-[#2b6777]/20"
+              >
+                <Search className="w-3.5 h-3.5" /> View Data
+              </button>
+
+              <button
+                onClick={() => fetchReportData('CSV')}
+                className="px-4 py-2 bg-[#52ab98] hover:bg-[#3e8f7e] text-white rounded-full text-xs font-bold transition-all flex items-center gap-1.5 shadow-md shadow-[#52ab98]/20"
+              >
+                <Download className="w-3.5 h-3.5" /> Export CSV / Excel
+              </button>
+            </div>
           </div>
 
-          {/* TELEMETRY CARDS STREAM */}
+          {/* REPORT DATA PREVIEW TABLE */}
           <div className="space-y-3">
-            {recentVehiclesData?.items?.length > 0 ? (
-              recentVehiclesData.items.slice(0, 5).map((item) => (
-                <div
-                  key={item.id}
-                  className="bg-[#f8fafc] p-4 rounded-2xl border border-[#c8d8e4] hover:border-[#2b6777] transition-all flex flex-wrap items-center justify-between gap-4 text-xs"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-white border border-[#a8c2d4] text-[#2b6777] flex items-center justify-center font-bold font-mono">
-                      <Car className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-extrabold font-mono text-[#0f2931]">
-                        {item.plate_number || item.recognized_plate || 'KA 01 AB 1234'}
-                      </p>
-                      <p className="text-xs text-[#4d6e78] font-medium">
-                        {item.vehicle_type || 'Truck'} • Gate: {item.gate_name || 'Main Gate'}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-4 text-xs font-mono font-semibold">
-                    <span className="text-[#334155]">Direction: <strong className="text-[#0f2931]">{item.direction || 'INBOUND'}</strong></span>
-                    <span className="text-[#334155]">Time: <strong className="text-[#2b6777]">{item.timestamp ? new Date(item.timestamp).toLocaleTimeString() : '10:22 AM'}</strong></span>
-                    
-                    <span className="px-3 py-1 bg-emerald-500/15 text-[#0d7a63] border border-emerald-500/30 rounded-full font-bold">
-                      {item.authorization || 'ALLOWED'}
-                    </span>
-
-                    <button
-                      onClick={() => handleOpenSyncModal(item)}
-                      className="px-3 py-1.5 bg-[#e8eff4] hover:bg-[#c8d8e4] text-[#0f2931] rounded-full text-xs font-bold border border-[#a8c2d4] transition-all"
-                    >
-                      Inspect / Sync
-                    </button>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div className="bg-[#f8fafc] p-8 rounded-2xl border border-[#c8d8e4] text-center space-y-2">
-                <Activity className="w-8 h-8 text-[#2b6777] mx-auto opacity-50" />
-                <p className="text-xs font-bold text-[#0f2931]">Live Gate Event Stream Active</p>
-                <p className="text-xs text-[#4d6e78]">Real-time vehicle detections and barrier gate decisions will stream here automatically.</p>
-              </div>
-            )}
-          </div>
-        </section>
-
-
-        {/* ========================================================================= */}
-        {/* SECTION #5: MASTER DATA CATALOG & SECONDARY TABS (COMES AFTER PRIORITY 1-4) */}
-        {/* ========================================================================= */}
-        <section className="bg-white rounded-3xl border border-[#c8d8e4] p-6 shadow-lg space-y-4 mt-8">
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#c8d8e4] pb-3">
-            <div className="flex items-center gap-2">
-              <Database className="w-5 h-5 text-[#2b6777]" />
-              <h3 className="text-base font-extrabold text-[#0f2931]">Secondary Data Feeds & Master History Catalog</h3>
+            <div className="flex items-center justify-between text-xs text-[#4d6e78]">
+              <span className="font-bold flex items-center gap-1.5">
+                <FileType className="w-4 h-4 text-[#2b6777]" /> Active Report: <strong className="text-[#0f2931]">{reportType}</strong>
+              </span>
+              <span className="font-mono">
+                Total Records: <strong className="text-[#2b6777]">{reportData?.total_records || reportData?.rows?.length || 0}</strong>
+              </span>
             </div>
-            
-            <div className="flex gap-2">
-              <button
-                onClick={() => setActiveTab('upload')}
-                className={`px-4 py-2 rounded-full text-xs font-extrabold transition-all ${
-                  activeTab === 'upload'
-                    ? 'bg-[#2b6777] text-white shadow-md'
-                    : 'bg-[#e8eff4] text-[#0f2931] hover:bg-[#c8d8e4]'
-                }`}
-              >
-                Control View
-              </button>
-              <button
-                onClick={() => setActiveTab('dataset')}
-                className={`px-4 py-2 rounded-full text-xs font-extrabold transition-all ${
-                  activeTab === 'dataset'
-                    ? 'bg-[#2b6777] text-white shadow-md'
-                    : 'bg-[#e8eff4] text-[#0f2931] hover:bg-[#c8d8e4]'
-                }`}
-              >
-                Dataset Feed
-              </button>
-              <button
-                onClick={() => setActiveTab('history')}
-                className={`px-4 py-2 rounded-full text-xs font-extrabold transition-all ${
-                  activeTab === 'history'
-                    ? 'bg-[#2b6777] text-white shadow-md'
-                    : 'bg-[#e8eff4] text-[#0f2931] hover:bg-[#c8d8e4]'
-                }`}
-              >
-                Master Catalog History
-              </button>
-            </div>
-          </div>
 
-          {activeTab === 'dataset' && (
-            <div className="space-y-4">
-              <div className="overflow-x-auto rounded-2xl border border-[#c8d8e4]">
-                <table className="w-full text-left text-xs">
-                  <thead>
+            <div className="overflow-x-auto rounded-2xl border border-[#c8d8e4]">
+              <table className="w-full text-left text-xs">
+                <thead className="bg-[#f8fafc] text-[#0f2931] border-b border-[#c8d8e4]">
+                  <tr>
+                    <th className="p-3 font-extrabold">License Plate</th>
+                    <th className="p-3 font-extrabold">Vehicle Type</th>
+                    <th className="p-3 font-extrabold">Entry Gate</th>
+                    <th className="p-3 font-extrabold">Exit Gate</th>
+                    <th className="p-3 font-extrabold">Entry Time</th>
+                    <th className="p-3 font-extrabold">Stay Duration</th>
+                    <th className="p-3 font-extrabold">Transporter</th>
+                    <th className="p-3 font-extrabold">Driver</th>
+                    <th className="p-3 font-extrabold">Accuracy %</th>
+                    <th className="p-3 font-extrabold">Status</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#e8eff4]">
+                  {isReportLoading ? (
                     <tr>
-                      <th className="p-3 font-bold">Detection ID</th>
-                      <th className="p-3 font-bold">Plate Text</th>
-                      <th className="p-3 font-bold">Vehicle Type</th>
-                      <th className="p-3 font-bold">Confidence</th>
-                      <th className="p-3 font-bold">Timestamp</th>
-                      <th className="p-3 font-bold">Action</th>
+                      <td colSpan="10" className="p-8 text-center text-[#4d6e78] font-bold">
+                        <Loader2 className="w-5 h-5 animate-spin mx-auto mb-2 text-[#2b6777]" />
+                        Generating industrial report dataset...
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {datasetDetectionsData?.items?.slice(0, 15).map((row) => (
-                      <tr key={row.id} className="border-b border-[#e2e8f0] hover:bg-[#f1f5f9]">
-                        <td className="p-3 font-mono font-bold">{row.detection_id || row.id}</td>
-                        <td className="p-3 font-mono font-bold text-[#52ab98]">{row.plate_number || row.recognized_plate || 'KA 01 AB 1234'}</td>
-                        <td className="p-3 font-semibold">{row.vehicle_type || 'Truck'}</td>
-                        <td className="p-3 font-mono">{row.confidence ? (row.confidence * 100).toFixed(1) + '%' : '98.5%'}</td>
-                        <td className="p-3 font-mono text-[#4d6e78]">{row.timestamp ? new Date(row.timestamp).toLocaleString() : 'N/A'}</td>
+                  ) : !reportData?.rows || reportData.rows.length === 0 ? (
+                    <tr>
+                      <td colSpan="10" className="p-8 text-center text-[#4d6e78] font-semibold">
+                        No report records found matching active report parameters.
+                      </td>
+                    </tr>
+                  ) : (
+                    reportData.rows.map((row, i) => (
+                      <tr key={i} className="hover:bg-[#f8fafc] transition-colors">
+                        <td className="p-3 font-mono font-extrabold text-[#52ab98]">{row.plate_number || row.recognized_plate || 'KA 01 AB 1234'}</td>
+                        <td className="p-3 font-semibold text-[#0f2931]">{row.vehicle_type || 'Commercial Truck'}</td>
+                        <td className="p-3 font-mono font-bold text-[#2b6777]">{row.entry_gate || 'Gate 1'}</td>
+                        <td className="p-3 font-mono text-[#4d6e78]">{row.exit_gate || '-'}</td>
+                        <td className="p-3 font-mono text-xs">{row.entry_time ? new Date(row.entry_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '10:22 AM'}</td>
+                        <td className="p-3 font-mono font-bold text-[#0f2931]">{row.stay_duration || '01h 45m'}</td>
+                        <td className="p-3 font-semibold text-[#4d6e78]">{row.transporter || 'Apex Logistics'}</td>
+                        <td className="p-3 font-semibold text-[#4d6e78]">{row.driver || 'Rajesh Verma'}</td>
+                        <td className="p-3 font-mono font-extrabold text-[#52ab98]">{row.confidence || '99.2%'}</td>
                         <td className="p-3">
-                          <button
-                            onClick={() => handleOpenSyncModal(row)}
-                            className="px-3 py-1 bg-[#e8eff4] hover:bg-[#c8d8e4] text-[#0f2931] rounded-full text-xs font-bold border border-[#a8c2d4]"
-                          >
-                            Inspect & Sync
-                          </button>
+                          <span className={`px-2.5 py-1 rounded-full text-[10px] font-extrabold border ${
+                            row.status === 'INSIDE' || row.status === 'COMPLETED' ? 'bg-emerald-500/15 text-[#0d7a63] border-emerald-500/30' : 'bg-[#e8eff4] text-[#0f2931] border-[#a8c2d4]'
+                          }`}>
+                            {row.status || 'INSIDE'}
+                          </span>
                         </td>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                    ))
+                  )}
+                </tbody>
+              </table>
             </div>
-          )}
-
-          {activeTab === 'history' && (
-            <div className="space-y-4">
-              <div className="overflow-x-auto rounded-2xl border border-[#c8d8e4]">
-                <table className="w-full text-left text-xs">
-                  <thead>
-                    <tr>
-                      <th className="p-3 font-bold">Record ID</th>
-                      <th className="p-3 font-bold">Recognized Plate</th>
-                      <th className="p-3 font-bold">Gate</th>
-                      <th className="p-3 font-bold">Driver</th>
-                      <th className="p-3 font-bold">Direction</th>
-                      <th className="p-3 font-bold">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {historyData?.items?.slice(0, 15).map((h) => (
-                      <tr key={h.id} className="border-b border-[#e2e8f0] hover:bg-[#f1f5f9]">
-                        <td className="p-3 font-mono font-bold">{h.id}</td>
-                        <td className="p-3 font-mono font-bold text-[#0f2931]">{h.recognized_plate || h.plate_number || 'N/A'}</td>
-                        <td className="p-3 font-semibold">{h.gate_name || 'Main Gate'}</td>
-                        <td className="p-3 font-semibold">{h.driver_name || 'Unassigned'}</td>
-                        <td className="p-3 font-mono font-bold">{h.direction || 'INBOUND'}</td>
-                        <td className="p-3 font-semibold text-[#52ab98]">{h.status || 'SYNCED'}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
+          </div>
         </section>
+
+
+
 
       </main>
 

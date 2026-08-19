@@ -85,7 +85,7 @@ class DetectionPipeline:
             detected_plates = plate_res.get("plates", [])
 
             # candidate_list consists ONLY of actual plate detections (never the entire vehicle crop)
-            candidate_list = list(detected_plates)
+            candidate_list = list(detected_plates)[:2]
 
 
             plates_output = []
