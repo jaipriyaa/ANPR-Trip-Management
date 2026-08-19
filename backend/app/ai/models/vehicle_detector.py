@@ -32,7 +32,7 @@ class VehicleDetector:
             if os.path.exists(onnx_path):
                 try:
                     import onnxruntime as ort
-                    providers = ["CUDAExecutionProvider", "CPUExecutionProvider"] if getattr(config, "GPU_ENABLED", False) else ["CPUExecutionProvider"]
+                    providers = ["CUDAExecutionProvider", "CPUExecutionProvider"] if getattr(config, "GPU_ENABLED", True) else ["CPUExecutionProvider"]
                     avail_providers = [p for p in providers if p in ort.get_available_providers()]
                     if not avail_providers:
                         avail_providers = ort.get_available_providers()
@@ -114,11 +114,13 @@ class VehicleDetector:
             predictions = self._parse_yolo_output(outputs[0], orig_shape)
         elif self._model_pt is not None:
             input_tensor = self._preprocess(image)
+            device = getattr(config, "GPU_DEVICE", 0) if getattr(config, "GPU_ENABLED", True) else "cpu"
             results = self._model_pt(
                 input_tensor,
                 conf=self._conf_threshold,
                 iou=self._iou_threshold,
                 classes=list(self._class_names.keys()),
+                device=device,
                 verbose=False,
             )
             predictions = self._postprocess(results[0], orig_shape)

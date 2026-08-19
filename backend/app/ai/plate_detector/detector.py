@@ -191,7 +191,8 @@ class PlateDetector:
         plates = []
 
         if self._model_pt is not None:
-            results = self._model_pt(canvas, conf=self._conf_threshold, iou=self._iou_threshold, verbose=False)
+            device = getattr(config, "GPU_DEVICE", 0) if getattr(config, "GPU_ENABLED", True) else "cpu"
+            results = self._model_pt(canvas, conf=self._conf_threshold, iou=self._iou_threshold, device=device, verbose=False)
             if len(results) > 0 and hasattr(results[0], "boxes"):
                 for box in results[0].boxes:
                     bx1, by1, bx2, by2 = map(int, box.xyxy[0].tolist())

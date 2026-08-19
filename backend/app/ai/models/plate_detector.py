@@ -34,7 +34,7 @@ class PlateDetector:
             if os.path.exists(onnx_path):
                 try:
                     import onnxruntime as ort
-                    providers = ["CUDAExecutionProvider", "CPUExecutionProvider"] if getattr(config, "GPU_ENABLED", False) else ["CPUExecutionProvider"]
+                    providers = ["CUDAExecutionProvider", "CPUExecutionProvider"] if getattr(config, "GPU_ENABLED", True) else ["CPUExecutionProvider"]
                     avail_providers = [p for p in providers if p in ort.get_available_providers()]
                     if not avail_providers:
                         avail_providers = ort.get_available_providers()
@@ -105,10 +105,12 @@ class PlateDetector:
             boxes = self._parse_yolo_output(outputs[0], (target_h, target_w))
         elif self._model_pt is not None:
             input_tensor = self._preprocess(target)
+            device = getattr(config, "GPU_DEVICE", 0) if getattr(config, "GPU_ENABLED", True) else "cpu"
             results = self._model_pt(
                 input_tensor,
                 conf=self._conf_threshold,
                 iou=self._iou_threshold,
+                device=device,
                 verbose=False,
             )
             boxes = self._postprocess(results[0], (target_h, target_w))

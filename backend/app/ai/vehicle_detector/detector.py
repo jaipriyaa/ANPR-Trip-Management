@@ -122,11 +122,13 @@ class VehicleDetector:
     def _run_inference(self, canvas: np.ndarray):
         """Inference execution abstraction layer."""
         if self._model_pt is not None:
+            device = getattr(config, "GPU_DEVICE", 0) if getattr(config, "GPU_ENABLED", True) else "cpu"
             results = self._model_pt(
                 canvas,
                 conf=self._conf_threshold,
                 iou=self._iou_threshold,
                 classes=list(self._coco_classes.keys()),
+                device=device,
                 verbose=False,
             )
             return ("pt", results)
@@ -247,7 +249,8 @@ class VehicleDetector:
                     from ultralytics import YOLO
                     self._coco_model = YOLO(config.ROOT_YOLO11_PT)
 
-                coco_res = self._coco_model(image, conf=0.25, classes=[2, 3, 5, 7], verbose=False)[0]
+                device = getattr(config, "GPU_DEVICE", 0) if getattr(config, "GPU_ENABLED", True) else "cpu"
+                coco_res = self._coco_model(image, conf=0.25, classes=[2, 3, 5, 7], device=device, verbose=False)[0]
                 if len(coco_res.boxes) > 0:
                     c_name_map = {2: "Car", 3: "Motorcycle", 5: "Bus", 7: "Truck"}
                     c_cls_map = {2: 0, 3: 1, 5: 2, 7: 3}

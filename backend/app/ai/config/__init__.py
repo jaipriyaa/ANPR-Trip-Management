@@ -15,7 +15,7 @@ os.makedirs(ROOT_MODELS_DIR, exist_ok=True)
 
 # Configurable Inference Backends & Hardware
 MODEL_BACKEND = os.getenv("MODEL_BACKEND", "AUTO").upper()
-GPU_ENABLED = os.getenv("GPU_ENABLED", "false").lower() in ("true", "1", "yes")
+GPU_ENABLED = os.getenv("GPU_ENABLED", "true").lower() in ("true", "1", "yes")
 GPU_DEVICE = int(os.getenv("GPU_DEVICE", "0"))
 
 ONNX_MODEL_DIR_ENV = os.getenv("ONNX_MODEL_PATH")
@@ -116,7 +116,7 @@ OPENCV_PLATE_MIN_WIDTH = 30
 OCR_CONFIDENCE_THRESHOLD = 0.10
 OCR_CHAR_WHITELIST = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 OCR_BATCH_SIZE = 1
-OCR_GPU = False
+OCR_GPU = os.getenv("OCR_GPU", "true").lower() in ("true", "1", "yes")
 
 # OCR Execution Mode: "STANDARD" or "ROBUST" (multi-variant ensemble for handwritten/irregular plates)
 PLATE_OCR_MODE = os.getenv("PLATE_OCR_MODE", "ROBUST").upper()

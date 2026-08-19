@@ -1,6 +1,7 @@
 import logging
 import time
 import numpy as np
+from app.ai import config
 
 logger = logging.getLogger(__name__)
 
@@ -12,8 +13,9 @@ def get_reader():
     if _ocr_reader is None:
         try:
             import easyocr
-            _ocr_reader = easyocr.Reader(["en"], gpu=False, verbose=False)
-            logger.info("EasyOCR reader initialized")
+            gpu_enabled = getattr(config, "OCR_GPU", True) if getattr(config, "GPU_ENABLED", True) else False
+            _ocr_reader = easyocr.Reader(["en"], gpu=gpu_enabled, verbose=False)
+            logger.info(f"EasyOCR reader initialized (GPU={gpu_enabled})")
         except Exception as e:
             logger.error(f"Failed to initialize EasyOCR: {e}")
             raise
