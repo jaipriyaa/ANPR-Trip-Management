@@ -114,7 +114,8 @@ class VehicleDetector:
             predictions = self._parse_yolo_output(outputs[0], orig_shape)
         elif self._model_pt is not None:
             input_tensor = self._preprocess(image)
-            device = getattr(config, "GPU_DEVICE", 0) if getattr(config, "GPU_ENABLED", True) else "cpu"
+            import torch
+            device = getattr(config, "GPU_DEVICE", 0) if (getattr(config, "GPU_ENABLED", True) and torch.cuda.is_available()) else "cpu"
             results = self._model_pt(
                 input_tensor,
                 conf=self._conf_threshold,

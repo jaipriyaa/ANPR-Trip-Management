@@ -151,35 +151,31 @@ class OCREngine:
             from app.ai.postprocessing.plate_validator import IndianPlateValidator
             validator = IndianPlateValidator()
 
-        # Build 10 preprocessing variants
+        # Fast high-yield variants evaluated lazily
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) if len(image.shape) == 3 else image.copy()
         h, w = gray.shape[:2]
 
-        variants = [
-            ("original", self._prepare_image(image)),
-            ("upscale_2x", cv2.resize(image, (max(320, w*2), max(96, h*2)), interpolation=cv2.INTER_CUBIC)),
-            ("upscale_3x", cv2.resize(image, (max(320, w*3), max(96, h*3)), interpolation=cv2.INTER_CUBIC)),
-            ("grayscale", cv2.cvtColor(gray, cv2.COLOR_GRAY2BGR)),
-            ("contrast", cv2.cvtColor(cv2.convertScaleAbs(gray, alpha=1.5, beta=10), cv2.COLOR_GRAY2BGR)),
+        clahe = cv2.createCLAHE(clipLimit=3.0, tileGridSize=(8, 8))
+
+        variant_generators = [
+            ("original", lambda: self._prepare_image(image)),
+            ("enhanced", lambda: self._prepare_image(image_enhanced) if (image_enhanced is not None and getattr(image_enhanced, "size", 0) > 0) else None),
+            ("clahe", lambda: cv2.cvtColor(clahe.apply(gray), cv2.COLOR_GRAY2BGR)),
+            ("upscale_2x", lambda: cv2.resize(image, (max(320, w * 2), max(96, h * 2)), interpolation=cv2.INTER_CUBIC)),
+            ("contrast", lambda: cv2.cvtColor(cv2.convertScaleAbs(gray, alpha=1.5, beta=10), cv2.COLOR_GRAY2BGR)),
+            ("grayscale", lambda: cv2.cvtColor(gray, cv2.COLOR_GRAY2BGR)),
+            ("sharpened", lambda: cv2.cvtColor(cv2.filter2D(gray, -1, np.array([[0, -1, 0], [-1, 5, -1], [0, -1, 0]])), cv2.COLOR_GRAY2BGR)),
+            ("otsu", lambda: cv2.cvtColor(cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1], cv2.COLOR_GRAY2BGR)),
+            ("upscale_3x", lambda: cv2.resize(image, (max(320, w * 3), max(96, h * 3)), interpolation=cv2.INTER_CUBIC)),
+            ("denoised", lambda: cv2.cvtColor(cv2.fastNlMeansDenoising(gray, None, h=10, templateWindowSize=7, searchWindowSize=21), cv2.COLOR_GRAY2BGR)),
         ]
 
-        if image_enhanced is not None and getattr(image_enhanced, "size", 0) > 0:
-            variants.append(("enhanced", self._prepare_image(image_enhanced)))
-
-        clahe = cv2.createCLAHE(clipLimit=3.0, tileGridSize=(8, 8))
-        variants.append(("clahe", cv2.cvtColor(clahe.apply(gray), cv2.COLOR_GRAY2BGR)))
-
-        kernel_sharpen = np.array([[0, -1, 0], [-1, 5, -1], [0, -1, 0]])
-        variants.append(("sharpened", cv2.cvtColor(cv2.filter2D(gray, -1, kernel_sharpen), cv2.COLOR_GRAY2BGR)))
-
-        gray_denoise = cv2.fastNlMeansDenoising(gray, None, h=10, templateWindowSize=7, searchWindowSize=21)
-        variants.append(("denoised", cv2.cvtColor(gray_denoise, cv2.COLOR_GRAY2BGR)))
-
-        _, gray_otsu = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-        variants.append(("otsu", cv2.cvtColor(gray_otsu, cv2.COLOR_GRAY2BGR)))
-
         candidates = []
-        for name, var_img in variants:
+        for name, gen_fn in variant_generators:
+            var_img = gen_fn()
+            if var_img is None:
+                continue
+
             ocr_res = self.read(var_img)
             plate_txt = ocr_res.get("plate_text", "")
             raw_txt = ocr_res.get("raw_text", "")
@@ -192,14 +188,19 @@ class OCREngine:
             is_valid = val_res.get("is_valid", False)
             norm_txt = val_res.get("plate_text", plate_txt)
 
-            candidates.append({
+            cand = {
                 "variant": name,
                 "plate_text": norm_txt,
                 "raw_text": raw_txt,
                 "confidence": conf,
                 "is_valid": is_valid,
                 "ocr_res": ocr_res,
-            })
+            }
+            candidates.append(cand)
+
+            # Early exit: If high-confidence valid Indian plate is recognized, stop evaluating further variants
+            if is_valid and conf >= 0.65:
+                break
 
         if not candidates:
             return self.read(image)

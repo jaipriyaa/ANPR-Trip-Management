@@ -36,7 +36,8 @@ def detect_vehicle(image: np.ndarray, conf_threshold: float = 0.5) -> dict:
     start = time.time()
 
     from app.ai import config
-    device = getattr(config, "GPU_DEVICE", 0) if getattr(config, "GPU_ENABLED", True) else "cpu"
+    import torch
+    device = getattr(config, "GPU_DEVICE", 0) if (getattr(config, "GPU_ENABLED", True) and torch.cuda.is_available()) else "cpu"
     results = model(image, conf=conf_threshold, classes=list(COCO_VEHICLE_CLASSES.keys()), device=device, verbose=False)
 
     vehicles = []
