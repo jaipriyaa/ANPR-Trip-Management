@@ -45,8 +45,6 @@ frontend/.env
 *.db
 
 # ML Models, Datasets & Training Run Outputs
-*.pt
-*.engine
 *.tflite
 *.pb
 *.weights
