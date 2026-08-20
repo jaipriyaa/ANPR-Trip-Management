@@ -154,6 +154,7 @@ export default function VehicleRecognitionPage() {
         setIsUploading(false);
         queryClient.invalidateQueries({ queryKey: ['recent-vehicles-recognition'] });
         queryClient.invalidateQueries({ queryKey: ['dataset-all-detections'] });
+        fetchReportData('JSON');
       }, 500);
     } catch (err) {
       setIsUploading(false);
@@ -194,6 +195,7 @@ export default function VehicleRecognitionPage() {
         setSyncModalItem(null);
         refetchRecent();
         refetchDataset();
+        fetchReportData('JSON');
         queryClient.invalidateQueries({ queryKey: ['trips-list'] });
       }, 1500);
     } catch (err) {
@@ -203,8 +205,8 @@ export default function VehicleRecognitionPage() {
     }
   };
 
-  const isImage = selectedFile?.type?.startsWith('image/');
-  const isVideo = selectedFile?.type?.startsWith('video/');
+  const isImage = selectedFile?.type?.startsWith('image/') || /\.(jpg|jpeg|png|webp|bmp|gif)$/i.test(selectedFile?.name || '');
+  const isVideo = selectedFile?.type?.startsWith('video/') || /\.(mp4|avi|mov|mkv|webm)$/i.test(selectedFile?.name || '');
 
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-[#f2f2f2] text-[#0f2931]">
@@ -251,7 +253,7 @@ export default function VehicleRecognitionPage() {
                 </label>
                 
                 <div
-                  className="border-2 border-dashed border-[#2b6777]/40 hover:border-[#52ab98] rounded-2xl p-6 text-center cursor-pointer bg-white transition-all flex flex-col items-center justify-center min-h-[180px] group"
+                  className="border-2 border-dashed border-[#2b6777]/40 hover:border-[#52ab98] rounded-2xl p-4 text-center cursor-pointer bg-white transition-all flex flex-col items-center justify-center min-h-[180px] group overflow-hidden"
                   onClick={() => fileInputRef.current?.click()}
                 >
                   <input
@@ -262,7 +264,20 @@ export default function VehicleRecognitionPage() {
                     onChange={handleFileSelect}
                   />
                   {previewUrl && isImage ? (
-                    <img src={previewUrl} alt="Preview" className="max-h-36 object-contain rounded-xl shadow-md" />
+                    <img src={previewUrl} alt="Preview" className="max-h-40 object-contain rounded-xl shadow-md mx-auto" />
+                  ) : previewUrl && isVideo ? (
+                    <div className="w-full flex flex-col items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
+                      <video
+                        src={previewUrl}
+                        controls
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="max-h-44 w-full object-contain rounded-xl shadow-md bg-black/10"
+                      />
+                      <span className="text-[11px] font-mono text-[#4d6e78] font-bold truncate max-w-full">{selectedFile.name}</span>
+                    </div>
                   ) : selectedFile ? (
                     <div className="space-y-1">
                       <Video className="w-10 h-10 text-[#2b6777] mx-auto" />

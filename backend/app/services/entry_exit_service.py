@@ -14,7 +14,7 @@ from app.schemas.vehicle_movement import VehicleMovementCreate, VehicleMovementU
 logger = logging.getLogger(__name__)
 
 DUPLICATE_TIME_WINDOW_SECONDS = 120  # 2 minutes duplicate suppression window
-CONFIDENCE_THRESHOLD = 0.30         # Minimum OCR confidence threshold
+CONFIDENCE_THRESHOLD = 0.01         # Minimum OCR confidence threshold (inclusive for all recognized plates)
 
 
 def format_stay_duration(total_seconds: float) -> str:

@@ -287,7 +287,9 @@ class VehicleRecognitionService:
             )
 
 
-        plate_text = ai_result.get("plate_text", "")
+        plate_text = ai_result.get("plate_text") or ai_result.get("corrected_plate") or ai_result.get("raw_text") or ai_result.get("raw_ocr") or ""
+        import re
+        plate_text = re.sub(r'[^A-Z0-9]', '', plate_text.upper())
         is_new = False
 
         if plate_text and len(plate_text) >= 4:

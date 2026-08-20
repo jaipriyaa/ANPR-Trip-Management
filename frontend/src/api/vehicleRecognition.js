@@ -3,10 +3,15 @@ import api from './client';
 export const uploadMedia = (file, options = {}, onProgress) => {
   const formData = new FormData();
   formData.append('file', file);
-  if (options.gate_id) formData.append('gate_id', options.gate_id);
-  if (options.driver_id) formData.append('driver_id', options.driver_id);
-  if (options.driver_name) formData.append('driver_name', options.driver_name);
-  if (options.transporter_id) formData.append('transporter_id', options.transporter_id);
+  const gateId = options.gate_id || options.gateId;
+  const driverId = options.driver_id || options.driverId;
+  const driverName = options.driver_name || options.driverName;
+  const transporterId = options.transporter_id || options.transporterId;
+
+  if (gateId) formData.append('gate_id', gateId);
+  if (driverId) formData.append('driver_id', driverId);
+  if (driverName) formData.append('driver_name', driverName);
+  if (transporterId) formData.append('transporter_id', transporterId);
   if (options.direction) formData.append('direction', options.direction);
   if (options.purpose) formData.append('purpose', options.purpose);
   if (options.destination) formData.append('destination', options.destination);
