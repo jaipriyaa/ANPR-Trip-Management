@@ -514,9 +514,6 @@ export default function VehicleRecognitionPage() {
                     <span className="text-[10px] font-mono font-bold bg-[#e8eff4] text-[#2b6777] px-2 py-0.5 rounded-full">YOLOv11 Object Detector</span>
                   </div>
                   <h4 className="font-extrabold text-[#0f2931] text-sm">Vehicle Detection & Tracking</h4>
-                  <p className="text-[#4d6e78] text-[11px] leading-relaxed">
-                    Scans camera frame to detect vehicle boundaries, assigns class color code & tracking ID.
-                  </p>
                 </div>
 
                 {/* CAMERA FRAME SHOWING HOW IT IS DETECTING THE VEHICLE */}
@@ -567,9 +564,6 @@ export default function VehicleRecognitionPage() {
                     <span className="text-[10px] font-mono font-bold bg-[#e8eff4] text-[#2b6777] px-2 py-0.5 rounded-full">Plate Detector & Deskew</span>
                   </div>
                   <h4 className="font-extrabold text-[#0f2931] text-sm">Plate ROI Localization</h4>
-                  <p className="text-[#4d6e78] text-[11px]">
-                    Isolates license plate bounding box within vehicle ROI and performs perspective deskewing.
-                  </p>
                 </div>
 
                 {/* CROPPED PLATE IMAGE DISPLAY */}
@@ -602,9 +596,6 @@ export default function VehicleRecognitionPage() {
                     <span className="text-[10px] font-mono font-bold bg-emerald-500/15 text-[#0d7a63] px-2 py-0.5 rounded-full">EasyOCR + Regex Engine</span>
                   </div>
                   <h4 className="font-extrabold text-[#0f2931] text-sm">OCR & Number Extraction</h4>
-                  <p className="text-[#4d6e78] text-[11px]">
-                    Extracts raw alphanumeric characters and applies Indian RTO regex validation rules.
-                  </p>
                 </div>
 
                 {/* EXTRACTED NUMBER DISPLAY CARD */}
