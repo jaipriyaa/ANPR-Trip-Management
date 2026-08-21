@@ -29,7 +29,7 @@ def test_scenario1_and_scenario2_entry_and_duplicate_protection():
 
     # Scenario 2: Verify duplicate check endpoint / logic
     # Fetch current inside vehicles
-    current_res = client.get("/api/v1/movements/current")
+    current_res = client.get("/api/v1/movements/current?limit=500")
     assert current_res.status_code == 200
     inside_items = current_res.json()["items"]
     inside_plates = [m["recognized_plate"] for m in inside_items]

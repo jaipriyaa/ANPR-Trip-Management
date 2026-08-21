@@ -1,0 +1,11 @@
+{
+  "review_id": "57387fb7-e697-4024-96fe-cf486b9c6040",
+  "raw_ocr_text": "MH12AB2343",
+  "original_ocr": "MH12AB2343",
+  "corrected_plate": "MH12CD2343",
+  "confidence": 0.55,
+  "vehicle_image_path": null,
+  "plate_image_path": null,
+  "reviewed_by": "Security Officer",
+  "timestamp": "2026-08-21T06:55:07.366488+00:00"
+}

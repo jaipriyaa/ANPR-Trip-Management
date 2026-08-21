@@ -1,0 +1,11 @@
+{
+  "review_id": "488e109b-97ee-469c-bc39-941bef0a23a8",
+  "raw_ocr_text": "MH14AB2082",
+  "original_ocr": "MH14AB2082",
+  "corrected_plate": "MH14CD2082",
+  "confidence": 0.6,
+  "vehicle_image_path": null,
+  "plate_image_path": null,
+  "reviewed_by": "Security Officer",
+  "timestamp": "2026-08-21T06:55:07.381269+00:00"
+}

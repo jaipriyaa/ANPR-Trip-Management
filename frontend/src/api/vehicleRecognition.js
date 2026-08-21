@@ -33,8 +33,12 @@ export const getRecognizedVehicles = (params) =>
 export const getRecognizedVehicle = (id) =>
   api.get(`/vehicle-recognition/vehicles/${id}`);
 
-export const getDetectionHistory = (vehicleId, params) =>
-  api.get(`/vehicle-recognition/vehicles/${vehicleId}/detections`, { params });
+export const getDetectionHistory = (vehicleId, params) => {
+  if (!vehicleId || typeof vehicleId === 'object') {
+    return api.get('/vehicle-recognition/detections', { params: vehicleId || params });
+  }
+  return api.get(`/vehicle-recognition/vehicles/${vehicleId}/detections`, { params });
+};
 
 export const getAllDetections = (params) =>
   api.get('/vehicle-recognition/detections', { params });

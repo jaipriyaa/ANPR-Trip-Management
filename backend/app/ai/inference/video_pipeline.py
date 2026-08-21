@@ -428,6 +428,7 @@ class VideoANPRPipeline:
                                         "confidence": conf,
                                         "plate_bbox": bx,
                                         "plate_crop": crop,
+                                        "frame": frame_fb,
                                     }
                 fb_frame_idx += 1
             cap_fb.release()
@@ -460,8 +461,77 @@ class VideoANPRPipeline:
                     }],
                 }]
 
+        # 5. Save Crop Files and Annotated Visualization Frame when output_dir is provided
+        annotated_path = None
+        if output_dir:
+            import uuid
+            from app.ai.visualization import annotate_image
+            os.makedirs(output_dir, exist_ok=True)
+            file_uid = str(uuid.uuid4())[:8]
+
+            # Generate annotated visualization on best frame sample
+            all_tracked = []
+            all_plates = []
+            sample_frame = None
+
+            for veh in deduplicated_vehicles:
+                all_tracked.append({
+                    "tracking_id": veh.get("tracking_id", ""),
+                    "vehicle_type": veh.get("vehicle_type", "Vehicle"),
+                    "vehicle_confidence": veh.get("vehicle_confidence", 0.9),
+                    "vehicle_bbox": veh.get("vehicle_bbox"),
+                })
+                for pl in veh.get("plates", []):
+                    if pl.get("plate_bbox"):
+                        all_plates.append({"plate_bbox": pl["plate_bbox"], "confidence": pl.get("confidence", 0.9)})
+
+            # Extract a frame for visualization overlay
+            cap_vis = cv2.VideoCapture(video_path)
+            if cap_vis.isOpened():
+                ret_v, frame_v = cap_vis.read()
+                if ret_v and frame_v is not None:
+                    sample_frame = frame_v
+                cap_vis.release()
+
+            if isinstance(sample_frame, np.ndarray) and sample_frame.size > 0:
+                ann_img = annotate_image(sample_frame, all_tracked, all_plates)
+                annotated_filename = f"annotated_{file_uid}.jpg"
+                annotated_path = os.path.join(output_dir, annotated_filename)
+                cv2.imwrite(annotated_path, ann_img)
+
+            # Write crops for each vehicle & plate
+            for idx, veh in enumerate(deduplicated_vehicles):
+                v_crop_arr = veh.get("vehicle_crop")
+                if isinstance(v_crop_arr, np.ndarray) and v_crop_arr.size > 0:
+                    v_crop_filename = f"veh_crop_{file_uid}_{idx}.jpg"
+                    v_crop_path = os.path.join(output_dir, v_crop_filename)
+                    cv2.imwrite(v_crop_path, v_crop_arr)
+                    veh["crop_path"] = v_crop_path
+
+                for p_idx, pl in enumerate(veh.get("plates", [])):
+                    p_crop_arr = pl.get("plate_crop")
+                    # Fallback to lower-center bumper ROI if plate crop array is empty
+                    if p_crop_arr is None or (isinstance(p_crop_arr, np.ndarray) and p_crop_arr.size == 0):
+                        if isinstance(v_crop_arr, np.ndarray) and v_crop_arr.size > 0:
+                            vh, vw = v_crop_arr.shape[:2]
+                            by1 = int(vh * 0.50)
+                            by2 = int(vh * 0.92)
+                            bx1 = int(vw * 0.20)
+                            bx2 = int(vw * 0.80)
+                            p_crop_arr = v_crop_arr[by1:by2, bx1:bx2].copy()
+                            pl["plate_crop"] = p_crop_arr
+
+                    if isinstance(p_crop_arr, np.ndarray) and p_crop_arr.size > 0:
+                        p_crop_filename = f"plate_crop_{file_uid}_{idx}_{p_idx}.jpg"
+                        p_crop_path = os.path.join(output_dir, p_crop_filename)
+                        cv2.imwrite(p_crop_path, p_crop_arr)
+                        pl["crop_path"] = p_crop_path
+
         total_processing_sec = round(time.time() - start_time, 3)
         duplicates_removed = max(0, total_frame_detections - len(deduplicated_vehicles))
+
+        top_v = deduplicated_vehicles[0] if deduplicated_vehicles else {}
+        top_p = top_v.get("plates", [{}])[0] if top_v.get("plates") else {}
 
         return {
             "processing_time": total_processing_sec,
@@ -472,6 +542,9 @@ class VideoANPRPipeline:
             "tracked_vehicle_count": len(deduplicated_vehicles),
             "duplicates_eliminated_count": duplicates_removed,
             "vehicles": deduplicated_vehicles,
+            "cropped_vehicle_path": top_v.get("crop_path"),
+            "cropped_plate_path": top_p.get("crop_path"),
+            "annotated_image_path": annotated_path,
         }
 
 

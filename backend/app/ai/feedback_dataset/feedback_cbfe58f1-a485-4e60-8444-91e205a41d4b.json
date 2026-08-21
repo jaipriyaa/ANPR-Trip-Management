@@ -1,0 +1,11 @@
+{
+  "review_id": "cbfe58f1-a485-4e60-8444-91e205a41d4b",
+  "raw_ocr_text": "03 ACU 808",
+  "original_ocr": "03ACU808",
+  "corrected_plate": "MH14TCF200F",
+  "confidence": 0.8431,
+  "vehicle_image_path": "c:\\Users\\Manoj Kumar\\Desktop\\ANPR-Trip-Management\\backend\\uploads\\processed\\veh_crop_2dccac64_0.jpg",
+  "plate_image_path": "c:\\Users\\Manoj Kumar\\Desktop\\ANPR-Trip-Management\\backend\\uploads\\processed\\plate_crop_2dccac64_0_0.jpg",
+  "reviewed_by": "Major Rajesh Verma",
+  "timestamp": "2026-08-21T06:55:00.550351+00:00"
+}

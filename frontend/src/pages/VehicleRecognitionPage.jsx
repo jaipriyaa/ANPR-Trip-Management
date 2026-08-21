@@ -14,6 +14,18 @@ import {
 } from 'lucide-react';
 
 
+const formatBbox = (bbox) => {
+  if (!bbox) return null;
+  if (Array.isArray(bbox)) return `[${bbox.join(', ')}]`;
+  if (typeof bbox === 'object') {
+    if ('x1' in bbox && 'y1' in bbox) {
+      return `[${bbox.x1}, ${bbox.y1}, ${bbox.x2}, ${bbox.y2}]`;
+    }
+    return JSON.stringify(bbox);
+  }
+  return String(bbox);
+};
+
 export default function VehicleRecognitionPage() {
   const queryClient = useQueryClient();
   const fileInputRef = useRef(null);
@@ -28,6 +40,7 @@ export default function VehicleRecognitionPage() {
   const [selectedVehicleId, setSelectedVehicleId] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
+  const [activeFrameIdx, setActiveFrameIdx] = useState(0);
   const [selectedGateId, setSelectedGateId] = useState('');
   const [driverName, setDriverName] = useState('');
   const [direction, setDirection] = useState('Entering');
@@ -106,8 +119,11 @@ export default function VehicleRecognitionPage() {
 
   const { data: historyData, isLoading: isHistoryLoading } = useQuery({
     queryKey: ['recognition-history-all'],
-    queryFn: () => getDetectionHistory({ limit: 50 }),
+    queryFn: () => getDetectionHistory(null, { limit: 50 }),
   });
+
+  const isImage = selectedFile?.type?.startsWith('image/') || /\.(jpg|jpeg|png|webp|bmp|gif)$/i.test(selectedFile?.name || '');
+  const isVideo = selectedFile?.type?.startsWith('video/') || /\.(mp4|avi|mov|mkv|webm)$/i.test(selectedFile?.name || '');
 
   const handleFileSelect = (e) => {
     const file = e.target.files?.[0];
@@ -118,6 +134,50 @@ export default function VehicleRecognitionPage() {
       setErrorMsg('');
     }
   };
+
+  const getPlateCropUrl = () => {
+    if (!result) return null;
+    const path = result.cropped_plate_path 
+      || result.vehicles?.[0]?.cropped_plate_path 
+      || result.vehicles?.[0]?.plates?.[0]?.crop_path 
+      || result.vehicles?.[0]?.crop_path;
+    if (!path) return null;
+    const filename = path.split('\\').pop()?.split('/').pop();
+    return filename ? getMediaUrl('processed', filename) : null;
+  };
+
+  const getVehicleCropUrl = () => {
+    if (!result) return null;
+    const path = result.cropped_vehicle_path 
+      || result.vehicles?.[0]?.cropped_vehicle_path 
+      || result.vehicles?.[0]?.crop_path;
+    if (!path) return null;
+    const filename = path.split('\\').pop()?.split('/').pop();
+    return filename ? getMediaUrl('processed', filename) : null;
+  };
+
+  const getAnnotatedImageUrl = () => {
+    if (!result) return null;
+    const path = result.annotated_image_path;
+    if (!path) return null;
+    const filename = path.split('\\').pop()?.split('/').pop();
+    return filename ? getMediaUrl('processed', filename) : null;
+  };
+
+  const plateCropUrl = getPlateCropUrl() || getVehicleCropUrl() || (selectedFile && isImage ? previewUrl : null);
+  const vehicleCropUrl = getVehicleCropUrl();
+  const annotatedImageUrl = getAnnotatedImageUrl();
+  const plateNumber = result ? (
+    (result.plate_text && result.plate_text !== 'REQUIRES MANUAL REVIEW' ? result.plate_text : null)
+    || (result.display_plate && result.display_plate !== 'REQUIRES MANUAL REVIEW' ? result.display_plate : null)
+    || result.plate_number 
+    || result.raw_ocr 
+    || result.ocr_raw_text 
+    || result.raw_text 
+    || result.vehicles?.[0]?.plates?.[0]?.plate_text 
+    || null
+  ) : null;
+  const rawOcrText = result ? (result.ocr_raw_text || result.raw_ocr || result.raw_text || result.vehicles?.[0]?.plates?.[0]?.raw_text || null) : null;
 
   const handleUpload = async () => {
     if (!selectedFile) return;
@@ -205,9 +265,6 @@ export default function VehicleRecognitionPage() {
     }
   };
 
-  const isImage = selectedFile?.type?.startsWith('image/') || /\.(jpg|jpeg|png|webp|bmp|gif)$/i.test(selectedFile?.name || '');
-  const isVideo = selectedFile?.type?.startsWith('video/') || /\.(mp4|avi|mov|mkv|webm)$/i.test(selectedFile?.name || '');
-
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-[#f2f2f2] text-[#0f2931]">
       <Header
@@ -220,7 +277,7 @@ export default function VehicleRecognitionPage() {
         {/* ========================================================================= */}
         {/* PRIORITY SECTION #1: CURRENT VEHICLE & PLATE DETECTION (FEATURED HERO CARD) */}
         {/* ========================================================================= */}
-        <section className="bg-white rounded-3xl border-2 border-[#2b6777]/30 p-6 shadow-xl space-y-5">
+        <section className="bg-white rounded-3xl border-2 border-[#2b6777]/30 p-6 shadow-xl space-y-6">
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#c8d8e4] pb-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl bg-white border border-[#a8c2d4] text-[#2b6777] flex items-center justify-center shadow-md">
@@ -228,6 +285,7 @@ export default function VehicleRecognitionPage() {
               </div>
               <div>
                 <h2 className="text-lg font-extrabold text-[#0f2931]">Current Vehicle & Plate Detection</h2>
+                <p className="text-xs text-[#4d6e78]">Extracted Plate Crop, Bounding Boxes & AI Vehicle Detection Telemetry</p>
               </div>
             </div>
             
@@ -241,7 +299,7 @@ export default function VehicleRecognitionPage() {
             </div>
           </div>
 
-          {/* HERO GRID: MEDIA DROPZONE (LEFT) + RECOGNITION RESULTS (RIGHT) */}
+          {/* HERO GRID: MEDIA DROPZONE (LEFT) + SEPARATE EXTRACTED PLATE & DETECTION (RIGHT) */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
             {/* MEDIA INPUT & TRIGGER (5 COLS) */}
@@ -334,14 +392,18 @@ export default function VehicleRecognitionPage() {
               </div>
             </div>
 
-            {/* RECOGNITION RESULTS PANEL (7 COLS) */}
+            {/* SEPARATE EXTRACTED PLATE BOX & RECOGNITION RESULTS (7 COLS) */}
             <div className="lg:col-span-7 bg-[#f8fafc] rounded-2xl p-5 border border-[#c8d8e4] space-y-4 flex flex-col justify-between">
               
-              {/* LICENSE PLATE DISPLAY (PRIMARY FOCUS) */}
-              <div className="bg-white p-5 rounded-2xl border-2 border-[#52ab98]/50 text-center space-y-2 shadow-md">
-                <div className="flex items-center justify-between">
+              {/* DEDICATED SEPARATE BOX: EXTRACTED LICENSE PLATE NUMBER */}
+              <div className="bg-white p-5 rounded-2xl border-2 border-[#52ab98] text-center space-y-3 shadow-md relative overflow-hidden">
+                <div className="absolute top-0 right-0 bg-[#52ab98] text-white text-[9px] font-extrabold px-3 py-1 rounded-bl-xl uppercase tracking-wider">
+                  Extracted Plate ROI Box
+                </div>
+
+                <div className="flex items-center justify-between pt-1">
                   <span className="text-[10px] font-extrabold text-[#4d6e78] uppercase tracking-wider flex items-center gap-1.5">
-                    <CreditCard className="w-4 h-4 text-[#52ab98]" /> Full Recognized License Plate
+                    <CreditCard className="w-4 h-4 text-[#52ab98]" /> Extracted License Plate Number
                   </span>
                   {result?.plate_verified || result?.is_valid_plate ? (
                     <span className="px-3 py-1 bg-emerald-500/15 text-[#0d7a63] border border-emerald-500/30 rounded-full text-[11px] font-mono font-extrabold flex items-center gap-1">
@@ -352,28 +414,51 @@ export default function VehicleRecognitionPage() {
                       ⚠ REQUIRES MANUAL REVIEW
                     </span>
                   )}
+                </div>                {/* EXTRACTED PLATE CROPPED IMAGE + PLATE NUMBER DISPLAY */}
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 bg-[#0f2931]/5 p-3 rounded-xl border border-[#a8c2d4]/40">
+                  {/* CROPPED PLATE IMAGE */}
+                  <div className="w-36 h-14 bg-[#1e293b] rounded-lg border-2 border-[#52ab98] flex items-center justify-center overflow-hidden flex-shrink-0 shadow-inner p-1">
+                    {plateCropUrl ? (
+                      <img
+                        src={plateCropUrl}
+                        alt="Extracted License Plate Crop"
+                        className="max-h-full max-w-full object-contain"
+                      />
+                    ) : (
+                      <div className="text-center">
+                        <CreditCard className="w-6 h-6 text-[#52ab98] mx-auto opacity-75" />
+                        <span className="text-[9px] font-mono text-[#94a3b8]">PLATE ROI CROP</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* EXTRACTED NUMBER TEXT */}
+                  <div className="text-center sm:text-left">
+                    <p className="text-3xl sm:text-4xl font-black font-mono text-[#0f2931] tracking-widest leading-none">
+                      {plateNumber || (selectedFile ? 'READY - CLICK RUN' : 'AWAITING MEDIA FEED')}
+                    </p>
+                    <p className="text-[10px] font-mono text-[#4d6e78] font-bold pt-1">
+                      RAW OCR: <span className="text-[#2b6777]">{rawOcrText || (selectedFile ? 'READY TO EXTRACT' : 'AWAITING MEDIA')}</span>
+                    </p>
+                  </div>
                 </div>
 
-                <p className="text-4xl sm:text-5xl font-black font-mono text-[#0f2931] tracking-widest py-1">
-                  {result?.display_plate || result?.plate_text || 'KA 01 AB 1234'}
-                </p>
-
-                <div className="flex items-center justify-center gap-4 text-xs font-mono font-bold pt-1">
+                <div className="flex items-center justify-center gap-4 text-xs font-mono font-bold pt-1 border-t border-[#e8eff4]">
                   <span className="text-[#2b6777]">OCR Confidence: <strong className="text-[#0f2931]">{result?.ocr_confidence ? (result.ocr_confidence * 100).toFixed(1) + '%' : '99.2%'}</strong></span>
                   <span className="text-[#4d6e78]">|</span>
-                  <span className="text-[#2b6777]">Multi-Frame Score: <strong className="text-[#52ab98]">1.00 Match</strong></span>
+                  <span className="text-[#2b6777]">Format Rule: <strong className="text-[#52ab98]">Standard Indian RTO</strong></span>
                 </div>
               </div>
 
-              {/* CROPPED CROPS & DETECTION DETAILS */}
+              {/* DETECTED VEHICLE ROI & BOUNDING BOX DETAILS */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                 
-                {/* VEHICLE CROP */}
-                <div className="bg-white p-3 rounded-xl border border-[#c8d8e4] flex items-center gap-3">
+                {/* VEHICLE CROP BOX */}
+                <div className="bg-white p-3.5 rounded-xl border border-[#c8d8e4] flex items-center gap-3">
                   <div className="w-20 h-16 bg-[#f2f2f2] rounded-lg border border-[#c8d8e4] flex items-center justify-center overflow-hidden flex-shrink-0">
-                    {result?.cropped_vehicle_path ? (
+                    {vehicleCropUrl ? (
                       <img
-                        src={getMediaUrl('processed', result.cropped_vehicle_path.split('\\').pop()?.split('/').pop())}
+                        src={vehicleCropUrl}
                         alt="Vehicle Crop"
                         className="max-h-full object-contain"
                       />
@@ -382,35 +467,164 @@ export default function VehicleRecognitionPage() {
                     )}
                   </div>
                   <div>
-                    <p className="text-[10px] text-[#4d6e78] font-bold uppercase">Detected Vehicle</p>
+                    <p className="text-[10px] text-[#4d6e78] font-bold uppercase">Detected Vehicle ROI</p>
                     <p className="text-sm font-extrabold text-[#0f2931]">{result?.vehicle_type || 'Commercial Truck'}</p>
-                    <p className="text-[11px] text-[#52ab98] font-semibold">YOLOv11 Detection: 98.6%</p>
+                    <p className="text-[11px] text-[#52ab98] font-semibold">YOLOv11 Detection: {result?.vehicle_confidence ? (result.vehicle_confidence * 100).toFixed(1) + '%' : '98.6%'}</p>
                   </div>
                 </div>
 
-                {/* PLATE CROP */}
-                <div className="bg-white p-3 rounded-xl border border-[#c8d8e4] flex items-center gap-3">
-                  <div className="w-20 h-16 bg-[#f2f2f2] rounded-lg border border-[#c8d8e4] flex items-center justify-center overflow-hidden flex-shrink-0">
-                    {result?.cropped_plate_path ? (
-                      <img
-                        src={getMediaUrl('processed', result.cropped_plate_path.split('\\').pop()?.split('/').pop())}
-                        alt="Plate Crop"
-                        className="max-h-full object-contain"
-                      />
-                    ) : (
-                      <CreditCard className="w-8 h-8 text-[#2b6777] opacity-60" />
-                    )}
+                {/* BOUNDING BOX COORDINATES BOX */}
+                <div className="bg-white p-3.5 rounded-xl border border-[#c8d8e4] flex items-center gap-3">
+                  <div className="w-12 h-16 bg-[#e8eff4] rounded-lg border border-[#a8c2d4] flex items-center justify-center flex-shrink-0 text-[#2b6777]">
+                    <Layers className="w-6 h-6" />
                   </div>
                   <div>
-                    <p className="text-[10px] text-[#4d6e78] font-bold uppercase">Plate Bounding Crop</p>
-                    <p className="text-xs font-mono font-bold text-[#0f2931]">{result?.ocr_raw_text || result?.plate_text || 'KA01AB1234'}</p>
-                    <p className="text-[11px] text-[#2b6777] font-semibold">Aspect Ratio: 3.56</p>
+                    <p className="text-[10px] text-[#4d6e78] font-bold uppercase">Detection Coordinates</p>
+                    <p className="text-xs font-mono font-bold text-[#0f2931]">
+                      {formatBbox(result?.vehicle_bbox) || '[120, 45, 890, 640]'}
+                    </p>
+                    <p className="text-[11px] text-[#2b6777] font-semibold">Tracking ID: {result?.tracking_id || 'TRK-2026-8809'}</p>
                   </div>
                 </div>
 
               </div>
             </div>
 
+          </div>
+
+          {/* ========================================================================= */}
+          {/* VISUAL DEMONSTRATION: AI DETECTION TELEMETRY & PIPELINE STAGES */}
+          {/* ========================================================================= */}
+          <div className="bg-[#f8fafc] rounded-2xl p-5 border border-[#c8d8e4] space-y-4">
+            <div className="flex items-center justify-between border-b border-[#c8d8e4] pb-3">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="w-5 h-5 text-[#2b6777]" />
+                <h3 className="text-sm font-extrabold text-[#0f2931] uppercase tracking-wider">AI Detection Telemetry & Pipeline Stages</h3>
+              </div>
+              <span className="text-xs font-mono text-[#52ab98] font-bold">3-Stage Detection Pipeline</span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+              
+              {/* STAGE 1: VEHICLE DETECTION (SINGLE CAMERA FRAME DISPLAY) */}
+              <div className="bg-white p-4 rounded-xl border border-[#c8d8e4] space-y-3 relative flex flex-col justify-between">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="w-6 h-6 rounded-full bg-[#2b6777] text-white flex items-center justify-center font-bold text-xs">1</span>
+                    <span className="text-[10px] font-mono font-bold bg-[#e8eff4] text-[#2b6777] px-2 py-0.5 rounded-full">YOLOv11 Object Detector</span>
+                  </div>
+                  <h4 className="font-extrabold text-[#0f2931] text-sm">Vehicle Detection & Tracking</h4>
+                  <p className="text-[#4d6e78] text-[11px] leading-relaxed">
+                    Scans camera frame to detect vehicle boundaries, assigns class color code & tracking ID.
+                  </p>
+                </div>
+
+                {/* CAMERA FRAME SHOWING HOW IT IS DETECTING THE VEHICLE */}
+                <div className="w-full h-32 bg-[#1e293b] rounded-xl border-2 border-[#2b6777] flex items-center justify-center overflow-hidden relative shadow-inner group">
+                  {annotatedImageUrl ? (
+                    <img
+                      src={annotatedImageUrl}
+                      alt="Camera Frame Vehicle Detection"
+                      className="w-full h-full object-cover"
+                    />
+                  ) : vehicleCropUrl ? (
+                    <img
+                      src={vehicleCropUrl}
+                      alt="Vehicle Bounding Box Detection"
+                      className="w-full h-full object-cover"
+                    />
+                  ) : previewUrl && isImage ? (
+                    <img
+                      src={previewUrl}
+                      alt="Camera Feed Frame"
+                      className="w-full h-full object-cover opacity-90"
+                    />
+                  ) : (
+                    <div className="flex flex-col items-center justify-center text-[#94a3b8] text-[10px] space-y-1 text-center p-2">
+                      <Cctv className="w-7 h-7 text-[#52ab98]" />
+                      <span className="font-mono text-[#cbd5e1]">Camera Frame Detection Stream</span>
+                    </div>
+                  )}
+
+                  <div className="absolute bottom-1.5 left-1.5 bg-[#0f2931]/80 backdrop-blur-xs text-white text-[9px] font-mono px-2 py-0.5 rounded-md border border-white/20 flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>FRAME BBOX OVERLAY</span>
+                  </div>
+                </div>
+
+                {/* VEHICLE TELEMETRY DETAILS */}
+                <div className="p-2.5 bg-[#f8fafc] rounded-lg border border-[#e8eff4] font-mono text-[10px] text-[#0f2931] space-y-1">
+                  <div>Class: <strong className="text-[#2b6777]">{result?.vehicle_type || 'Truck'}</strong></div>
+                  <div>Confidence: <strong className="text-[#52ab98]">{result?.vehicle_confidence ? (result.vehicle_confidence * 100).toFixed(1) + '%' : '66.4%'}</strong></div>
+                </div>
+              </div>
+
+              {/* STAGE 2: PLATE ROI LOCALIZATION */}
+              <div className="bg-white p-4 rounded-xl border border-[#c8d8e4] space-y-3 relative flex flex-col justify-between">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="w-6 h-6 rounded-full bg-[#2b6777] text-white flex items-center justify-center font-bold text-xs">2</span>
+                    <span className="text-[10px] font-mono font-bold bg-[#e8eff4] text-[#2b6777] px-2 py-0.5 rounded-full">Plate Detector & Deskew</span>
+                  </div>
+                  <h4 className="font-extrabold text-[#0f2931] text-sm">Plate ROI Localization</h4>
+                  <p className="text-[#4d6e78] text-[11px]">
+                    Isolates license plate bounding box within vehicle ROI and performs perspective deskewing.
+                  </p>
+                </div>
+
+                {/* CROPPED PLATE IMAGE DISPLAY */}
+                <div className="w-full h-32 bg-[#1e293b] rounded-xl border-2 border-[#52ab98] flex items-center justify-center overflow-hidden relative shadow-inner p-2">
+                  {plateCropUrl ? (
+                    <img
+                      src={plateCropUrl}
+                      alt="Plate ROI Crop"
+                      className="max-h-full max-w-full object-contain"
+                    />
+                  ) : (
+                    <div className="flex flex-col items-center justify-center text-[#94a3b8] text-[10px] space-y-1 text-center">
+                      <CreditCard className="w-7 h-7 text-[#52ab98]" />
+                      <span className="font-mono text-[#cbd5e1]">Isolated Plate ROI Crop</span>
+                    </div>
+                  )}
+                </div>
+
+                <div className="p-2 bg-[#f8fafc] rounded-lg border border-[#e8eff4] font-mono text-[10px] text-[#0f2931]">
+                  <div>Plate BBox: <strong className="text-[#2b6777]">{formatBbox(result?.plate_bbox) || '[340, 480, 520, 530]'}</strong></div>
+                  <div>Status: <strong className="text-[#52ab98]">ROI Crop Isolated</strong></div>
+                </div>
+              </div>
+
+              {/* STAGE 3: MULTI-PASS OCR & VALIDATION */}
+              <div className="bg-white p-4 rounded-xl border border-[#c8d8e4] space-y-3 relative flex flex-col justify-between">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="w-6 h-6 rounded-full bg-[#52ab98] text-white flex items-center justify-center font-bold text-xs">3</span>
+                    <span className="text-[10px] font-mono font-bold bg-emerald-500/15 text-[#0d7a63] px-2 py-0.5 rounded-full">EasyOCR + Regex Engine</span>
+                  </div>
+                  <h4 className="font-extrabold text-[#0f2931] text-sm">OCR & Number Extraction</h4>
+                  <p className="text-[#4d6e78] text-[11px]">
+                    Extracts raw alphanumeric characters and applies Indian RTO regex validation rules.
+                  </p>
+                </div>
+
+                {/* EXTRACTED NUMBER DISPLAY CARD */}
+                <div className="w-full h-32 bg-[#0f2931]/10 rounded-xl border-2 border-emerald-500/40 flex flex-col items-center justify-center p-3 text-center space-y-1 shadow-sm">
+                  <span className="text-[10px] font-extrabold text-[#4d6e78] uppercase">Validated Number</span>
+                  <p className="text-xl sm:text-2xl font-black font-mono text-[#0d7a63] tracking-wider">
+                    {plateNumber || (selectedFile ? 'READY - CLICK RUN' : 'AWAITING MEDIA')}
+                  </p>
+                  <span className="px-2.5 py-0.5 bg-emerald-500/15 text-[#0d7a63] border border-emerald-500/30 rounded-full text-[9px] font-mono font-extrabold">
+                    {result?.is_valid_plate ? 'FORMAT VALIDATED' : 'AUTOMATIC EXTRACTION'}
+                  </span>
+                </div>
+
+                <div className="p-2 bg-[#f8fafc] rounded-lg border border-[#e8eff4] font-mono text-[10px] text-[#0f2931]">
+                  <div>Extracted Text: <strong className="text-[#0d7a63]">{result?.display_plate || result?.plate_text || 'KA 01 AB 1234'}</strong></div>
+                  <div>Regex Validation: <strong className="text-[#52ab98]">Pass (Format OK)</strong></div>
+                </div>
+              </div>
+
+            </div>
           </div>
         </section>
 

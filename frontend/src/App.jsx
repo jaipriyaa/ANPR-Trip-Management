@@ -45,6 +45,10 @@ export default function App() {
           <Route path="/vehicle-plates" element={<VehiclePlatesPage />} />
           <Route path="/drivers" element={<DriversPage />} />
           <Route path="/vehicle-recognition" element={<VehicleRecognitionPage />} />
+          <Route path="/vehicle_recognition" element={<VehicleRecognitionPage />} />
+          <Route path="/vehicle recognition" element={<VehicleRecognitionPage />} />
+          <Route path="/vehicle%20recognition" element={<VehicleRecognitionPage />} />
+          <Route path="/vehicle" element={<VehicleRecognitionPage />} />
           <Route path="/gates" element={<GateManagementPage />} />
           <Route path="/entry-exit" element={<EntryExitLogPage />} />
           <Route path="/live-gate" element={<LiveGateMonitorPage />} />

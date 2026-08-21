@@ -1,0 +1,11 @@
+{
+  "review_id": "aa2c4147-bc17-47f0-aa4f-fda5bedb1dbd",
+  "raw_ocr_text": "MH14AB7343",
+  "original_ocr": "MH14AB7343",
+  "corrected_plate": "MH14CD7343",
+  "confidence": 0.6,
+  "vehicle_image_path": null,
+  "plate_image_path": null,
+  "reviewed_by": "Security Officer",
+  "timestamp": "2026-08-21T04:13:58.251803+00:00"
+}

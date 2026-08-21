@@ -1,0 +1,11 @@
+{
+  "review_id": "e6b2153f-dc56-4e0a-b038-a44112e8e44f",
+  "raw_ocr_text": "KA01AB3267",
+  "original_ocr": "KA01AB3267",
+  "corrected_plate": "KA01CD3267",
+  "confidence": 0.6,
+  "vehicle_image_path": null,
+  "plate_image_path": null,
+  "reviewed_by": "Security Officer",
+  "timestamp": "2026-08-21T06:55:07.410946+00:00"
+}

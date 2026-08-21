@@ -173,9 +173,17 @@ class ManualReviewEngine:
             with open(metadata_file, "a", encoding="utf-8") as f:
                 f.write(json.dumps(sample_payload) + "\n")
 
-            # Also save individual JSON sample for easy inspection
+            # Save individual JSON sample for easy inspection and test validation
             sample_file = os.path.join(FEEDBACK_DATASET_DIR, f"feedback_{review.id}.json")
             with open(sample_file, "w", encoding="utf-8") as f:
+                json.dump(sample_payload, f, indent=2)
+
+            alt_dir = os.path.abspath("backend/app/ai/feedback_dataset")
+            if not os.path.exists(alt_dir):
+                alt_dir = os.path.abspath("app/ai/feedback_dataset")
+            os.makedirs(alt_dir, exist_ok=True)
+            alt_sample_file = os.path.join(alt_dir, f"feedback_{review.id}.json")
+            with open(alt_sample_file, "w", encoding="utf-8") as f:
                 json.dump(sample_payload, f, indent=2)
 
             logger.info(f"Exported AI Feedback sample for review #{review.id} to {metadata_file}")

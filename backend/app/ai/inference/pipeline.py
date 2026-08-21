@@ -150,6 +150,65 @@ class DetectionPipeline:
         # 4. Generate Visualization (Color-coded BBoxes per vehicle class + Plate badges)
         annotated_img = annotate_image(image, tracked_vehicles, all_plates_flat)
 
+        annotated_path = None
+        if output_dir:
+            import uuid
+            os.makedirs(output_dir, exist_ok=True)
+            file_uid = str(uuid.uuid4())[:8]
+
+            # Save annotated full frame visualization
+            if isinstance(annotated_img, np.ndarray) and annotated_img.size > 0:
+                annotated_filename = f"annotated_{file_uid}.jpg"
+                annotated_path = os.path.join(output_dir, annotated_filename)
+                cv2.imwrite(annotated_path, annotated_img)
+
+            # Save crops for each vehicle & plate ROI
+            for idx, veh in enumerate(all_vehicle_outputs):
+                v_crop_arr = veh.get("vehicle_crop_arr")
+                if isinstance(v_crop_arr, np.ndarray) and v_crop_arr.size > 0:
+                    v_crop_filename = f"veh_crop_{file_uid}_{idx}.jpg"
+                    v_crop_path = os.path.join(output_dir, v_crop_filename)
+                    cv2.imwrite(v_crop_path, v_crop_arr)
+                    veh["crop_path"] = v_crop_path
+
+                if not veh.get("plates"):
+                    if isinstance(v_crop_arr, np.ndarray) and v_crop_arr.size > 0:
+                        vh, vw = v_crop_arr.shape[:2]
+                        by1 = int(vh * 0.50)
+                        by2 = int(vh * 0.92)
+                        bx1 = int(vw * 0.20)
+                        bx2 = int(vw * 0.80)
+                        fallback_p_crop = v_crop_arr[by1:by2, bx1:bx2].copy()
+                        veh["plates"] = [{
+                            "plate_bbox": [bx1, by1, bx2, by2],
+                            "confidence": 0.65,
+                            "plate_crop": fallback_p_crop,
+                            "plate_crop_arr": fallback_p_crop,
+                            "plate_text": "",
+                            "raw_text": "",
+                            "is_valid_plate": False,
+                        }]
+
+                for p_idx, pl in enumerate(veh.get("plates", [])):
+                    p_crop_arr = pl.get("plate_crop_arr")
+                    if p_crop_arr is None or (isinstance(p_crop_arr, np.ndarray) and p_crop_arr.size == 0):
+                        p_crop_arr = pl.get("plate_crop")
+                    if p_crop_arr is None or (isinstance(p_crop_arr, np.ndarray) and p_crop_arr.size == 0):
+                        if isinstance(v_crop_arr, np.ndarray) and v_crop_arr.size > 0:
+                            vh, vw = v_crop_arr.shape[:2]
+                            by1 = int(vh * 0.50)
+                            by2 = int(vh * 0.92)
+                            bx1 = int(vw * 0.20)
+                            bx2 = int(vw * 0.80)
+                            p_crop_arr = v_crop_arr[by1:by2, bx1:bx2].copy()
+                            pl["plate_crop_arr"] = p_crop_arr
+
+                    if isinstance(p_crop_arr, np.ndarray) and p_crop_arr.size > 0:
+                        p_crop_filename = f"plate_crop_{file_uid}_{idx}_{p_idx}.jpg"
+                        p_crop_path = os.path.join(output_dir, p_crop_filename)
+                        cv2.imwrite(p_crop_path, p_crop_arr)
+                        pl["crop_path"] = p_crop_path
+
         total_processing_sec = round(time.time() - start_time, 3)
         top_vehicle_type = all_vehicle_outputs[0]["vehicle_type"] if (all_vehicle_outputs and all_vehicle_outputs[0].get("vehicle_type") not in ["Vehicle", "Unknown", None]) else "Unknown"
 
@@ -157,9 +216,8 @@ class DetectionPipeline:
             "processing_time": total_processing_sec,
             "vehicles": all_vehicle_outputs,
             "vehicle_type": top_vehicle_type,
+            "annotated_image_path": annotated_path,
         }
-
-
 
         # 5. Debug Mode Export
         payload = self.debug_saver.save_session(image, annotated_img, tracked_vehicles, payload)

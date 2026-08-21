@@ -1,0 +1,11 @@
+{
+  "review_id": "a3af8929-1bce-4b9a-b5d0-540856b90339",
+  "raw_ocr_text": "MH20AB5616",
+  "original_ocr": "MH20AB5616",
+  "corrected_plate": "MH20CD5616",
+  "confidence": 0.6,
+  "vehicle_image_path": null,
+  "plate_image_path": null,
+  "reviewed_by": "Security Officer",
+  "timestamp": "2026-08-21T04:13:58.268664+00:00"
+}

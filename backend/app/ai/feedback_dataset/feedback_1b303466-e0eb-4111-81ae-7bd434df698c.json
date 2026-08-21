@@ -1,0 +1,11 @@
+{
+  "review_id": "1b303466-e0eb-4111-81ae-7bd434df698c",
+  "raw_ocr_text": "MH20AB3934",
+  "original_ocr": "MH20AB3934",
+  "corrected_plate": "MH20CD3934",
+  "confidence": 0.6,
+  "vehicle_image_path": null,
+  "plate_image_path": null,
+  "reviewed_by": "Security Officer",
+  "timestamp": "2026-08-21T06:55:07.397351+00:00"
+}

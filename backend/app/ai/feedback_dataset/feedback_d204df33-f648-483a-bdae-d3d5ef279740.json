@@ -1,0 +1,11 @@
+{
+  "review_id": "d204df33-f648-483a-bdae-d3d5ef279740",
+  "raw_ocr_text": "MH12AB7608",
+  "original_ocr": "MH12AB7608",
+  "corrected_plate": "MH12CD7608",
+  "confidence": 0.55,
+  "vehicle_image_path": null,
+  "plate_image_path": null,
+  "reviewed_by": "Security Officer",
+  "timestamp": "2026-08-21T04:13:58.236254+00:00"
+}

@@ -51,8 +51,8 @@ class ANPRPipeline:
 
         primary_vehicle, primary_plate = self._find_best_plate(res)
 
-        crop_veh_path = primary_vehicle.get("crop_path")
-        crop_plt_path = primary_plate.get("crop_path")
+        crop_veh_path = primary_vehicle.get("crop_path") or primary_vehicle.get("cropped_vehicle_path")
+        crop_plt_path = primary_plate.get("crop_path") or primary_vehicle.get("cropped_plate_path") or primary_vehicle.get("crop_path")
 
         v_bbox = primary_vehicle.get("vehicle_bbox")
         p_bbox = primary_plate.get("plate_bbox")
@@ -92,6 +92,7 @@ class ANPRPipeline:
             "plate_bbox": p_bbox,
             "cropped_vehicle_path": crop_veh_path,
             "cropped_plate_path": crop_plt_path,
+            "annotated_image_path": res.get("annotated_image_path"),
             "ai_model_version": self.model_version,
             "processing_time_ms": res.get("processing_time", 0.0) * 1000,
             "vehicle_type": v_type,
@@ -142,8 +143,9 @@ class ANPRPipeline:
             "vehicle_count": len(res.get("vehicles", [])),
             "vehicle_bbox": primary_vehicle.get("vehicle_bbox"),
             "plate_bbox": primary_plate.get("plate_bbox"),
-            "cropped_vehicle_path": primary_vehicle.get("crop_path"),
-            "cropped_plate_path": primary_plate.get("crop_path"),
+            "cropped_vehicle_path": res.get("cropped_vehicle_path") or primary_vehicle.get("crop_path"),
+            "cropped_plate_path": res.get("cropped_plate_path") or primary_plate.get("crop_path"),
+            "annotated_image_path": res.get("annotated_image_path"),
             "ai_model_version": self.model_version,
             "processing_time_ms": res.get("processing_time", 0.0) * 1000,
             "vehicle_type": v_type,
